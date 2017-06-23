@@ -74,7 +74,7 @@ margin-top:15px; margin-right:20px; float:right; border-radius: 5px; background-
 				</div>
 							
                 <div>
-                <button class="btn btn-secondary btn-block btn-chat-show" id="createBtn" style="font-size:20px; font-family:'Comic Sans MS'; color:white;background-color:#e31937;"><span class="glyphicon glyphicon-comment"></span> Ready</button>
+                <button class="btn btn-secondary btn-block btn-chat-show" id="createBtn" style=" font-size:20px; font-family:'Comic Sans MS'; color:white;background-color:#e31937;"><span class="glyphicon glyphicon-comment"></span> Ready</button>
                 </div>
 		</div>   
 

@@ -137,16 +137,16 @@ img{
 						</c:if>
 					<button id="inactive" class="btn btn-warning" onclick="inactive()">활동중지</button>
 				</c:if>
-<<<<<<< HEAD
+
 			
 			</c:if>
 			
-=======
-									
+
+						<c:if test="${Rights.m_rights == 2 || Rights.m_rights == 4}">			
 						<a href="ScheMain?tid=${sessionScope.team_id }">
 						<button id="conference" class="btn btn-danger">캘린더</button></a>
 				</c:if>	
->>>>>>> 617d1c0f420c1cb12792eb4b157057a9b00a6b91
+
 			<c:if test="${Rights.m_rights == 2 || Rights.m_rights == 4}">
 				<button id="inactive" class="btn btn-danger" onclick="dropout()">탈퇴</button>
 			</c:if>
@@ -365,11 +365,7 @@ $(".app").on("click", function(){
 	}
 });
 </script>
-<<<<<<< HEAD
 
-
-=======
->>>>>>> 617d1c0f420c1cb12792eb4b157057a9b00a6b91
 	<script>
 		var formid = $("#formid");
 		
