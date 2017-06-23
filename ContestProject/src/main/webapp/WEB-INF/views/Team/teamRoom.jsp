@@ -163,19 +163,12 @@ img{
 							<button id="claimant" class="btn btn-warning">심사위원지원자보기</button>
 							<a href="contestForm?t_id=${t_id }" ><button class="btn btn-default">공모전</button></a>
 						</c:if>
-<<<<<<< HEAD
 					<button id="inactive" class="btn btn-warning" onclick="inactive()">활동중지</button>
 				</c:if>
-			
-=======
-						
+									
 						<a href="ScheMain?tid=${sessionScope.team_id }">
 						<button id="conference" class="btn btn-danger">캘린더</button></a>
 				</c:if>	
-				
->>>>>>> 6d2875a332e902605e7015ae430ed857e5261c3b
-			</c:if>
-			
 			<c:if test="${Rights.m_rights == 2 || Rights.m_rights == 4}">
 				<button id="inactive" class="btn btn-danger" onclick="dropout()">탈퇴</button>
 				<a href="ScheMain?tid=${sessionScope.team_id }">
@@ -319,7 +312,6 @@ img{
 
 
 
-<<<<<<< HEAD
 <script>
 
 $("#claimant").on("click",function(){
@@ -400,10 +392,6 @@ $(".app").on("click", function(){
 	}
 });
 </script>
-=======
->>>>>>> 6d2875a332e902605e7015ae430ed857e5261c3b
-
-
 	<script>
 		var formid = $("#formid");
 		
