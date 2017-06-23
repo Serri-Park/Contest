@@ -186,7 +186,9 @@ var times = ${times};
 				        	 $('.textarea').prop('disabled', true);
 				        	 $('.submit').prop('disabled', true);
 							 if(count != countCk){ ///////////////////////////////////시간 및 페이시 다시 생성
-								 $(".form-group div").addClass("defaultDiv");
+								 
+								 $(".form-group div").attr('class','defaultDiv');
+				/* 				 $(".form-group div").addClass("defaultDiv"); */
 								 $(".form-group div textarea").addClass("defaultDiv1");
 								 $(".form-group div button").addClass("defaultDiv2");
 								 countDown(0,0,times,'theTime');
