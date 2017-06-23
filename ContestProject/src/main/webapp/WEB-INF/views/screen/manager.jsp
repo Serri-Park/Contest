@@ -176,7 +176,12 @@
 				<tr>
 					<td>1</td>
 					<td>${el.el_name }(배점 : ${el.el_score})</td>
-					<td><input type="number" class="form-control" max="${el.el_score}" maxlength="3" oninput="maxLengthCheck(this)"/></td>
+					<td class="form-inline cover">
+						<input type="number" class="form-control score" max="${el.el_score}" maxlength="3" oninput="maxLengthCheck(this)"
+						style="width:60%;" value=""/>
+						<button class="ten btn btn-default" data-btn="10" style="position: reative;">10</button>
+						<button class="one btn btn-default" data-btn="1" style="position: reative;">1</button>
+					</td>
 				</tr>
 			</c:forEach>
 	</table>
@@ -228,7 +233,24 @@
 		onClose : function() {}
 		}); 
 	});
-	}
+	}	
+		$(".cover").on("click","button",function(){
+			var s =$(this).attr("data-btn");
+			console.log($(this).prev().val());
+			
+			if(10 == s){
+				var result = $(this).prev();
+				s = Number(result.val()) + Number(s);
+				result.val(s);   
+				console.log(result.val());
+			}    
+			else{
+				var result = $(this).prev().prev();
+				s = Number(result.val()) + Number(s);
+				result.val(s);   
+				console.log(result.val());
+			}
+		});
 		$("#next").on("click", function() {
 			$("form").attr("action", "next");
 			$("form").attr("method", "get");
