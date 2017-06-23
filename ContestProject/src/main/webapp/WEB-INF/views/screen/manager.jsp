@@ -22,13 +22,21 @@
 <title>Insert title here</title>
 <jsp:include page="../screen/top.jsp" flush="false" />
 <jsp:include page="../screen/mAside.jsp" flush="false" />
-<jsp:include page="../Teamconference/chat.jsp" flush="false" />
 <style>
 * {
 	padding: 0;
 	margin: 0;
 }
-
+.btn-glyphicon {
+    padding:8px;
+    background:#ffffff;
+    margin-right:4px;
+	
+}
+.icon-btn {
+    padding: 9px 15px 10px 2px;
+    border-radius:50px;
+}
 #pre {
 	min-height: 300px;
 	text-align: center;
@@ -65,10 +73,11 @@
 
 #grandeBox {
 	text-align: center;
-	margin: 3% -5%;
+	margin: 3% 9%;
 	float: left;
 	height: 5%;
-	width: 35%;
+	width: 50%;
+	position: reative;
 }
 #grandeBox1 {
 	text-align: center;
@@ -89,6 +98,13 @@
 #form {    
 	margin: 3% 0% 10% 23%;
 	min-height: 300px;
+}
+#btn_pass{
+	
+}
+
+#btn_fail{
+
 }
 </style>
 </head>
@@ -127,9 +143,14 @@
 	<c:if test="${m.ep_how == 'Pass or Fail 방법' }">
 		<c:if test="${get_id==null}">
 			<div id="grandeBox">
-				<button class="btn btn-default" id="btn_pass" data-btn="pass">Pass</button>
-				<button class="btn btn-default" id="btn_fail" data-btn="fail">Fail</button>
-
+				<a class="btn icon-btn btn-primary"  href="#">
+				<span class="btn-glyphicon img-circle" id="btn_pass" data-btn="pass"><img alt="Pass" src="${pageContext.request.contextPath }/resources/upload/black-letter-p-20.png"></span>
+				Pass
+				</a>
+				<a class="btn icon-btn btn-warning"  href="#">
+				<span class="btn-glyphicon img-circle" id="btn_fail" data-btn="fail"><img alt="Fail" src="${pageContext.request.contextPath }/resources/upload/black-letter-f-20.png"></span>
+				Fail
+				</a>
 				<div id="modify" style="display: none">
 					<button class="btn btn-default" id="btn_Modify">Modify</button>
 				</div>
@@ -245,7 +266,7 @@
 		});
 		$("#btn_fail").on("click",function(){
 			var button = $("#btn_fail").attr("data-btn");
-			var data = {"w_id":${work.w_id},"grande":button,"u_id":${sessionScope.u_id}};
+			var data = {"w_id":${work.w_id},"grande":button,"u_id":${sessionScope.u_id},"t_id":${t_id}};
 			 
 			$.ajax({
 			url: 'grande',

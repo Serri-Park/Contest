@@ -80,7 +80,7 @@ background:#bc2e2e url("http://www.blueb.co.kr/data/201010/IJ12872476173279/vert
 	    		if(data.list[i-1].ep_state == 1)
 	    		str+="<li class='stage on'><a href='manager?t_id=${t_id}&r_id=0'  class='current'>"+i+"단계<br>"+data.list[i-1].ep_how+"</a></li>"; 
 	    		else
-	    			str+="<li class='stage un'>"+i+"단계<br>"+data.list[i-1].ep_how+"<br>(CAN'T CLICK)</li>"; 	
+	    			str+="<li class='stage un'><a href='#'>"+i+"단계<br>"+data.list[i-1].ep_how+"<br>(CAN'T CLICK)</a></li>"; 	
 	    	}
 	    	$(".vert-one").prepend(str);
 	    	
