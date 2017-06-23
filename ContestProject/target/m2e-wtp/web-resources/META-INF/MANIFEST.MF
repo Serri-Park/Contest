@@ -1,5 +1,9 @@
 Manifest-Version: 1.0
+<<<<<<< HEAD
+Built-By: seonnote
+=======
 Built-By: kccre
+>>>>>>> dbc8e430d3e12415da3258ba076f3939c2884c46
 Build-Jdk: 1.8.0_121
 Created-By: Maven Integration for Eclipse
 
