@@ -20,16 +20,15 @@
 	height:10px;
 	}
 .defaultDiv{
-background-color:red;
 border:1px solid red;
 float:left;
-width:100px;
-height:100px;
+width:230px;
+height:170px;
 margin-left:20px;
 border-radius: 5px;
 }
 .defaultDiv1{
-background-color:red;margin-left:10%; margin-right:10%; width:30px; height:30px;border-radius: 5px;
+margin-left:10%; margin-right:10%; width:185px; height:110px;border-radius: 5px;
 }
 .defaultDiv2{
 display:none;
@@ -86,13 +85,13 @@ margin-top:15px; margin-right:20px; float:right; border-radius: 5px; background-
 
         <!-- panel with buttons -->
             <div class="panel">
-                <a href="#category_form" id="category_pop" style="margin-top:120px;font-size:20px; font-family:'Comic Sans MS'; color:white;background-color:#e31937;">카테고리 등록</a>
+                <a href="#category_form" id="category_pop" style="margin-top:120px;font-size:20px; font-family:'Comic Sans MS'; color:white;background-color:#e31937;">카테고리 분류</a>
             </div>
 
         <!-- popup form #1 -->
         <a href="#x" class="overlay" id="category_form"></a>
         <div class="popup" style="margin-bottom:-15px;">
-            <h2>카테고리 등록 폼</h2>
+            <h2>카테고리 분류명</h2>
             <p>아이디어를 나눌 카테고리를 등록하세요</p>
             <div>
                 <label for="category_name">카테고리 명</label>
@@ -102,8 +101,8 @@ margin-top:15px; margin-right:20px; float:right; border-radius: 5px; background-
 
             <a class="close" href="#close"></a>
         </div>
- 
-<table class="table" id="category_list" style="float:right; width:200px; height:30px; margin-top:40px;margin-right:100px;padding-right:100px; font-size:17px; font-family:'Comic Sans MS';">
+ <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<table class="table" id="category_list" style="float:left; width:200px; height:30px; margin-right:100px; font-size:17px; font-family:'Comic Sans MS';">
 <tr>
 	<th>카테고리명</th>
 </tr>
@@ -188,9 +187,8 @@ var times = ${times};
 							 if(count != countCk){ ///////////////////////////////////시간 및 페이시 다시 생성
 								 
 								 $(".form-group div").attr('class','defaultDiv');
-				/* 				 $(".form-group div").addClass("defaultDiv"); */
-								 $(".form-group div textarea").addClass("defaultDiv1");
-								 $(".form-group div button").addClass("defaultDiv2");
+								 $(".form-group textarea").attr('class','defaultDiv1');
+								 $(".form-group button").attr('class','defaultDiv2');
 								 countDown(0,0,times,'theTime');
 					        	 startpage();
 							 }else{

@@ -50,7 +50,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Team<span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="AllTeamList?Conlist=0&permitt=1">Waiting TeamList</a></li>
-                                
+                                <li><a href="AllTeamList?Conlist=0&permitt=2">My Team</a></li>
                                 <li><a href="#">미확정</a></li>
 
 

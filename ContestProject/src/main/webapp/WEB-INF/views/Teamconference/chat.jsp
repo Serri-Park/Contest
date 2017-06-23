@@ -3,21 +3,15 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head lang="en">
-
-<<<<<<< HEAD
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-=======
->>>>>>> 6d2875a332e902605e7015ae430ed857e5261c3b
+
 <title>Insert title here</title>
     <script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script> 
 
-	<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/pagecss.css">
+	<link rel="stylesheet" href="resources/css/pagecss.css">
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-<<<<<<< HEAD
 
-=======
-     <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
->>>>>>> 6d2875a332e902605e7015ae430ed857e5261c3b
+
     <title>webSocket</title>
     <!-- <div class="col-lg" style="height:40px; width:100px;">
 		<div class="input-group">
