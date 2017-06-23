@@ -35,22 +35,20 @@
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li class="#"><a href="home">Home</a></li>
-                        
-                        <li><a href="AllTeamList?Conlist=0&permit=2">My Team</a></li>
+           
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">공모전 <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="contestList">공모전 현황</a></li> 
-                                <li><a href="registTeam?Conlist=3">개최하기</a></li>
+								<li><a href="AllTeamList?Conlist=1&permit=1">공모전 팀원모집</a></li>
                                 <li><a href="AllTeamList?Conlist=3&permit=1">심사위원 모집</a></li>
-
+  
                             </ul>
                         </li>
                         
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Team List<span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Team<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                             <li><a href="AllTeamList?Conlist=1&permit=1">All Team</a></li>
                                 <li><a href="AllTeamList?Conlist=0&permitt=1">Waiting TeamList</a></li>
                                 <li><a href="AllTeamList?Conlist=0&permit=2">My TeamList</a></li>
                                 

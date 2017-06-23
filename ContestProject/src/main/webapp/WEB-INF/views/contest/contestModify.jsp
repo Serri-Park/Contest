@@ -241,7 +241,7 @@
 					</li>
 					<li>
 						<span class="tit">
-							주최/주간
+							주최/주관
 							<span class="need">*</span>
 						</span>
 						<span class="ipt short">
