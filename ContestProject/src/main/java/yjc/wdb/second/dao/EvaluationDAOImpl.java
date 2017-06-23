@@ -179,9 +179,9 @@ private static final String namespace="yjc.wdb.EvalMapper";
 	}
 
 	@Override
-	public Manager epEl(int t_id) throws Exception {
+	public List<Manager> epEl(int t_id) throws Exception {
 		// TODO Auto-generated method stub
-		return sql.selectOne(namespace+".epEl", t_id);
+		return sql.selectList(namespace+".epEl", t_id);
 	}
 
 	@Override

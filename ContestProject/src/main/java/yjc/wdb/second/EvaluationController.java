@@ -156,10 +156,10 @@ public class EvaluationController {
 	
 	@RequestMapping(value = "screen/manager", method = RequestMethod.GET)
 	public String manager(int t_id,Model model,@RequestParam int r_id, HttpSession session) throws Exception {
-		Manager m1 = service.epEl(t_id);
-		m1.setT_id(t_id);
-		int leader = tservice.leaderRights(t_id);
-		model.addAttribute("ClaimantVo",leader);
+		List<Manager> m1 = service.epEl(t_id);
+		for(int i = 0;i<m1.size();i++)
+		m1.get(i).setT_id(t_id);
+		model.addAttribute("list",m1);
 		//c_id 諛쏄린
 		Manager manage =service.manager(t_id);
 		model.addAttribute("manage",manage);
@@ -168,15 +168,15 @@ public class EvaluationController {
 		manage.setStartNum(r_id);
 		boolean b = false;
 		int cnt_m = service.cnt_m(t_id);
-		int cnt_work = service.cnt_work(m1);
-		int cnt_eval = service.cnt_eval(m1);
+		int cnt_work = service.cnt_work(m1.get(0));
+		int cnt_eval = service.cnt_eval(m1.get(0));
 		int total_cnt = cnt_m * cnt_work;
 		System.out.println(cnt_work + " " + cnt_eval + " " + total_cnt);
 		if(cnt_eval == total_cnt){
 			b =true;
 		}
 		
-		manage.setEp_stage(m1.getEp_stage());
+		manage.setEp_stage(m1.get(0).getEp_stage());
 		//�옉�뭹遺덈윭�삤湲�
 		Manager work = null;
 		 work = service.read_work(manage);
@@ -191,7 +191,7 @@ public class EvaluationController {
 			model.addAttribute("r_id",r_id);
 			Manager m = service.config(t_id);
 			model.addAttribute("m",m);
-			return "manager";
+			return "screen/manager";
 	}
 	
 	@RequestMapping(value = "screen/next", method = RequestMethod.GET)
@@ -203,14 +203,16 @@ public class EvaluationController {
 		String id=(String)session.getAttribute("u_id");
 		Manager work = null;
 		++r_id;
-		Manager m1 = service.epEl(t_id);
-		m1.setT_id(t_id);
-		int cnt = service.cnt_work(m1);
+		List<Manager> m1 = service.epEl(t_id);
+		for(int i = 0;i<m1.size();i++)
+		m1.get(i).setT_id(t_id);
+		model.addAttribute("list",m1);
+		int cnt = service.cnt_work(m1.get(0));
 		if(cnt == r_id)
 			--r_id;
 		boolean b = false;
 		manage.setStartNum(r_id);
-		manage.setEp_stage(m1.getEp_stage());
+		manage.setEp_stage(m1.get(0).getEp_stage());
 		 work = service.read_work(manage);
 		 work.setU_id(id);
 		
@@ -237,9 +239,12 @@ public class EvaluationController {
 		Manager work = null;
 		if (r_id != 0)
 			--r_id;
-		Manager m1 = service.epEl(t_id);
+		List<Manager> m1 = service.epEl(t_id);
+		for(int i = 0;i<m1.size();i++)
+		m1.get(i).setT_id(t_id);
+		model.addAttribute("list",m1);
 		manage.setStartNum(r_id);
-		manage.setEp_stage(m1.getEp_stage());
+		manage.setEp_stage(m1.get(0).getEp_stage());
 		work = service.read_work(manage);
 		work.setU_id(id);
 		Manager get_id = service.get_work_id(work);
@@ -270,8 +275,11 @@ public class EvaluationController {
 	public ResponseEntity<String> grande(@RequestBody Manager m,Model model) throws Exception {
 		int score=1;
 		m.setE_score(score);
-		Manager epEl = service.epEl(m.getT_id());
-		m.setEl_id(epEl.getEl_id());
+		int t_id = m.getT_id();
+		List<Manager> m1 = service.epEl(t_id);
+		for(int i = 0;i<m1.size();i++)
+		m1.get(i).setT_id(t_id);
+		m.setEl_id(m1.get(0).getEl_id());
 		System.out.println(m.getGrande());
 		if(m.getGrande().equals("pass")){
 			score = 100;
@@ -351,18 +359,19 @@ public class EvaluationController {
 	
 	@RequestMapping(value = "screen/progress", method = RequestMethod.GET)
 	public void eMain(int t_id,Model model,HttpSession session) throws Exception {
-		Manager m = service.epEl(t_id);
+		List<Manager> m1 = service.epEl(t_id);
+		for(int i = 0;i<m1.size();i++)
+		m1.get(i).setT_id(t_id);
 		String id=(String)session.getAttribute("u_id");
-		m.setT_id(t_id);
 		int cnt_m = service.cnt_m(t_id);
-		int cnt_work = service.cnt_work(m);
-		int cnt_eval = service.cnt_eval(m);
+		int cnt_work = service.cnt_work(m1.get(0));
+		int cnt_eval = service.cnt_eval(m1.get(0));
 		int total_cnt = cnt_m * cnt_work;
 		
 		Manager c =service.manager(t_id);
 		c.setU_id(id);
 		c.setT_id(t_id);
-		c.setEl_id(m.getEl_id());
+		c.setEl_id(m1.get(0).getEl_id());
 		int cnt_u_work = service.cnt_u_work(c);
 		List<Manager> list = service.progress(c);
 		model.addAttribute("cnt_u_work",cnt_u_work);
@@ -396,9 +405,12 @@ public class EvaluationController {
 	@RequestMapping(value = "screen/totalPro", method = RequestMethod.POST)
 	@ResponseBody
 	public List<Manager> totalPro(@RequestBody Manager m,Model model) throws Exception {
-		Manager m1 = service.epEl(m.getT_id());
-		m1.setT_id(m.getT_id());
-		List<Manager> list = service.cnt_alleval(m1);
+		int t_id = m.getT_id();
+		List<Manager> m1 = service.epEl(t_id);
+		for(int i = 0;i<m1.size();i++)
+		m1.get(i).setT_id(t_id);
+		m1.get(0).setT_id(m.getT_id());
+		List<Manager> list = service.cnt_alleval(m1.get(0));
 		//System.out.println(list.get(1).getAllCnt());
 		return list;
 	}

@@ -19,10 +19,10 @@
 	src="${pageContext.request.contextPath }/resources/js/popModal.js"></script>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>Insert titl
-e here</title>
-<jsp:include page="top.jsp" flush="false" />
-<jsp:include page="mAside.jsp" flush="false" />
+<title>Insert title here</title>
+<jsp:include page="../screen/top.jsp" flush="false" />
+<jsp:include page="../screen/mAside.jsp" flush="false" />
+<jsp:include page="../Teamconference/chat.jsp" flush="false" />
 <style>
 * {
 	padding: 0;
@@ -67,9 +67,16 @@ e here</title>
 	text-align: center;
 	margin: 3% -5%;
 	float: left;
-	height: 80px;
-	width: 79%;
+	height: 5%;
+	width: 35%;
 }
+#grandeBox1 {
+	text-align: center;
+	margin: 2%;
+	
+	height: 5%;
+	position: reative;
+}   
 
 #modify {
 	text-align: center;
@@ -80,13 +87,12 @@ e here</title>
 }
 
 #form {    
-	margin: 5% 0% 10% 23%;
+	margin: 3% 0% 10% 23%;
 	min-height: 300px;
 }
 </style>
 </head>
 <body>
-	<c:if test="${ClaimantVo == 3}">
 		<div id="confirm_content" style="display: none">
 			<div class="confirmModal_content">
 				현재 단계의 평가가 완료 되었습니다.<br>다음 평가를 진행하시겠습니까?
@@ -98,7 +104,6 @@ e here</title>
 					data-confirmmodal-but="cancel">Cancel</button>
 			</div>
 		</div>
-	</c:if>
 	<form>
 		<input type='hidden' name='r_id' id='r_id' value='${r_id}'> 
 		<input type="hidden" name="t_id" id="t_id" value="${t_id}">
@@ -112,7 +117,7 @@ e here</title>
 			</button>
 			<div id="viewer">
 				<img src="displayFile?fileName=${work.f_name }"
-					style="max-height: 320px;margin-top:15px;width:90%;	box-shadow:3px 3px 10px #000;" onclick="onClick(this)" class="w3-hover-opacity">
+					style="max-height: 320px;margin-top:15px;width:90%;	box-shadow:3px 3px 10px #000; min-height: 320px;" onclick="onClick(this)" class="w3-hover-opacity">
 			</div>
 			<button class="btn btn-default" id="next">
 				<span class="glyphicon glyphicon-chevron-right" id="btn_next"></span>
@@ -139,7 +144,26 @@ e here</title>
 		</c:if>
 	</c:if>
 	<c:if test="${m.ep_how == '상세채점 방법' }">
-		good
+	<div id="grandeBox1">
+	<table class="table table-hover" style="width:70%;"> 
+			<tr>
+				<th>번호</th>
+				<th>평가항목</th>
+				<th>채점</th>
+			</tr>
+		<c:forEach items="${list}" var="el">
+				<tr>
+					<td>1</td>
+					<td>${el.el_name }(배점 : ${el.el_score})</td>
+					<td><input type="number" class="form-control" max="${el.el_score}" maxlength="3" oninput="maxLengthCheck(this)"/></td>
+				</tr>
+			</c:forEach>
+	</table>
+				<button class="btn btn-default" id="commit" data-btn="commit" style="margin-left:-33%;">확인</button>
+				<div id="modify" style="display: none">
+					<button class="btn btn-default" id="btn_Modify">Modify</button>
+				</div>
+			</div>
 	</c:if>
 	</div>
 	<div id="modal01" class="w3-modal" onclick="this.style.display='none'">
@@ -150,13 +174,15 @@ e here</title>
 	</div>
 
 	<script>
-		function onClick(element) {
+	function onClick(element) {
  		 document.getElementById("img01").src = element.src;
 		  document.getElementById("modal01").style.display = "block";
 			}
-</script>
-
-	<script>
+	 function maxLengthCheck(object){
+		   if (object.value.length > object.maxLength){
+		    object.value = object.value.slice(0, object.maxLength);
+		   }    
+		  }
 	var check = ${b};
 	if(check==true){  
 	$(document).ready(function(){ 

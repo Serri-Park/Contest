@@ -172,7 +172,7 @@
 <br>
 <div style="margin: 0% 10%">
 	<div id="cnav">
-		<form id="contestList" method="get">
+		<form id="../contestList" method="get">
 			<div class="list-group">  
 				<ul class="nav nav-pills nav-stacked">
 					<li class="list-group-item list-group-item-success">분야별</li>

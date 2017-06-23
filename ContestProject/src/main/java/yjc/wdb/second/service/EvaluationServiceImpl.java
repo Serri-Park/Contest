@@ -176,7 +176,7 @@ public class EvaluationServiceImpl implements EvaluationService{
 		return dao.nowEp_id(t_id);
 	}
 	@Override
-	public Manager epEl(int t_id) throws Exception {
+	public List<Manager> epEl(int t_id) throws Exception {
 		// TODO Auto-generated method stub
 		return dao.epEl(t_id);
 	}
