@@ -7,9 +7,8 @@
 <title>Insert title here</title>
     <script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script> 
 
-	<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/pagecss.css">
+	<link rel="stylesheet" href="resources/css/pagecss.css">
 
-     <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     <title>webSocket</title>
     <!-- <div class="col-lg" style="height:40px; width:100px;">
 		<div class="input-group">

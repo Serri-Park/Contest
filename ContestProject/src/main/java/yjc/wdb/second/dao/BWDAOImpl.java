@@ -92,12 +92,8 @@ private static final String namespace="yjc.wdb.bwMapper";
 	public void categoryupdate(IDEA idea) throws Exception {
 		int t = sqlSession.selectOne(namespace+".categoryupdateselect", idea);
 		  idea.setBwc_id(t);
-		 String bwi_contents[] = idea.getBwi_content().split("/@");
-		 
-		for(int a=0; a<bwi_contents.length; a++){
-			idea.setBwi_content(bwi_contents[a]);
 			sqlSession.update(namespace+".categoryupdate", idea);
-		}
+		
 		
 	}
 

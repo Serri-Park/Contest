@@ -42,6 +42,10 @@ margin-left:10%; margin-right:10%; width:175px; height:90px; resize: none; borde
 .submit{
 margin-top:15px; margin-right:20px; float:right; border-radius: 5px; background-color:red; color:white;
 }
+.category_align{
+width:200px;font-size:20px;  text-align:center; font-family:'Comic Sans MS'; color:black; display:inline-block;margin-right:10px; margin-bottom:20px;  border:1px solid #e31937; border-radius:5px;
+
+}
 </style>
 
 
@@ -101,13 +105,11 @@ margin-top:15px; margin-right:20px; float:right; border-radius: 5px; background-
 
             <a class="close" href="#close"></a>
         </div>
- <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<table class="table" id="category_list" style="float:left; width:200px; height:30px; margin-right:100px; font-size:17px; font-family:'Comic Sans MS';">
-<tr>
-	<th>카테고리명</th>
-</tr>
+ <br><br><br><br><br><br><br>
+<div class="table" id="category_list" style="display:none; float:left; width:800px; height:800px; margin-right:100px; font-size:17px; font-family:'Comic Sans MS';">
 
-</table>     
+
+</div>     
 </head>
 
 <body>
@@ -192,6 +194,7 @@ var times = ${times};
 								 countDown(0,0,times,'theTime');
 					        	 startpage();
 							 }else{
+							 	$("#category_list").show();
 								 var bt
 									$(".form-group*").on("mouseover","div",function(){
 									 	 bt = $(this);
@@ -205,7 +208,7 @@ var times = ${times};
 											});   
 									});
 	
-							 		$('.table*').on("mouseup", "td", function(){
+							 		$('.table*').on("mouseup", "p", function(){
 							 			var btt = $(this).text();
 							 			var tttt = bt.children('textarea').val()
 							  			//alert(tttt);
@@ -450,7 +453,7 @@ var times = ${times};
 		  data : {bwc_content : $("#category_name").val()},
 		  dataType : "text",
 		  success : function(data){
-			  category = "<tr><td>"+data+"</td></tr> </br>";			 
+			  category = "<p class='category_align'>"+data+"</p>";			 
 			  $("#category_list").append(category);
 			  location.href="#close";
 		  },
