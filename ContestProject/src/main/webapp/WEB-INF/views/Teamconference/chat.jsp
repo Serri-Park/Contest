@@ -5,16 +5,13 @@
 <head lang="en">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <title>Insert title here</title>
     <script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
 
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	<link rel="stylesheet" href="resources/css/pagecss.css">
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-     <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
-    <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
     <title>webSocket</title>
     <!-- <div class="col-lg" style="height:40px; width:100px;">
 		<div class="input-group">
@@ -26,7 +23,7 @@
 		</div>
 	</div> -->
 
-<div class="note blue" style="width:300px; height:80px; right:20px; top:500px; margin-bottom:-50px; background-color:#e2e2e2; z-index:1;">
+<div class="note blue" style="width:300px; height:80px; right:20px; top:75%; margin-bottom:-50px; background-color:#e2e2e2; z-index:1;">
 <p style="color:#e31937; font-size :20px; font-family:'Comic Sans MS';">Chat</p>
 	<div class="well" id="msg" style="overflow-x:hidden; overflow-y:scroll; width:300px; height:80px; padding:1px;"></div>
 	

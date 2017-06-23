@@ -52,7 +52,6 @@
                             <ul class="dropdown-menu">
                              <li><a href="AllTeamList?Conlist=1&permit=1">All Team</a></li>
                                 <li><a href="AllTeamList?Conlist=0&permitt=1">Waiting TeamList</a></li>
-                                <li><a href="AllTeamList?Conlist=0&permit=2">My TeamList</a></li>
                                 
                                 <li><a href="#">미확정</a></li>
 

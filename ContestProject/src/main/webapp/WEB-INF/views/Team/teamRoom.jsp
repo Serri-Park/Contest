@@ -135,7 +135,7 @@ img{
 							<button id="claimant" class="btn btn-warning">심사위원지원자보기</button>
 							<a href="contestForm?t_id=${t_id }"><button>공모전</button></a>
 						</c:if>
-					<button id="inactive" class="btn btn-warning">활동중지</button>
+					<button id="inactive" class="btn btn-warning" onclick="inactive()">활동중지</button>
 				</c:if>
 			
 			</c:if>
@@ -311,51 +311,6 @@ function dropout(){
 }
 
 
-$("#inactive").on("click",function(){
-	event.preventDefault()
-	var t_id = $(".t_id").val();
-	var recruit = 0;
-	if (confirm("팀을 비활성하시겠습니까??") == true){    //확인
-		 $.ajax({
-				type:'post',
-				url:'Recruitcont',
-				data: {t_id:t_id,permit:recruit},
-				success : function(result){
-					console.log("result: "+result);
-					if(result == 'SUCCESS'){
-						alert("비활성화.");
-						window.location.href="myTeams";
-					}
-				}
-			});
-	}else{   //취소
-	    return;
-	}
-});
-
-
-function activation(){
-	event.preventDefault()
-	var t_id = $(".t_id").val();
-	var recruit = 1;
-	if (confirm("팀을 활성화합니다.") == true){    //확인
-		 $.ajax({
-				type:'post',
-				url:'Recruitcont',
-				data: {t_id:t_id,permit:recruit},
-				success : function(result){
-					console.log("result: "+result);
-					if(result == 'SUCCESS'){
-						alert("활성화.");
-						window.location.href="myTeams";
-					}
-				}
-			});
-	}else{   //취소
-	    return;
-	}
-}
-
 //가입신청취소
 $(".cancell").on("click", function(){
 	event.preventDefault();
@@ -383,7 +338,7 @@ $(".app").on("click", function(){
    //신청서가 들어가는 팀
  
    var t_id = $(".t_id").val();
-   if (confirm("정말 취소하시겠습니까??") == true){  
+   if (confirm("정말 가입하시겠습니까??") == true){  
 	    $.ajax({
 	      type:'post',
 	      url:'joinTeam',
