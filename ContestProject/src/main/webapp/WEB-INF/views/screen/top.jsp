@@ -30,19 +30,19 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="home">The Contest Helper</a>  <!-- 팀로고 -->
+                    <a class="navbar-brand" href="../home">The Contest Helper</a>  <!-- 팀로고 -->
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="#"><a href="home">Home</a></li>
+                        <li class="#"><a href="../home">Home</a></li>
                         
-                        <li><a href="AllTeamList?Conlist=0&permit=2">My Team</a></li>
+                        <li><a href="../AllTeamList?Conlist=0&permit=2">My Team</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">공모전 <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="contestList">공모전 현황</a></li> 
-                                <li><a href="registTeam?Conlist=3">개최하기</a></li>
-                                <li><a href="AllTeamList?Conlist=3&permit=1">심사위원 모집</a></li>
+                                <li><a href="../contestList">공모전 현황</a></li> 
+                                <li><a href="../registTeam?Conlist=3">개최하기</a></li>
+                                <li><a href="../AllTeamList?Conlist=3&permit=1">심사위원 모집</a></li>
 
                             </ul>
                         </li>
@@ -50,8 +50,8 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Team List<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                             <li><a href="AllTeamList?Conlist=1&permit=1">All Team</a></li>
-                                <li><a href="AllTeamList?Conlist=0&permitt=1">Waiting TeamList</a></li>
+                             <li><a href="../AllTeamList?Conlist=1&permit=1">All Team</a></li>
+                                <li><a href="../AllTeamList?Conlist=0&permitt=1">Waiting TeamList</a></li>
                                 
                                 <li><a href="#">미확정</a></li>
 
@@ -60,15 +60,15 @@
                         </li>
                         
                         <li><a href="#">Gallery</a></li>
-                        <li><a href="listPage">Community</a></li>
-                        <li><a href="PlaceList">장소대여</a></li>
+                        <li><a href="../listPage">Community</a></li>
+                        <li><a href="../PlaceList">장소대여</a></li>
 	 <c:if test="${empty sessionScope.u_id}">
 <!-- 	        <li><a href="join"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li> -->
 	        <li><a href="#" data-toggle="modal" data-target="#login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
        
 </c:if> 
 <c:if test="${not empty sessionScope.u_id}"> <!-- sessionScopre.id가 있으면 -->
-         <li><a href="logout"><span class="glyphicon glyphicon-log-in"></span> logout</a></li>
+         <li><a href="../logout"><span class="glyphicon glyphicon-log-in"></span> logout</a></li>
 
 
 </c:if>
@@ -111,15 +111,15 @@
             </div>
           
         
-     <span class='text-center' ><a href="missingPassword" class="text-sm">비밀번호 찾기</a></span>&nbsp;&nbsp;&nbsp;	
+     <span class='text-center' ><a href="../missingPassword" class="text-sm">비밀번호 찾기</a></span>&nbsp;&nbsp;&nbsp;	
             <span class='text-center'>
-            <a href="MIssingID" class="text-sm">아이디  찾기</a></span>
+            <a href="../MIssingID" class="text-sm">아이디  찾기</a></span>
            
     
             <hr />
             
             <div class="form-group">
-                <a href="join" class="btn btn-default btn-block m-t-md"> 회원가입</a>
+                <a href="../join" class="btn btn-default btn-block m-t-md"> 회원가입</a>
             </div>
         </form>
       </div>
