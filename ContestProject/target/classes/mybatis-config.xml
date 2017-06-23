@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+
+		<typeAlias alias="user" type="yjc.wdb.second.bean.Userbean" />
+		<typeAlias alias="schedule" type="yjc.wdb.second.bean.Schedule" />
+		<typeAlias alias="places" type="yjc.wdb.second.bean.PlaceVo" />
+		<typeAlias alias="Reservation" type="yjc.wdb.second.bean.Reservation" />
+		<typeAlias alias="pay" type="yjc.wdb.second.bean.pay" />
+		<typeAlias alias="evaluation" type="yjc.wdb.second.bean.evaluationVo" />
+
+		<typeAlias type="yjc.wdb.second.bean.TeamVo" alias="teams" />
+		<typeAlias type="yjc.wdb.second.bean.ClaimantVo" alias="claima" />
+		<typeAlias type="yjc.wdb.second.bean.Contest" alias="Contest" />
+
+		<typeAlias type="yjc.wdb.second.bean.Work" alias="Work" />
+
+		<typeAlias type="yjc.wdb.second.bean.Receipt" alias="Receipt" />
+
+		<typeAlias type="yjc.wdb.second.bean.Board" alias="Board" />
+
+		<typeAlias type="yjc.wdb.second.bean.BoardReply" alias="BoardReply" />
+
+		<typeAlias type="yjc.wdb.second.bean.File" alias="File" />
+
+		<typeAlias type="yjc.wdb.second.bean.Contest" alias="Contest" />
+		
+		<typeAlias type="yjc.wdb.second.bean.BW" alias="bw" />
+		<typeAlias type="yjc.wdb.second.bean.IDEA" alias="idea" />
+		<typeAlias type="yjc.wdb.second.bean.Page" alias="page" />
+
+		<typeAlias type="yjc.wdb.second.bean.Criteria" alias="Criteria" />
+			<typeAlias type="yjc.wdb.second.bean.Evaluation" alias="Eval" />
+			<typeAlias type="yjc.wdb.second.bean.Manager" alias="manager" />
+	</typeAliases>
+</configuration>

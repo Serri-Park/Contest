@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="yjc.wdb.ContestMapper">
+	<insert id="create">
+		insert into contest(c_name, c_category, c_host, c_target, c_prize, c_homepage, c_content, c_startdate, c_enddate, c_poster, t_id)
+		values(#{c_name},#{c_category},#{c_host},#{c_target},#{c_prize},#{c_homepage},#{c_content},#{c_startdate},#{c_enddate},#{c_poster},#{t_id})
+	</insert>
+
+	<select id="read" resultType="Contest">
+		<!-- 풀네임 써야함 아니면 별칭을 등록해야함. Borad yjc.wdb.bbs.bean.Board라 해야함 -->
+		select *
+		from contest
+		where c_id=#{c_id}
+	</select>
+	<update id="update">
+		update contest set c_name=#{c_name}, c_category=#{c_category}, c_host=#{c_host}, c_target=#{c_target}, c_prize=#{c_prize}, c_homepage=#{c_homepage}, c_content=#{c_content}, c_startdate=#{c_startdate}, c_enddate=#{c_enddate}, c_poster=#{c_poster}, c_regdate = now()
+		where c_id=#{c_id}
+	</update>
+	<delete id="delete">
+		delete from contest 
+		where c_id=#{c_id}
+	</delete>
+	<select id="listPage" resultType="Contest">
+		select * 
+		from contest
+		order by c_id desc
+		limit #{startRecord}, #{recordsPerPage}
+	</select>
+	<select id="totalCount" resultType="Integer">
+		select count(*) 
+		from contest
+	</select>
+	
+	<select id="listSearch" resultType="Contest" parameterType="Criteria">
+		select *
+		from contest
+		<include refid="search"></include>
+		order by c_id desc
+		limit #{startRecord}, #{recordsPerPage}
+	</select>
+	
+<sql id="search">
+	<!-- category : 분야 -->
+	<!-- dateState : 진행상태 -->
+	<!-- c_searchType : 검색타입 -->
+	<!-- c_keyword : 검색키워드 -->
+	<if test="category.equals('allCategory')">
+		<if test="dateState.equals('all')">
+			<if test="c_searchType.equals('noSearch')">
+			<!-- 전체조회 -->
+			</if>
+			<if test="c_searchType.equals('c_name')">
+			where c_name like CONCAT('%', #{c_keyword}, '%')
+			</if>
+			<if test="c_searchType.equals('c_host')">
+			where c_host like CONCAT('%', #{c_keyword}, '%')
+			</if>
+		</if>
+		<if test="(dateState.equals('start'))">
+			<if test="c_searchType.equals('noSearch')">
+			where <![CDATA[c_startdate > now()]]>
+			</if>
+			<if test="c_searchType.equals('c_name')">
+			where <![CDATA[c_startdate > now()]]> and c_name like CONCAT('%', #{c_keyword}, '%')
+			</if>
+			<if test="c_searchType.equals('c_host')">
+			where <![CDATA[c_startdate > now()]]> and c_host like CONCAT('%', #{c_keyword}, '%')
+			</if>
+		</if>
+		<if test="(dateState.equals('ing'))">
+			<!-- 전체조회 -->
+			<if test="c_searchType.equals('noSearch')">
+			where <![CDATA[c_startdate < now() and c_enddate > now()]]>
+			</if>
+			<if test="c_searchType.equals('c_name')">
+			where <![CDATA[c_startdate < now() and c_enddate > now()]]> and c_name like CONCAT('%', #{c_keyword}, '%')
+			</if>
+			<if test="c_searchType.equals('c_host')">
+			where <![CDATA[c_startdate < now() and c_enddate > now()]]> and c_host like CONCAT('%', #{c_keyword}, '%')
+			</if>
+		</if>
+		<if test="(dateState.equals('end'))">
+			<!-- 전체조회 -->
+			<if test="c_searchType.equals('noSearch')">
+			where <![CDATA[c_enddate < now()]]>
+			</if>
+			<if test="c_searchType.equals('c_name')">
+			where <![CDATA[c_enddate < now()]]> and c_name like CONCAT('%', #{c_keyword}, '%')
+			</if>
+			<if test="c_searchType.equals('c_host')">
+			where <![CDATA[c_enddate < now()]]> and c_host like CONCAT('%', #{c_keyword}, '%')
+			</if>
+		</if>
+	</if>
+	
+	<if test="!(category.equals('allCategory'))">
+		<if test="dateState.equals('all')">
+			<if test="c_searchType.equals('noSearch')">
+			where c_category like CONCAT('%', #{category}, '%')
+			</if>
+			<if test="c_searchType.equals('c_name')">
+			where c_category like CONCAT('%', #{category}, '%') and c_name like CONCAT('%', #{c_keyword}, '%')
+			</if>
+			<if test="c_searchType.equals('c_host')">
+			where c_category like CONCAT('%', #{category}, '%') and c_host like CONCAT('%', #{c_keyword}, '%')
+			</if>
+		</if>
+		<if test="(dateState.equals('start'))">
+			<if test="c_searchType.equals('noSearch')">
+			where c_category like CONCAT('%', #{category}, '%') and <![CDATA[c_startdate > now()]]>
+			</if>
+			<if test="c_searchType.equals('c_name')">
+			where c_category like CONCAT('%', #{category}, '%') and <![CDATA[c_startdate > now()]]> and c_name like CONCAT('%', #{c_keyword}, '%')
+			</if>
+			<if test="c_searchType.equals('c_host')">
+			where c_category like CONCAT('%', #{category}, '%') and <![CDATA[c_startdate > now()]]> and c_host like CONCAT('%', #{c_keyword}, '%')
+			</if>
+		</if>
+		<if test="(dateState.equals('ing'))">
+			<!-- 전체조회 -->
+			<if test="c_searchType.equals('noSearch')">
+			where c_category like CONCAT('%', #{category}, '%') and <![CDATA[c_startdate < now() and c_enddate > now()]]>
+			</if>
+			<if test="c_searchType.equals('c_name')">
+			where c_category like CONCAT('%', #{category}, '%') and <![CDATA[c_startdate < now() and c_enddate > now()]]> and c_name like CONCAT('%', #{c_keyword}, '%')
+			</if>
+			<if test="c_searchType.equals('c_host')">
+			where c_category like CONCAT('%', #{category}, '%') and <![CDATA[c_startdate < now() and c_enddate > now()]]> and c_host like CONCAT('%', #{c_keyword}, '%')
+			</if>
+		</if>
+		<if test="(dateState.equals('end'))">
+			<!-- 전체조회 -->
+			<if test="c_searchType.equals('noSearch')">
+			where c_category like CONCAT('%', #{category}, '%') and <![CDATA[c_enddate < now()]]>
+			</if>
+			<if test="c_searchType.equals('c_name')">
+			where c_category like CONCAT('%', #{category}, '%') and <![CDATA[c_enddate < now()]]> and c_name like CONCAT('%', #{c_keyword}, '%')
+			</if>
+			<if test="c_searchType.equals('c_host')">
+			where c_category like CONCAT('%', #{category}, '%') and <![CDATA[c_enddate < now()]]> and c_host like CONCAT('%', #{c_keyword}, '%')
+			</if>
+		</if>
+	</if>
+</sql>
+
+	<select id="searchTotalCount" resultType="int">
+		select count(*)
+		from contest
+		<include refid="search"></include>
+	</select>
+
+	
+	<select id="ContestListMain">
+select * from contest order by c_regdate desc 
+	
+	</select>
+
+<insert id="addAttach"> insert into file(f_name,c_id) values(#{f_name}, LAST_INSERT_ID()) </insert>
+
+<insert id="addWork"> insert into file(f_name,w_id) values(#{f_name}, (select max(w_id) from work)) </insert>
+
+<select id="getAttach" resultType="string"> select f_name from file where c_id = #{c_id} order by f_regdate </select>
+
+<delete id="deleteAttach"> delete from file where c_id = #{c_id} </delete>
+
+<insert id="replaceAttach"> insert into file(f_name, c_id) value (#{f_name}, #{c_id}) </insert>
+
+<update id="updateHit"> update contest set c_viewcnt = c_viewcnt + 1 where c_id = #{c_id} </update>
+
+<insert id="submitInsert"> insert into receipt(t_id,c_id) values(#{t_id},#{c_id}) </insert>
+
+<select id="getr_id"> select r_id from receipt where r_id=#{r_id} </select>
+
+<select id="WorkCount">
+select  count(r_id) from receipt where c_id=#{c_id}
+</select>
+
+<insert id="WorkInsert"> insert into work(w_name,w_content,r_id) values(#{w_name},#{w_content},(select max(r_id) from receipt)) </insert>
+
+<select id="getAttachs" resultType="string"> select f_name from file where w_id = #{w_id} order by f_regdate </select>
+
+<delete id="deleteAttachs"> delete from file where w_id = #{w_id} </delete>
+
+<insert id="replaceAttachs"> insert into file(f_name, w_id) value (#{f_name}, #{w_id}) </insert>
+</mapper>

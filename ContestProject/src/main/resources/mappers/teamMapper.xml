@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="yjc.wdb.team.teamMapper">
+ 
+ <select id="teamData" resultType="teams">
+ select * from team where t_id = #{t_id}
+ </select>
+ 
+ <select id="Rights" resultType="teams">
+ select m_rights from member where u_id = #{u_id} and t_id = #{t_id}
+ </select>
+ 
+ 
+ <insert id="insertTeam">
+   insert into team(t_name,t_areas,t_filed,t_content,t_permit,t_logo,t_regdate)
+    values(#{t_name},#{t_areas},#{t_filed},#{t_content},#{t_permit},#{t_logo},now())
+ </insert>
+ 
+ <select id="TnameChck" resultType="teams">
+ 	select t_name from team where t_name = #{t_name}
+ </select>
+ 
+ <!-- 생성될 때의 팀의 정보로 팀의 id를 찾는다 -->
+<select id="team_id" resultType="Integer">
+ 	select t_id from team where t_name = #{t_name} and t_areas = #{t_areas} and t_content = #{t_content}
+ 	and t_filed = #{t_filed}
+ </select>
+
+<!-- 모든 팀을 찾는다!!!!!! -->
+ <select id="AllTeamList" resultType="teams">
+ select e.t_name"t_name", e.t_areas "t_areas", e.t_regdate
+"t_regdate",e.t_filed "t_filed", e.t_id "t_id",d.u_id "u_id",e.t_permit "t_permit",d.m_rights "m_rights", e.t_logo "t_logo"
+ from team e JOIN member d
+ on (e.t_id = d.t_id) where d.u_id= #{u_id} and d.m_rights != 0
+  <include refid="search"></include>
+  ORDER BY e.t_regdate DESC;
+ </select>
+ 
+ <!-- 개최팀만 찾음 -->
+  <select id="listhost" resultType="teams">
+ select e.t_name"t_name", e.t_areas "t_areas", e.t_regdate
+"t_regdate",e.t_filed "t_filed", e.t_id "t_id",d.u_id "u_id",e.t_permit "t_permit",d.m_rights "m_rights", e.t_logo "t_logo"
+ from team e JOIN member d
+ on (e.t_id = d.t_id) where d.u_id != #{u_id} and d.m_rights = 3 
+ <include refid="search"></include>
+  ORDER BY e.t_regdate DESC;
+ </select>
+  <!-- 참가자팀만 찾음 -->
+  <select id="Listguest" resultType="teams">
+ select e.t_name"t_name", e.t_areas "t_areas", e.t_regdate
+"t_regdate",e.t_filed "t_filed", e.t_id "t_id",d.u_id "u_id",e.t_permit "t_permit",d.m_rights "m_rights", e.t_logo "t_logo"
+ from team e JOIN member d
+ on (e.t_id = d.t_id) where d.u_id != #{u_id} and d.m_rights = 1 
+ <include refid="search"></include>
+  ORDER BY e.t_regdate DESC;
+ </select>
+ 
+ <sql id="search">
+ <if test="searchType !='All'">
+ 	and e.t_filed like CONCAT('%',#{searchType},'%')
+ </if>
+ </sql>
+ 
+ 
+ 
+ 
+ 
+ 
+ <!-- 가입된 팀을 찾는다. -->
+ <!-- teamList에서 팀아이디 찾고 중복되면 제한주기위한 쿼리 -->
+ <select id="teamlist" resultType="teams">
+ 	select t_id, m_rights, u_id  from member where u_id = #{u_id}
+ 	 ORDER BY m_regdate DESC;
+ </select>
+
+<!--가입된 모든 팀의 정보를 띄워준다 띄워준다
+TeamJoinTotall에서 이용한다
+<select id="TeamJoinTotall" resultType="teams">
+select b.t_id, b.t_name,b.t_permit,a.m_rights,a.m_regdate from member a join team b 
+on(a.t_id = b.t_id) where u_id = #{u_id}
+</select>
+ -->
+
+ <!-- team_userinsert -->
+ <insert id="addTeamUser">
+ insert into member(m_rights,u_id,t_id) values(#{m_rights},#{u_id},#{t_id})
+ </insert>
+ 
+ 
+ <!-- MyTeamList -->
+ <select id="myteamlist" resultType="teams">
+ select e.t_name "t_name", e.t_areas "t_areas",
+  e.t_regdate "t_regdate", d.t_id "t_id",e.t_permit "t_permit", d.m_rights "m_rights",e.t_logo "t_logo"
+ from team e JOIN member d
+ on (e.t_id = d.t_id) where 10>m_rights>0 and u_id = #{u_id}
+ </select>
+ 
+ <!-- leaderRights 리더의 권한 찾기 -->
+ <select id="leaderRights" resultType="Integer">
+ select m_rights,u_id from member where t_id = #{t_id} and m_rights IN(1,3)
+ </select>
+ 
+ <!-- permitlook -->
+ <select id="permitlook" resultType="teams">
+ select t_permit from team where t_id= #{t_id}
+ </select>
+ 
+ <!-- permitupdate -->
+ <update id="permitup">
+ update team set t_permit = #{t_permit} where t_id = #{t_id}
+ </update>
+ 
+
+ 
+ <!-- 탈퇴 -->
+ <update id="dropoutTeam">
+ update member set m_rights= 0, m_withdrawdate= now()
+		where u_id=#{u_id} and t_id = #{t_id}
+ </update>
+
+ <select id="JoinCount" resultType="teams">
+ 
+ select e.t_name "t_name", e.t_areas "t_areas", e.t_filed "t_filed",
+  e.t_regdate "t_regdate", d.t_id "t_id",e.t_permit "t_permit", d.m_rights "m_rights",e.t_logo "t_logo"
+ from team e JOIN member d
+ on (e.t_id = d.t_id) where 10>=d.m_rights>0 and u_id = #{u_id} or m_id is null
+ </select>
+ </mapper>

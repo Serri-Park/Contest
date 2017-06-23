@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="yjc.wdb.team.claimantMapper">
+ <!-- 신청자 보기 -->
+ <select id="claimant" resultType="claima">
+ select a.m_regdate "m_regdate",b.u_id "u_id" ,b.u_name "u_name", b.u_birthyear "u_birthyear", b.u_address "u_address"
+from member a JOIN user b
+on(a.u_id = b.u_id) where a.m_rights = 10 and a.t_id = #{t_id}
+ </select>
+ 
+ <!-- 가입수락 -->
+ 	<update id="rightsUp">
+		update member set m_rights=#{m_rights}
+		where u_id=#{u_id} and t_id = #{t_id}
+	</update>
+	
+	
+<!-- 가입거절 -->	
+	<delete id="rightsNo">
+	delete from member where u_id=#{u_id} and t_id = #{t_id}
+	</delete>
+	<!-- team_user -->
+	
+ <select id="user" resultType="claima">
+ select a.u_id "u_id", a.m_rights "m_rights",a.m_regdate "m_regdate" ,b.u_name "u_name" 
+from user b left join member a 
+on (a.u_id = b.u_id) where a.t_id = #{t_id}
+ </select>
+ 
+ <!--  -->
+  <!-- 참여공모전-->
+  <select id="guestContest" resultType="claima">
+	select c.c_id, c.c_name, c.c_category, c.c_startdate, c.c_enddate ,r.r_id,r_regdate
+	from contest c join receipt r join team t
+	on t.t_id = r.t_id and r.c_id = c.c_id and t.t_id = #{t_id}
+	order by r.r_regdate
+	limit 5;
+ </select>
+ 
+   <select id="gCList" resultType="claima">
+	select c.c_id, c.c_name, c.c_category, c.c_startdate, c.c_enddate ,r.r_id,r_regdate
+	from contest c join receipt r join team t
+	on t.t_id = r.t_id and r.c_id = c.c_id and t.t_id = #{t_id}
+	order by r.r_regdate
+ </select>
+ 
+ 
+ <!--  -->
+ <!-- 개최공모전 -->
+ <select id="hostContest" resultType="claima">
+	select   c_id, c_name, c_category, c_startdate, c_enddate, c_regdate
+	from contest
+	where t_id = #{t_id}
+	order by c_regdate desc
+	limit 5;
+ </select>
+ 
+ <select id="hCList" resultType="claima">
+	select   c_id, c_name, c_category, c_startdate, c_enddate
+	from contest
+	where t_id = #{t_id}
+	order by c_regdate desc
+ </select>
+ 
+ <select id="Myschedule" resultType="claima">
+	select s_id, s_title, s_content, s_end
+	from schedule 
+	where t_id = #{t_id} and s_going =1 and u_id =#{u_id}
+	order by s_end
+ </select>
+ <select id="JointotalList">
+ select t_id, m_rights, u_id  from member where u_id = #{u_id} and m_rights in(1,2,3,4,10)
+ 	 ORDER BY m_regdate DESC;
+ 
+ 
+ </select>
+ </mapper>
+

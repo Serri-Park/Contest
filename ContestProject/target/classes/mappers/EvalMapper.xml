@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
+<mapper namespace="yjc.wdb.EvalMapper">
+	<!-- 공모전 정보 불러오기 -->
+	<select id="read" resultType="Eval">
+		select *
+		from contest
+		where c_id=#{c_id}
+	</select>
+	<!-- 평가단계 등록 -->
+	<insert id="firstCreate">
+		insert into epage(ep_stage,ep_how,c_id,ep_state)
+		values(#{ep_stage},#{ep_how},#{c_id},1)
+	</insert>
+	<insert id="create">
+		insert into epage(ep_stage,ep_how,c_id)
+		values(#{ep_stage},#{ep_how},#{c_id})
+	</insert>
+	<insert id="passFail">
+		insert into elist(el_name,ep_id)
+		values(#{ep_how}, LAST_INSERT_ID())
+	</insert>
+	<!-- 팀으로 공모전 아이디 찾기 -->
+	<select id="manager" resultType="manager">
+		select c_id from
+		contest
+		where t_id = #{t_id}
+		order by c_id desc
+		limit 0,1
+	</select>
+	<!-- 해당 심사팀에 평가가 등록되었는가를 찾기 -->
+	<select id="config" resultType="manager">
+		select *
+		from epage
+		where c_id in(select c_id
+					from contest
+					where t_id=#{t_id})
+		and ep_state=1
+	</select>
+	<!-- 공모전 아이디로 작품읽기 -->
+	<select id="read_work" resultType="manager">
+		select a.w_id,a.w_name,a.w_content,f.f_name,r.t_id,a.w_result
+		from work a join receipt r on (r.c_id = #{c_id} and r.r_id = a.r_id)
+					join file f on (a.w_id = f.w_id)
+		where a.w_result =#{ep_stage}-1
+		limit #{startNum},#{endNum}
+
+	</select>
+	<!-- 작품 갯수 -->
+	<select id="cnt_work" resultType="int">
+	select count(r.c_id)
+	from work w, receipt r , (select c_id,t_id
+					from contest
+					where t_id =#{t_id}
+					order by c_id desc
+					limit 0,1) c
+	where r.c_id = c.c_id
+		and r.r_id = w.r_id
+		and w.w_result = #{ep_stage}-1
+	</select>
+	<!-- 맴버의 수 검색 -->
+	<select id="cnt_m" resultType="int">
+		select count(m_id)
+		from member m
+		where t_id = #{t_id};
+	</select>
+	<!-- 심사 내역 갯수 -->
+	<select id="cnt_eval" resultType="int">
+		select count(e_id)
+		from evaluation e join work w on(e.w_id = w.w_id and e.el_id = #{el_id}) 
+ 						join receipt r on (w.r_id = r.r_id)
+		where r.c_id = (select c_id from
+						contest
+						where t_id = #{t_id}
+						order by c_id desc
+						limit 0,1)
+			and w.w_result = #{ep_stage}-1
+	</select>
+	<!-- 자신의 심사 내역 갯수 -->
+	<select id="cnt_u_work" resultType="int">
+		select count(e_id)
+		from evaluation e join work w on(e.w_id = w.w_id and e.el_id = #{el_id}) 
+ 						join receipt r on (w.r_id = r.r_id)
+		where r.c_id = (select c_id from
+						contest
+						where t_id = #{t_id}
+						order by c_id desc
+						limit 0,1)
+				and e.u_id = #{u_id}
+				
+	</select>
+	<!-- 채점 -->
+	<insert id="grande">
+		insert into evaluation(u_id,e_score,w_id,el_id)
+		values(#{u_id},#{e_score},#{w_id},#{el_id})
+	</insert>
+	<!-- 평가단계,항목 읽기 -->
+	<select id="epEl" resultType="manager">
+		select *
+		from epage ep join elist el on (ep.ep_id = el.ep_id)
+		where ep.ep_state = 1
+		and ep.c_id = (select c_id from
+						contest
+						where t_id = #{t_id}
+						order by c_id desc
+						limit 0,1)
+	</select>
+	<!-- work_id로 해당 작품 정보 읽기 -->
+	<select id="get_work_id" resultType="manager">
+		select *
+		from work
+		where w_id = (select w_id
+					from evaluation
+					where w_id = #{w_id} and u_id = #{u_id})
+	</select>
+	<!-- 채점 취소 -->
+	<delete id="del_grande">
+		delete from evaluation where w_id=#{w_id} and u_id = #{u_id}
+	</delete>
+	<!-- 공모전아이뒤로 평가 단계읽기 -->
+	<select id="get_epage" resultType="manager">
+		select *
+		from epage
+		where c_id =
+		#{c_id}
+	</select>
+	<!-- 업데이트 -->
+	<update id="update_ep">
+		update ePage set
+		ep_stage=#{ep_stage},ep_how=#{ep_how}
+		where ep_id=#{ep_id}
+	</update>
+	<!-- 평가가완료된 작품찾기 -->
+	<select id="granded" resultType="manager">
+		select *
+		from evaluation
+		where w_id in (select w_id
+		from work
+		where r_id in (select r_id
+		from receipt
+		where c_id = #{c_id}))
+		and u_id = #{u_id}
+	</select>
+	<!-- 제출된 팀 검색 -->
+	<select id = "progress" resultType="manager">
+	select c.t_name, d.w_name, e.e_score
+		from receipt a join (select c_id
+							from contest
+							where t_id = #{t_id}
+							order by c_id desc
+							limit 0,1) b
+				join team c on (a.t_id = c.t_id)
+				join work d on (d.r_id = a.r_id)
+				left outer join evaluation e on(e.w_id = d.w_id and e.u_id =#{u_id} and e.el_id = #{el_id})
+		where a.c_id = b.c_id
+	</select>
+	<!-- 평가 유저의 평가진행상황 검색 -->
+	<select id="cnt_alleval" resultType="manager">
+		select a.u_id, count(a.u_id) allCnt
+		from evaluation a join work w on (a.w_id = w.w_id and a.el_id = #{el_id}) 
+						join receipt r on (r.r_id = w.r_id and r.c_id = (select c_id 
+																		from contest
+																		where t_id = #{t_id}
+																		order by c_id desc
+																		limit 0,1))																					
+		group by a.u_id
+	</select>
+	<!-- 상세평가 아이디 얻어오기 -->
+	<select id="ep_id" resultType="int">
+		select ep_id
+		from epage
+		where c_id = #{c_id} 
+		and ep_how like '%상세%'
+	</select>
+	<!-- 평가항목 삽입 -->
+	<insert id="elistCreate">
+		insert into elist(el_name,el_score,ep_id)
+		values(#{el_name},#{el_score},#{ep_id})
+	</insert>
+	<!-- 평가 단계수정  (다음단계 아이디 불러오기)-->
+	<select id="get_ep_id" resultType="manager">
+	select *
+	from epage
+	where c_id = (select c_id from
+						contest
+						where t_id = #{t_id}
+						order by c_id desc
+						limit 0,1)
+		and ep_stage in (select ep_stage+1
+							from epage
+							where ep_state = 1)
+	</select>
+	<!-- 현재 평가단계 찾기 -->
+	<select id="nowEp_id" resultType="manager">
+	select *
+	from epage
+	where c_id = (select c_id from
+						contest
+						where t_id = #{t_id}
+						order by c_id desc
+						limit 0,1)
+		and ep_stage in (select ep_stage
+							from epage
+							where ep_state = 1)
+	</select>
+	<!-- 평가 단계상태 수정 -->
+	<update id="stage_end">
+		update epage set ep_state = 2
+		where c_id = (select c_id from
+						contest
+						where t_id = #{t_id}
+						order by c_id desc
+						limit 0,1)
+		 and ep_state = 1
+	</update>
+	<update id="stage_pro">
+		update epage set ep_state = 1
+		where ep_id = #{ep_id}	
+	</update>
+	<select id="result_get" resultType="manager">
+		select a.w_id,count(a.e_id)>(#{m_count}/2) w_result
+		from evaluation a join work w on (a.w_id = w.w_id) 
+						join receipt r on (r.r_id = w.r_id and r.c_id = (select c_id 
+																		from contest
+																		where t_id = #{t_id}
+																		order by c_id desc
+																		limit 0,1)) 
+		where a.e_score = 100
+		group by a.w_id;
+	</select>
+	<update id="result_set">
+		update work set w_result = #{stage}
+		where w_id = #{w_id}
+	</update>
+	<!-- 결과값이들어간 작품출력 -->
+	<select id="get_work" resultType="manager">
+		select *
+		from work w join receipt r on (w.r_id = r.r_id)
+			join team t on(r.t_id = t.t_id)
+		where r.c_id = (select c_id from
+						contest
+						where t_id = #{t_id}
+						order by c_id desc
+						limit 0,1)
+	</select>
+</mapper>

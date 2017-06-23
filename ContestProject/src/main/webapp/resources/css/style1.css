@@ -1,0 +1,138 @@
+@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
+@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+
+body{
+position:relative;
+}
+
+
+
+
+.panel-group .panel+.panel {
+    margin-top: 5px;
+    height: 100%;
+}
+
+.headline{
+	font-family: 'Hanna', serif;
+	font-size: 30px;
+}
+.row.content {height:100%;}
+
+.icon {
+    margin-left: 87%;
+    margin-top: 1%;
+    font-size: 13px;
+    color: white;
+}
+#i1{
+font-size:1.5px;
+}
+
+.row.content{
+width:320px;
+float:left;
+}
+
+
+
+.ph1 {
+	font-family: 'Hanna', serif;
+	color: #8c8c8c;
+	
+}
+
+
+div.top.fix{
+            position: fixed;
+            top:0;
+}
+
+.yjc{
+font-size:25px;
+color:#2d5986;
+font-family: 'Hanna', serif;
+margin-top: 15%;
+}
+
+.yjc1{
+font-size:25px;
+font-color:#2d5986;
+font-family: "a";
+}
+
+.panel{
+background-color:#2d5986;
+font-color:white;
+border:0;
+}
+
+.btn{
+background-color:#2d5986;
+border: none;
+color: white;
+font-family: 'Hanna', serif;
+font-size:17px;
+}
+
+.btn1{
+background-color:#2d5986;
+border: none;
+color: white;
+font-family: 'Jeju Gothic', serif;
+font-size:13px;
+}
+
+
+.btn1:hover{
+ background-color: rgba( 255, 255, 255, 0.5 ) !important;
+ font-family: 'Jeju Gothic', serif;
+}
+
+.btn:hover{
+background-color:#2d5986;
+border: none;
+font-family: 'Hanna', serif;
+}
+
+
+#icon1{
+font-size:16px;
+}
+
+#icon2{
+font-size:16px;
+color:red;
+}
+
+@media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+    
+
+
+.well{
+width:350px;   
+height:150px;
+margin-top:140%;
+}
+
+#i2{
+margin-top:2%;   
+}
+
+
+hr.hr1{
+border-width: 3px;
+color: red;
+}
+
+#left{
+   float:left;
+}
+
+</style>

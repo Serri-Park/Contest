@@ -1,0 +1,11 @@
+eclipse.preferences.version=1
+encoding//src/main/java/yjc/wdb/second/BBSController.java=UTF-8
+encoding//src/main/java/yjc/wdb/second/BBSReplyController.java=UTF-8
+encoding//src/main/java/yjc/wdb/second/Criteria.java=UTF-8
+encoding//src/main/java/yjc/wdb/second/Criteria2.java=UTF-8
+encoding//src/main/java/yjc/wdb/second/EvaluationController.java=UTF-8
+encoding//src/main/java/yjc/wdb/second/bean/TeamVo.java=UTF-8
+encoding//src/main/java/yjc/wdb/second/dao/TeamDao.java=UTF-8
+encoding//src/main/java/yjc/wdb/second/dao/TeamImpl.java=UTF-8
+encoding//src/main/java/yjc/wdb/second/service/TeamService.java=UTF-8
+encoding//src/main/java/yjc/wdb/second/service/TeamServiceImpl.java=UTF-8

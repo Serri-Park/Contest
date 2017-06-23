@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="web.yjc.wdb.mappers.ScheMapper">
+
+	<insert id="insertschedule" parameterType="schedule">
+		insert into
+		schedule(s_title,s_content,s_category,s_start,s_end,s_going,s_color,u_id,t_id)
+		values(#{s_title},#{s_content},#{s_category},DATE_FORMAT(#{s_start},
+		'%Y-%m-%d'),DATE_FORMAT(#{s_end},'%Y-%m-%d'),1,#{s_color},#{u_id},#{t_id})
+	</insert>
+
+	<select id="getEvents" resultType="schedule" parameterType="int">
+	select  s_id,s_title,s_content,s_category,s_start,s_end,s_regdate,s_going,s_color,u_id,team.t_id
+	from schedule,team where team.t_id=schedule.t_id and team.t_id=#{tid}
+	
+	</select>
+
+
+	<select id="getScheInfo" resultType="schedule">
+
+		select * from schedule where
+		s_id=#{s_id}
+
+	</select>
+
+	<select id="getRecently" resultType="schedule">
+
+		select * from schedule where
+		u_id=#{u_id}
+
+	</select>
+
+
+	<select id="getSearchList" resultType="schedule">
+
+
+		select * from schedule
+		where u_id=#{m_id} and s_title like ('%'||
+		#{search}||'%')
+
+	</select>
+	<select id="getDday" resultType="int">
+		SELECT
+		DATEDIFF(s_end,s_start)AS 'DiffDate' from schedule where
+		s_id=#{s_id}
+
+
+	</select>
+	<delete id="deleteSche">
+
+		delete from schedule where s_id=#{s_id}
+
+	</delete>
+
+	<update id="updateSche">
+
+		update schedule set s_title=#{s_title},
+		s_content=#{s_content},s_start=#{s_start},s_end=#{s_end},
+		s_color=#{s_color},s_category=#{s_category},s_going=#{s_going}
+		where s_id=#{s_id}
+
+	</update>
+
+	<select id="delaydate" resultType="schedule"> 
+	<![CDATA[
+	select * FROM schedule 
+	where s_end < CURDATE()  and s_going=0 or s_going=50  ORDER BY s_end DESC
+	]]>
+	</select>
+<select id="finaldelay" resultType="schedule">
+<![CDATA[
+SELECT * FROM schedule  where scheend=date_add(now(), interval -1 day)
+         ]]>                                                                                                   
+</select>
+	<insert id="insertScheduleDrop">
+insert into
+		schedule(s_title,s_content,s_category,s_start,s_end,s_going,s_color,u_id)
+		values(#{s_title},#{s_content},#{s_category},DATE_FORMAT(#{s_start},
+		'%Y-%m-%d'),DATE_FORMAT(#{s_end},'%Y-%m-%d'),1,#{s_color},#{u_id})
+	</insert>
+
+</mapper>

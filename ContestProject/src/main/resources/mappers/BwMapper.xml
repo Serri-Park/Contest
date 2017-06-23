@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
+<mapper namespace="yjc.wdb.bwMapper">
+
+	<insert id="bwcreate">
+		insert into bw(bw_sub,bw_timer,bw_pagenum,t_id)
+		values(#{bw_sub},#{bw_timer},#{bw_pagenum},#{t_id})
+	</insert>
+	<insert id="bwpage">
+		insert into bwpage(bw_id) 
+		values(#{bw_id})		
+	</insert>
+	
+	<select id="pageread" resultType="Integer">
+		select Max(bwp_id) from bwpage where bw_id = #{bw_id}
+	</select>
+
+	<insert id="idea">
+		insert into bwidea(bwi_content,bwp_id,u_id)
+		values(#{bwi_content},#{bwp_id},#{u_id})
+	</insert>
+	
+	<select id="bwread" resultType="Integer">
+		select Max(bwi_id) from bwidea natural join bwpage where bwi_content = #{bwi_content} AND u_id = 1
+	</select>
+	
+	<update id="ideaModify">
+		update bwidea set bwi_content=#{bwi_content}
+		where bwi_id=#{bwi_id}
+	</update>
+	
+	<select id="listpageid" resultType="Integer">
+		select ifnull((select Max(bwp_id)
+							 from bwpage
+							 where bwp_id <![CDATA[<]]> #{bwp_id}
+							 AND bw_id = #{bw_id}),Max(bwp_id)) from bwpage where bw_id = #{bw_id}
+	</select>
+	
+	<select id="bwlistpage" resultType="IDEA">
+		<!-- select bwi_content from bwidea where bwp_id =
+	(select Max(bwp_id) from bwpage natural join bw
+	 where bw_id = (select Max(bw_id) from bw where t_id = 700) 
+	 AND bwp_id = #{bwp_id}) -->
+	 select bwi_content
+	 from bwidea
+	 where bwp_id= #{bwp_id}
+	</select>
+	
+	<select id="idealist" resultType="IDEA">
+select a.bwi_content,b.bwc_content,a.u_id
+from (select bwi_content,bwc_id,u_id from bwidea natural join bwpage where bw_id = #{bw_id}) a, bwcategory b
+where a.bwc_id = b.bwc_id
+	</select>
+	
+	<select id="count" resultType="Integer">
+		select bw_pagenum
+		from bw
+		where bw_id = #{bw_id}
+	</select>
+	
+	<select id="timer" resultType="String">
+		select bw_timer
+		from bw
+		where bw_id = #{bw_id}
+	</select>
+	
+		<select id="bwlist" resultType="BW">
+	select bw_id,bw_sub,bw_time
+	from bw
+	where t_id = #{t_id}
+	</select>
+	<insert id="categoryinsert">
+		insert into bwcategory(bwc_content)
+		values(#{bwc_content})
+	</insert>
+	<select id="categoryselect" resultType="String">
+		select bwc_content from bwcategory where bwc_content = #{bwc_content} order by bwc_id desc limit 1
+	</select>
+	
+	<update id="categoryupdate">
+		update bwidea set bwc_id = #{bwc_id}
+		where bwi_content=#{bwi_content}
+	</update>
+	<select id="categoryupdateselect" resultType="Integer">
+	select bwc_id from bwcategory where bwc_content = #{bwc_content}
+	</select>
+</mapper>

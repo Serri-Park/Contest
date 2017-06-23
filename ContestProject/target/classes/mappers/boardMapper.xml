@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
+<mapper namespace="yjc.wdb.bbsMapper">
+	<insert id="create">
+		insert into board(b_title,b_content,u_id,bg_id)
+		values(#{b_title},#{b_content},#{u_id},#{bg_id})
+	</insert>
+
+	<select id="read" resultType="yjc.wdb.second.bean.Board">
+		<!-- 풀네임 써야함 아니면 별칭을 등록해야함. Borad yjc.wdb.second.bean.Board라 해야함 -->
+		select *
+		from board
+		where b_id=#{bid}
+	</select>
+	<update id="update">
+		update board set bg_id=#{bg_id}, b_title=#{b_title}, b_content=#{b_content}, b_regdate = now()
+		where b_id=#{b_id}
+	</update>
+	<delete id="delete">
+		delete from board 
+		where b_id=#{bid}
+	</delete>
+	<select id="listAll" resultType="yjc.wdb.second.bean.Board">
+		select * 
+		from board 
+		order by b_id desc
+	</select>
+	<select id="listPage" resultType="Board">
+		select * 
+		from board
+		order by b_id desc
+		limit #{startRecord}, #{recordsPerPage}
+	</select>
+	<select id="totalCount" resultType="Integer">
+		select count(*) 
+		from board
+	</select>
+	
+	<select id="listSearch" resultType="Board">
+		select *
+		from board
+		<!--  
+		1. where title like '%test%';
+		2. where content like '%test%';
+		3. where title like '%test%' or content like '%test%'; 
+		-->
+		<include refid="search"></include>
+		order by b_id desc
+		limit #{startRecord}, #{recordsPerPage}
+	</select>
+	<sql id="search">
+		<if test="menuType == 0">
+			<if test="searchType != null">
+				<if test="searchType == 't'.toString()">
+					where b_title like CONCAT('%', #{keyword}, '%')
+				</if>
+				<if test="searchType == 'c'.toString()">
+					where b_content like CONCAT('%', #{keyword}, '%')
+				</if>
+				<if test="searchType == 'w'.toString()">
+					where u_id like CONCAT('%', #{keyword}, '%')
+				</if>
+				<if test="searchType == 'tc'.toString()">
+					where b_title like CONCAT('%', #{keyword}, '%')
+						or b_content like CONCAT('%', #{keyword}, '%')
+				</if>
+				<if test="searchType == 'cw'.toString()">
+					where b_content like CONCAT('%', #{keyword}, '%')
+						or u_id like CONCAT('%', #{keyword}, '%')
+				</if>
+				<if test="searchType == 'tcw'.toString()">
+					where b_title like CONCAT('%', #{keyword}, '%')
+						or b_content like CONCAT('%', #{keyword}, '%')
+						or u_id like CONCAT('%', #{keyword}, '%')
+				</if>
+			</if>
+		</if>
+		<if test="menuType != 0">
+			<if test="searchType != null">
+				<if test="searchType == 't'.toString()">
+					where bg_id = #{menuType} and b_title like CONCAT('%', #{keyword}, '%')
+				</if>
+				<if test="searchType == 'c'.toString()">
+					where bg_id = #{menuType} and b_content like CONCAT('%', #{keyword}, '%')
+				</if>
+				<if test="searchType == 'w'.toString()">
+					where bg_id = #{menuType} and u_id like CONCAT('%', #{keyword}, '%')
+				</if>
+				<if test="searchType == 'tc'.toString()">
+					where bg_id = #{menuType} and b_title like CONCAT('%', #{keyword}, '%')
+						or b_content like CONCAT('%', #{keyword}, '%')
+				</if>
+				<if test="searchType == 'cw'.toString()">
+					where bg_id = 30 and b_content like CONCAT('%', #{keyword}, '%')
+						or u_id like CONCAT('%', #{keyword}, '%')
+				</if>
+				<if test="searchType == 'tcw'.toString()">
+					where bg_id = #{menuType} and b_title like CONCAT('%', #{keyword}, '%')
+						or b_content like CONCAT('%', #{keyword}, '%')
+						or u_id like CONCAT('%', #{keyword}, '%')
+				</if>
+			</if>
+			
+			<if test="searchType == null || searchType == 'n'.toString()">
+					where bg_id = #{menuType}
+			</if>
+		</if>
+			
+	</sql>
+	<select id="searchTotalCount" resultType="int">
+		select count(*)
+		from board
+		<include refid="search"></include>
+	</select>
+	
+	<insert id="addAttach">
+		insert into file(f_name,b_id) 
+		values(#{f_name}, LAST_INSERT_ID())
+	</insert>
+	
+	<select id="getAttach" resultType="string">
+		select f_name from file where b_id = #{bid} order by f_regdate
+	</select>
+	
+	<select id="readGroup" resultType="string">
+		select bg_name
+		from bgroup
+		where bg_id=#{gid}
+	</select>
+	
+	<delete id="deleteAttach">
+		delete from file where b_id = #{bid}
+	</delete>
+	
+	<insert id="replaceAttach">
+		insert into file(f_name, b_id) value (#{f_name}, #{bid})
+	</insert>
+	
+	<update id="updateHit">
+		update board 
+		set b_hits = b_hits + 1
+		where b_id = #{bid}
+	</update>
+
+</mapper>

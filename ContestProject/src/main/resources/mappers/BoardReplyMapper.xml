@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
+<mapper namespace="yjc.wdb.ReplyMapper">
+	<select id="list" resultType="BoardReply">
+		select * 
+		from bcomment 
+		where b_id=#{bid}
+		order by bc_id desc
+	</select>
+	<select id="listPage" resultType="BoardReply">
+		select *
+		from bcomment
+		where b_id=#{bid}
+		order by bc_id desc
+		limit #{criteria.startRecord}, #{criteria.recordsPerPage}
+	</select>
+	<select id="replyCount" resultType="int">
+		select count(*)
+		from bcomment
+		where b_id=#{bid}
+	</select>
+	<insert id="create">
+		insert into bcomment(b_id, bc_content, u_id)
+		values(#{b_id}, #{bc_content}, #{u_id})
+	</insert>
+	<update id="update">
+		update bcomment set bc_content=#{bc_content}, bc_regdate = now()
+		where bc_id=#{bc_id}
+	</update>
+	<delete id="delete">
+		delete from bcomment where bc_id=#{cid}
+	</delete>
+	<delete id="deleteAll">
+		delete from bcomment where b_id=#{bid}
+	</delete>
+</mapper>

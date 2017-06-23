@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="web.yjc.wdb.mappers.placeMapper">
+
+	<insert id="insertPlace">
+		insert into
+		place(p_name,p_content,p_Kind,p_Address,p_cost,p_lat,p_lng,p_option,p_regdate,u_id,p_picture)
+		values(#{p_name},#{p_Content},#{p_Kind},#{P_address},#{p_cost},#{p_lat},#{p_lng},#{p_option},
+		now(),#{u_id},#{p_picture})
+	</insert>
+
+
+
+	<select id="listPlace" resultType="places">
+
+		select * from place order by
+		p_id desc limit #{startRecord}, #{recordsPerPage};
+      
+	</select>
+	
+	<select id="totalCount" resultType="Integer">
+		select count(*) 
+		from place
+	</select>
+	<select id="listInfo" resultType="places">
+
+		select * from place where
+		p_id=#{p_id}
+
+	</select>
+	<insert id="insertReservation" parameterType="Reservation" >
+		insert into
+		pReservation(pr_resdate,pr_starttime,pr_endtime,u_id,p_id)
+		values(#{pr_resdate},#{pr_Starttime},#{pr_endtime},#{u_id},#{p_id})
+	</insert>
+
+	<select id="listRservation" resultType="Reservation">
+
+		select
+		p_cost,p_name,pr_id,pr_status,pr_resdate,preservation.u_id,pr_starttime,pr_endtime
+		from preservation,place where place.p_id=preservation.p_id and
+		preservation.u_id=#{id}
+
+	</select>
+	<select id="reservationInfo" resultType="Reservation">
+
+		select
+		pr_id,u.u_id,pr_status,p.p_name,p.p_id from preservation
+		r,user
+		u,place p where r.pr_id=#{pr_id} and
+		u.u_id=r.u_id and
+		p.p_id=r.p_id
+	</select>
+
+
+	<insert id="insertpay">
+		insert into	
+		payment(pr_id,paykind,payStatus,pay_date)
+		values(#{pr_id},#{paykind},#{payStatus},now())
+	</insert>
+	<update id="updatepay">
+
+		upate payment set pay_status=#{pay_status}
+	</update>
+	<delete id="deletePlace">
+
+		delete from place where p_id=#{p_id}
+	</delete>
+	<delete id="deletereservation">
+		delete from reservation where
+		pr_id=#{pr_id}
+
+	</delete>
+	<select id="listPay" resultType="pay">
+
+		select pr.pr_id,paykind,pay_Status,pay_date,pr.u_id   from payment p,preservation pr where pr.pr_id=pr.pr_id
+	</select>
+
+	<update id="reservationUpdate">
+		update preservation set pr_status=1 where
+		pr_id=#{pr_id}
+	</update>
+	<insert id="create">
+		insert into review (u_id, p_id,rv_point,rv_replycontent)
+		values (#{id},(select p_id from place where
+		p_id=#{p_id}),#{point},#{replycontent})
+	</insert>
+
+	<select id="list" resultType="evaluation">
+		select *
+		from review
+		where
+		p_id=#{p_id}
+		order by u_id desc
+	</select>
+	
+	<select id="replyCount" resultType="int">
+		select count(*)
+		from
+		review
+		where p_id=#{p_id}
+	</select>
+
+	
+	<delete id="delete">
+		delete from evaluation where r_id=#{r_id}
+	</delete>
+	
+	
+	<select id="listSearch" resultType="places">
+		select *
+		from place
+		<!--  
+		1. where title like '%test%';
+		2. where content like '%test%';
+		3. where title like '%test%' or content like '%test%'; 
+		-->
+		<include refid="search"></include>
+		order by p_id desc
+		limit #{startRecord}, #{recordsPerPage}
+	</select>
+	<sql id="search">
+		
+		
+			<if test="searchType != null">
+				<if test="searchType == 't'.toString()">
+					where  = #{menuType} and title like CONCAT('%', #{keyword}, '%')
+				</if>
+				<if test="searchType == 'c'.toString()">
+					where  = #{menuType} and content like CONCAT('%', #{keyword}, '%')
+				</if>
+				<if test="searchType == 'w'.toString()">
+					where  = #{menuType} and writer like CONCAT('%', #{keyword}, '%')
+				</if>
+				<if test="searchType == 'tc'.toString()">
+					where  = #{menuType} and title like CONCAT('%', #{keyword}, '%')
+						or content like CONCAT('%', #{keyword}, '%')
+				</if>
+				<if test="searchType == 'cw'.toString()">
+					where  = 30 and content like CONCAT('%', #{keyword}, '%')
+						or writer like CONCAT('%', #{keyword}, '%')
+				</if>
+				<if test="searchType == 'tcw'.toString()">
+					where  = #{menuType} and title like CONCAT('%', #{keyword}, '%')
+						or content like CONCAT('%', #{keyword}, '%')
+						or writer like CONCAT('%', #{keyword}, '%')
+				</if>
+			</if>
+			
+			<if test="searchType == null || searchType == 'n'.toString()">
+					where p_kind = #{menuType}
+			</if>
+		
+			
+	</sql>
+	<select id="searchTotalCount" resultType="int">
+		select count(*)
+		from place
+		<include refid="search"></include>
+	</select>
+	
+</mapper>
+
+	
