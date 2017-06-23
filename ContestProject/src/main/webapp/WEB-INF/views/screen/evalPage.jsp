@@ -8,7 +8,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <title>평가지페이지</title>
-<jsp:include page="../Member/top.jsp" flush="false" />
+<jsp:include page="../screen/top.jsp" flush="false" />
 </head>
 <body>
 <div class="container">

@@ -53,9 +53,12 @@
 		
 		<div id="ControllBtn">
 			<c:if test="${Conlist == 1}">
-				<button id="createTeam" class="btn btn-default">팀 생성</button>
+				<button class="createTeam" class="btn btn-default">팀 생성</button>
 			</c:if>
-			<select name="searchType" class="changeType">		
+			<c:if test="${Conlist == 3}">
+				<button class="createTeam" class="btn btn-default">팀 생성</button>
+			</c:if>
+			 <select name="searchType" class="changeType">		
 				<option value="논문/리포트">논문/리포트</option>
 				<option value="기획/아이디어">기획/아이디어</option>
 				<option value="네이밍/슬로건">네이밍/슬로건</option>
@@ -82,7 +85,7 @@
 		
 		
 		<div class="table-users">
-			<div class="header">Team List</div>
+			<div class="a">Team List</div>
 			<c:if test="${listnum == 0 }">
 				현재 팀이 없습니다.
 			</c:if>
@@ -116,7 +119,7 @@
 								<td><a href="teamRoom?t_id=${TeamVo.t_id}">${TeamVo.t_name}</a></td>
 								<td>${TeamVo.u_id}</td>
 								<td>${TeamVo.t_areas}</td>
-								<td>${TeamVo.t_filed}</td>
+								<td class="filedFilter">${TeamVo.t_filed}</td>
 								<td><fmt:formatDate pattern="yyyy-MM-dd" value="${TeamVo.t_regdate}"/></td>
 								
 									<c:if test="${Conlist == 0}">
@@ -127,18 +130,13 @@
 										<c:if test="${TeamVo.m_rights == 2 || TeamVo.m_rights == 4}">
 											<td><button class="out btn btn-default">탈퇴</button></td>
 										</c:if>
-										
-										<c:if test="${TeamVo.m_rights == 1 || TeamVo.m_rights == 3}">
-											<td><button class="end btn btn-default">활동종료</button></td>
-										</c:if>
-										
 										<c:if test="${TeamVo.m_rights == 1 || TeamVo.m_rights == 3}">
 											<td>
 												<c:if test="${TeamVo.t_permit == 2}">
-												<button class="start btn btn-default">모집시작</button>
+													<button class="start btn btn-default">모집시작</button>
 												</c:if>
 												<c:if test="${TeamVo.t_permit == 1}">
-												<button class="completion btn btn-default">모집완료</button>
+													<button class="completion btn btn-default">모집완료</button>
 												</c:if>
 											</td>
 										</c:if>
@@ -176,11 +174,6 @@ $(".cancell").on("click", function(){
 	    return;
 	}
 });
-
-
-
-
-
 
 
 //탈퇴
@@ -277,11 +270,17 @@ $(".start").on("click", function(){
 	}
 });
 
-$("#createTeam").on("click", function(){
-	
-	var Conlist = 0;
+var Conlist = "";
+Conlist = ${Conlist};
+$(".createTeam").on("click", function(){
+	if(Conlist ==1){
 	window.location.href="registTeam?Conlist=1";
+	}else if(Conlist == 3){
+		window.location.href="registTeam?Conlist=3";	
+	}
 });
+
+
 /* 
 나중에 분야로 검색할때 이용
 //분야
@@ -293,7 +292,7 @@ $(".changeType").change(function(){
     	search += $( this ).text() + " ";
     });
    
-})
+});
 
 
 

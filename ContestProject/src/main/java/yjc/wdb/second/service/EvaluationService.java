@@ -31,7 +31,7 @@ public interface EvaluationService {
 	public void result_set(Manager m) throws Exception;
 	public List<Manager> get_work(int t_id) throws Exception;
 	public Manager nowEp_id(int t_id) throws Exception;
-	public Manager epEl(int t_id) throws Exception;
+	public List<Manager> epEl(int t_id) throws Exception;
 	public int ep_id(int c_id) throws Exception;
 	public void elistCreate(Manager m) throws Exception;
 }
