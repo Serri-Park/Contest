@@ -43,8 +43,9 @@
  select e.t_name"t_name", e.t_areas "t_areas", e.t_regdate
 "t_regdate",e.t_filed "t_filed", e.t_id "t_id",d.u_id "u_id",e.t_permit "t_permit",d.m_rights "m_rights", e.t_logo "t_logo"
  from team e JOIN member d
- on (e.t_id = d.t_id) where d.u_id != #{u_id} and d.m_rights = 3 
- <include refid="search"></include>
+ on (e.t_id = d.t_id) where d.m_rights = 3 
+ <!--d.u_id != #{u_id} and   -->
+ <include refid="search"></include>   
   ORDER BY e.t_regdate DESC;
  </select>
   <!-- 참가자팀만 찾음 -->
@@ -52,7 +53,7 @@
  select e.t_name"t_name", e.t_areas "t_areas", e.t_regdate
 "t_regdate",e.t_filed "t_filed", e.t_id "t_id",d.u_id "u_id",e.t_permit "t_permit",d.m_rights "m_rights", e.t_logo "t_logo"
  from team e JOIN member d
- on (e.t_id = d.t_id) where d.u_id != #{u_id} and d.m_rights = 1 
+ on (e.t_id = d.t_id) where d.m_rights = 1 
  <include refid="search"></include>
   ORDER BY e.t_regdate DESC;
  </select>

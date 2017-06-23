@@ -104,7 +104,6 @@ public class teamController {
 	@RequestMapping("displayTeamFile")
 	public ResponseEntity<byte[]> displayTeamFile(String fileName) throws Exception{
 		ResponseEntity<byte[]> entity = null;
-		
 		String ext = fileName.substring(fileName.lastIndexOf(".")+1);
 		
 		MediaType mediaType = MediaUtils.getMediaType(ext);
@@ -166,7 +165,7 @@ public class teamController {
 		
 		Manager manage = eservice.config(t_id);
 	      if(manage!=null){
-	      System.out.println("�򰡹��:"+manage.getEp_how());
+	      System.out.println("�򰡹��:"+manage.getEp_how());
 	      model.addAttribute("manage",manage);
 	      }
 		model.addAttribute("ConlCount",ConlCount);
@@ -179,7 +178,7 @@ public class teamController {
 		 return"Team/teamRoom";
 	}
 	
-	//嶺뚮?���?��?��?���?? �뜝�룞�삕 �솻洹ｋ?���굢�귦?��?�뜝�룞�삕�뜝?���??
+	//嶺뚮?���?��?��?���?? �뜝�룞�삕 �솻洹ｋ?���굢�귦?��?�뜝�룞�삕�뜝?���??
 	@RequestMapping(value = "AllTeamList", method = {RequestMethod.GET, RequestMethod.POST})
 	public String Teamlist(@RequestParam(value="Conlist",defaultValue="1")int Conlist,
 			@RequestParam(value="permit",defaultValue="1")int permit,
@@ -235,7 +234,7 @@ public class teamController {
 		
 	}
 	
-	//�뜝�럥?��뽩뜝�럥?��?�뜝�럥彛� �뜝�룞�삕 �솻洹ｋ?���굢�귦?��?�뜝�룞�삕�뜝?���??
+	//�뜝�럥?��뽩뜝�럥?��?�뜝�럥彛� �뜝�룞�삕 �솻洹ｋ?���굢�귦?��?�뜝�룞�삕�뜝?���??
 		@RequestMapping(value = "myTeams", method = RequestMethod.GET)
 		public String MyTeamlist(TeamVo vo,Model model, HttpSession session) throws Exception{
 			String u_id = (String)session.getAttribute("u_id");
@@ -259,7 +258,7 @@ public class teamController {
 		return str;
 	}
 	
-	//�뤆�룊�삕�뜝�럩?����?���럥六욜�?�?륁삕
+	//�뤆�룊�삕�뜝�럩?����?���럥六욜�?�?륁삕
 	@RequestMapping(value="joinTeam", method = RequestMethod.POST)
 	@ResponseBody
 	public String joinTeam(TeamVo vo, HttpServletRequest req ,HttpSession session){
@@ -281,7 +280,7 @@ public class teamController {
 		return entity;
 	}
 	
-	//�뜝�럥六욜�?�?륁삕�뜝�럩�겱 claimant
+	//�뜝�럥六욜�?�?륁삕�뜝�럩�겱 claimant
 	@RequestMapping(value = "claimant", method = RequestMethod.GET)
 	public String claimants(@RequestParam(value="t_id",defaultValue="-1")int t_id,ClaimantVo vo,Model model, HttpSession session) throws Exception{
 		
@@ -297,7 +296,7 @@ public class teamController {
 	return"Team/claimant";
 	}
 	
-	//�뤆�룊�삕�뜝�럩?����?���럥�빢�뜝�럩?��
+	//�뤆�룊�삕�뜝�럩?����?���럥�빢�뜝�럩?��
 	@RequestMapping(value="userOk", method = RequestMethod.POST)
 	@ResponseBody
 	public String userOk(ClaimantVo vo, HttpServletRequest req ,HttpSession session) throws Exception{
@@ -324,7 +323,7 @@ public class teamController {
 	}
 	
 	
-	//�뤆�룊�삕�뜝�럩?���濾곌쑨��?�뜝�룞�삕
+	//�뤆�룊�삕�뜝�럩?���濾곌쑨��?�뜝�룞�삕
 		@RequestMapping(value="userNo", method = RequestMethod.POST)
 		@ResponseBody
 		public String userNo(ClaimantVo vo, HttpServletRequest req ,HttpSession session){
@@ -361,7 +360,7 @@ public class teamController {
 
 			return entity;
 		}
-		//�뜝�룞�삕�뜝�럡留�?�뜝�럡?���?
+		//�뜝�룞�삕�뜝�럡留�?�뜝�럡?���?
 				@RequestMapping(value="Recruitcont", method = RequestMethod.POST)
 				@ResponseBody
 				public String Recruitcont(TeamVo vo, HttpServletRequest req ,HttpSession session){
