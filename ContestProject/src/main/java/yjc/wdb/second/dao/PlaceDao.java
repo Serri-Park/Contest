@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.apache.ibatis.ognl.Evaluation;
 
-import yjc.wdb.second.Criteria2;
 import yjc.wdb.second.bean.Board;
 import yjc.wdb.second.bean.Criteria;
+import yjc.wdb.second.bean.Criteria2;
 import yjc.wdb.second.bean.PlaceVo;
 import yjc.wdb.second.bean.Reservation;
 import yjc.wdb.second.bean.evaluationVo;

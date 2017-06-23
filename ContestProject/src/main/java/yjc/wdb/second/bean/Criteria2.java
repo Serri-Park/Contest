@@ -1,9 +1,9 @@
-package yjc.wdb.second;
+package yjc.wdb.second.bean;
 
-public class Criteria {
+public class Criteria2 {
 
    private int page = 1;
-   private int recordsPerPage = 10;
+   private int recordsPerPage = 20;
    private String searchType;
    private String keyword;
 	

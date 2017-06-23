@@ -10,9 +10,9 @@ import org.apache.ibatis.ognl.Evaluation;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import yjc.wdb.second.Criteria2;
 import yjc.wdb.second.bean.Board;
 import yjc.wdb.second.bean.Criteria;
+import yjc.wdb.second.bean.Criteria2;
 import yjc.wdb.second.bean.PlaceVo;
 import yjc.wdb.second.bean.Reservation;
 import yjc.wdb.second.bean.evaluationVo;

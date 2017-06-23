@@ -25,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import yjc.wdb.second.bean.Criteria;
+import yjc.wdb.second.bean.Criteria2;
 import yjc.wdb.second.bean.PlaceVo;
 
 import yjc.wdb.second.bean.Reservation;

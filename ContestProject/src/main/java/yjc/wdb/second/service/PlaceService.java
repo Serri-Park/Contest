@@ -2,9 +2,9 @@ package yjc.wdb.second.service;
 
 import java.util.List;
 
-import yjc.wdb.second.Criteria2;
 import yjc.wdb.second.bean.Board;
 import yjc.wdb.second.bean.Criteria;
+import yjc.wdb.second.bean.Criteria2;
 import yjc.wdb.second.bean.PlaceVo;
 import yjc.wdb.second.bean.Reservation;
 import yjc.wdb.second.bean.evaluationVo;

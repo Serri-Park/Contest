@@ -22,40 +22,32 @@
 	height: 700px;
 	margin:auto;
 	border: 1px solid #ffffff;
-	
 }
+/* #formid{
+	display: none;
+} */
 
-#formid{
+#t_id{
 display: none;
 }
 
 #atigs{
-	
+
 	height: 37px;
-    margin-left: 6%;
-   
+    margin: 10px
 }
 
 #imgsite{
-    width: 80%;
-    height: 300px;
-    border: 1px solid #ffffff;
-    margin-top: 30px;
-    margin-left: 27px;
-     box-shadow:10px 10px 10px #8C8C8C;
-     border-top-right-radius: 2em;
-    border-top-left-radius: 2em;
-  	border-bottom-left-radius: 2em;
-  	border-bottom-right-radius: 2em;
+	width: 80%;
+	height: 300px;
+	border: 1px solid #ffffff;
+    margin: 10px;
+    padding: 17px;
 }
 
 img{
-	width: 100%;
-	height: 100%;
-	border-top-right-radius: 2em;
-    border-top-left-radius: 2em;
-  	border-bottom-left-radius: 2em;
-  	border-bottom-right-radius: 2em;
+	width: 98%;
+	height: 98%;
 }
 
 
@@ -67,7 +59,7 @@ img{
 
 #sectionrigth{
 	width: 45%;
-  	 margin-top: 30px;
+    margin-top: 55px;
     margin-left: 48%;
 }
 
@@ -77,49 +69,26 @@ img{
 	border: 1px solid #2d2d2d;
     margin: 10px;
     padding: 17px;
-     box-shadow:10px 10px 10px #8C8C8C;
-     background-color: #F8FFFF;
-     border-top-right-radius: 2em;
-     border-top-left-radius: 2em;
-  	border-bottom-left-radius: 2em;
-  	border-bottom-right-radius: 2em;
-     
 }
 
 #partici{
-	width: 80%;
+	width: 40%;
 	height: 280px;
 	border: 1px solid #2d2d2d;
-    margin-top: 7px;
-    margin-left:30px;
+    margin: 10px;
     padding: 17px;
-    box-shadow:10px 10px 10px #8C8C8C;
-     background-color: #F8FFFF;
-     border-top-right-radius: 2em;
-     border-top-left-radius: 2em;
-  	border-bottom-left-radius: 2em;
-  	border-bottom-right-radius: 2em;
 
 }
 
 #contentser{
-	width: 80%;
-	height: 285px;
+	width: 40%;
+	height: 300px;
 	border: 1px solid #2d2d2d;
     margin: 10px;
     padding: 17px;
- 	box-shadow:10px 10px 10px #8C8C8C;
- 	 background-color: #F8FFFF;
- 	 border-top-right-radius: 2em;
-     border-top-left-radius: 2em;
-  	border-bottom-left-radius: 2em;
-  	border-bottom-right-radius: 2em;
+
 }
 
-.btn{
-	margin-left: 10px;
-	width:150px;
-}
 
 </style>
 
@@ -131,10 +100,21 @@ img{
 <body>
 <form id="formid">
 		<input type="hidden" class="t_id" name="t_id" value="${t_id}">
-</form>
 
+	</form>
 <section id="allbody">
-	<div id="atigs">
+
+	<section id="sectionLeft">
+	
+		<div id="atigs">
+			<c:if test="${Rights.m_rights == 10}">
+				<button class="cancell btn btn-default">지원취소</button>
+			</c:if>
+			
+			<c:if test="${Rights.m_rights == null}">
+				<button class="app btn btn-default">가입신청</button>
+			</c:if>
+			
 			
 			<c:if test="${teamDate.t_permit == 0}">
 				<c:if test="${Rights.m_rights == 1 || Rights.m_rights == 3 }">
@@ -142,17 +122,9 @@ img{
 					<button id="inactive" class="btn btn-default" onclick="activation()">활성화</button><br>
 				</c:if>
 			</c:if>
+		
 			<c:if test="${teamDate.t_permit != 0}">
-				<c:if test="${Rights.m_rights == 10}">
-					<button class="cancell btn btn-default">지원취소</button>
-				</c:if>
-			
-				<c:if test="${Rights.m_rights == null}">
-					<button class="app btn btn-default">가입신청</button>
-				</c:if>
-			
-				<button id="inactive" class="btn btn-warning" onclick="inactive()">활동중지</button>
-				
+		
 				<c:if test="${Rights.m_rights == 1 || Rights.m_rights == 3 }">
 			
 						<c:if test="${Rights.m_rights == 1}">
@@ -161,150 +133,150 @@ img{
 							
 						<c:if test="${Rights.m_rights == 3}">
 							<button id="claimant" class="btn btn-warning">심사위원지원자보기</button>
-							<a href="contestForm?t_id=${t_id }" ><button class="btn btn-default">공모전</button></a>
+							<a href="contestForm?t_id=${t_id }"><button>공모전</button></a>
 						</c:if>
-						
+					<button id="inactive" class="btn btn-warning" onclick="inactive()">활동중지</button>
+				</c:if>
+<<<<<<< HEAD
+			
+			</c:if>
+			
+=======
+									
 						<a href="ScheMain?tid=${sessionScope.team_id }">
 						<button id="conference" class="btn btn-danger">캘린더</button></a>
 				</c:if>	
-				
-			</c:if>
-			
+>>>>>>> 617d1c0f420c1cb12792eb4b157057a9b00a6b91
 			<c:if test="${Rights.m_rights == 2 || Rights.m_rights == 4}">
 				<button id="inactive" class="btn btn-danger" onclick="dropout()">탈퇴</button>
-				<a href="ScheMain?tid=${sessionScope.team_id }">
-						<button id="conference" class="btn btn-danger">캘린더</button></a>
 			</c:if>
 			
-		
+			<c:if test="${teamDate.t_permit == 0}">
+			<span>팀이 활동하지 않습니다.</span>
+			<button id="inactive" class="btn btn-default" onclick="activation()">활성화</button>
+			<br>
+		</c:if>
   
-			<c:if test="${teamDate.t_permit == 2}">
-			
-				<c:if test="${Rights.m_rights == 1 || Rights.m_rights == 2}">
-	
-					<a href="bwlist?t_id=${t_id}&u_id=${sessionScope.u_id }" class="btn btn-default" id="navproject" style="text-decoration:none;">My Project</a>
-	
-				</c:if>
-				
-				<c:if test="${Rights.m_rights == 3}">
-					<c:if test="${manage.ep_how==null}">
-						<button class="btn btn-default" id="evalPage">평가단계설정</button>
-					</c:if>
-					
-					<c:if test="${manage.ep_how!=null}">
-						<button class="btn btn-default" id="ePageModify">평가단계수정</button>
-						<button class="btn btn-default" id="evallist">평가지작성</button>
-					</c:if>
-					
-					<c:if test="${Rights.m_rights == 3 || Rights.m_rights == 4}">
-						<button class="btn btn-default" id="manager">평가매니저</button>
-					</c:if>
-				</c:if>
-				
+		<c:if test="${teamDate.t_permit == 2}">
+		
+			<c:if test="${Rights.m_rights == 1 || Rights.m_rights == 2}">
+				<a href="ScheMain?tid=${sessionScope.team_id }"><button
+						id="conference" class="btn btn-danger">캘린더</button></a>
+				<a href="bwlist?t_id=${t_id}&u_id=${sessionScope.u_id }" class="btn btn-default" id="navproject" style="text-decoration:none;">My Project</a>
+
 			</c:if>
+			
+			<c:if test="${Rights.m_rights == 3}">
+				<c:if test="${manage.ep_how==null}">
+					<button class="btn btn-default" id="evalPage">평가단계설정</button>
+				</c:if>
+				
+				<c:if test="${manage.ep_how!=null}">
+					<button class="btn btn-default" id="ePageModify">평가단계수정</button>
+					<button class="btn btn-default" id="evallist">평가지작성</button>
+				</c:if>
+				
+				<c:if test="${Rights.m_rights == 3 || Rights.m_rights == 4}">
+					<button class="btn btn-default" id="manager">평가매니저</button>
+				</c:if>
+			</c:if>
+		
+		</c:if>
 		</div>
-	<section id="sectionLeft">
+
 	
-		
-		
-	<!-- 이미지 -->
-	<article id="imgsite">
-		<img src = "displayTeamFile?fileName=${teamDate.t_logo}"/> 
-	</article>
-	
-	<article id="partici">
-			<div><h3>팀명: ${teamDate.t_name}</h3></div>
-				<div>
-					<div><h4>팀 소개</h4></div>
-				<div>${teamDate.t_content}</div>
-			</div>
-	</article>
+	<!-- <form id="formid"> -->
+	<input type="hidden" class="t_id" name="t_id" value="${t_id}">
+	<!-- </form> -->
 	
 	
+	<div id="imgsite">
+	<img src = "displayTeamFile?fileName=${teamDate.t_logo}"/> 
+	</div>
+	
+	<div id="table-users">
+	   <div><h4>팀원리스트</h4></div>
+	<table class="table table-hover">
+		<tr>
+			<th>회원ID</th>
+			<th>이름</th>
+			<th>등급</th>
+			<th>가입일</th>	
+		</tr>
+		<c:forEach items="${list}" var="ClaimantVo">
+		<c:if test="${ClaimantVo.m_rights < 10 && ClaimantVo.m_rights > 0}">
+		<tr>
+			<td>${ClaimantVo.u_id}</td>
+			<td>${ClaimantVo.u_name}</td>
+			<c:if test="${ClaimantVo.m_rights == 1 || ClaimantVo.m_rights == 3}">
+			<td>팀장</td>
+			</c:if>
+			<c:if test="${ClaimantVo.m_rights == 2 || ClaimantVo.m_rights == 4}">
+			<td>회원</td>
+			</c:if>
+			<td><fmt:formatDate pattern="yyyy-MM-dd" value="${ClaimantVo.m_regdate}"/></td>
+		</tr>
+		</c:if>
+		</c:forEach>
+	</table>
+	</div>
 	
 	</section>
 	
 	<section id= "sectionrigth">
+	<article id="partici">
+	<div><h3>팀명: ${teamDate.t_name}</h3></div>
+	<div>
+	<div><h4>팀 소개</h4></div>
+	<div>${teamDate.t_content}</div>
+	</div>
+	</article>
 		
-		<article id="table-users">
-	   		<div><h4>팀원리스트</h4></div>
-			
-			<table class="table table-hover">
-				<tr>
-					<th>회원ID</th>
-					<th>이름</th>
-					<th>등급</th>
-					<th>가입일</th>	
-				</tr>
-				<c:forEach items="${list}" var="ClaimantVo">
-					<c:if test="${ClaimantVo.m_rights < 10 && ClaimantVo.m_rights > 0}">
-						<tr>
-							<td>${ClaimantVo.u_id}</td>
-							<td>${ClaimantVo.u_name}</td>
-							<c:if test="${ClaimantVo.m_rights == 1 || ClaimantVo.m_rights == 3}">
-							<td>팀장</td>
-							</c:if>
-							<c:if test="${ClaimantVo.m_rights == 2 || ClaimantVo.m_rights == 4}">
-							<td>회원</td>
-							</c:if>
-							<td><fmt:formatDate pattern="yyyy-MM-dd" value="${ClaimantVo.m_regdate}"/></td>
-						</tr>
-					</c:if>
-				</c:forEach>
-			 </table>
-		</article>
 	
 	<!-- 공모전정보 -->
-		<article id="contentser">
-		
+	<article id="contentser">
+	
+	<c:if test="${leader == 1}">
+	<div><h4>참여한 공모전</h4></div>
+	</c:if>
+	<c:if test="${leader == 3}">
+	<div><h4>개최한 공모전</h4></div>
+	</c:if>
+	<table class="table table-hover">
+	<c:if test="${ConlCount == 0}">
+	기록이 없습니다.
+	</c:if>
+	<c:if test="${ConlCount > 0}">
+		<tr>
+			<th>제목</th>
+			<th>분야</th>
+			<th>시작일</th>
+			<th>종료일</th>
 			<c:if test="${leader == 1}">
-				<div><h4>참여한 공모전</h4></div>
+			<th>접수일</th>	
 			</c:if>
-			
 			<c:if test="${leader == 3}">
-				<div><h4>개최한 공모전</h4></div>
+			<th>등록일</th>	
 			</c:if>
 			
-			<table class="table table-hover">
-				<c:if test="${ConlCount == 0}">
-					기록이 없습니다.
+		</tr>
+		<c:forEach items="${Colist}" var="Colist">
+			<tr>
+				<td>${Colist.c_name}</td>
+				<td>${Colist.c_category}</td>
+				<td><fmt:formatDate pattern="yyyy-MM-dd" value="${Colist.c_startdate}"/></td>
+				<td><fmt:formatDate pattern="yyyy-MM-dd" value="${Colist.c_enddate}"/></td>
+				<c:if test="${leader == 1}">
+					<td><fmt:formatDate pattern="yyyy-MM-dd" value="${Colist.r_regdate}"/></td>
 				</c:if>
-				<c:if test="${ConlCount > 0}">
-					<tr>
-						<th>제목</th>
-						<th>분야</th>
-						<th>시작일</th>
-						<th>종료일</th>
-						
-						<c:if test="${leader == 1}">
-							<th>접수일</th>	
-						</c:if>
-						
-						<c:if test="${leader == 3}">
-							<th>등록일</th>	
-						</c:if>
-						
-					</tr>
-					
-					<c:forEach items="${Colist}" var="Colist">
-						<tr>
-							<td>${Colist.c_name}</td>
-							<td>${Colist.c_category}</td>
-							<td><fmt:formatDate pattern="yyyy-MM-dd" value="${Colist.c_startdate}"/></td>
-							<td><fmt:formatDate pattern="yyyy-MM-dd" value="${Colist.c_enddate}"/></td>
-							
-							<c:if test="${leader == 1}">
-								<td><fmt:formatDate pattern="yyyy-MM-dd" value="${Colist.r_regdate}"/></td>
-							</c:if>
-							
-							<c:if test="${leader == 3}">
-								<td><fmt:formatDate pattern="yyyy-MM-dd" value="${Colist.c_regdate}"/></td>
-							</c:if>
-						</tr>
-					</c:forEach>
+				<c:if test="${leader == 3}">
+					<td><fmt:formatDate pattern="yyyy-MM-dd" value="${Colist.c_regdate}"/></td>
 				</c:if>
-			</table>
-		</article>
+			</tr>
+		</c:forEach>
+	</c:if>
+	</table>
+	</article>
 	
 	</section>
 
@@ -313,110 +285,37 @@ img{
 
 
 
+<script>
 
-
-	<script>
-		var formid = $("#formid");
-		
-		function dropout() {
-			event.preventDefault()
-			var t_id = $(".t_id").val();
-			alert(t_id);
-			if (confirm("정말 탈퇴하시겠습니까??") == true) { //확인
-				$.ajax({
-					type : 'post',
-					url : 'dropoutTeam',
-					data : {
-						t_id : t_id
-					},
-					success : function(result) {
-						console.log("result: " + result);
-						if (result == 'SUCCESS') {
-							alert("탈퇴완료.");
-
-							window.location.href = "AllTeamList?Conlist=0&permitt=1";
-						}
-					}
-				});
-			} else { //취소
-				return;
-			}
-		}
-
-		function inactive() {
-			event.preventDefault()
-			var t_id = $(".t_id").val();
-			var recruit = 0;
-			if (confirm("팀을 비활성하시겠습니까??") == true) { //확인
-				$.ajax({
-					type : 'post',
-					url : 'Recruitcont',
-					data : {
-						t_id : t_id,
-						permit : recruit
-					},
-					success : function(result) {
-						console.log("result: " + result);
-						if (result == 'SUCCESS') {
-							alert("비활성화.");
-							 location.reload();
-						}
-					}
-				});
-			} else { //취소
-				return;
-			}
-		}
-
-		function activation() {
-			event.preventDefault()
-			var t_id = $(".t_id").val();
-			var recruit = 1;
-			if (confirm("팀을 활성화합니다.") == true) { //확인
-				$.ajax({
-					type : 'post',
-					url : 'Recruitcont',
-					data : {
-						t_id : t_id,
-						permit : recruit
-					},
-					success : function(result) {
-						console.log("result: " + result);
-						if (result == 'SUCCESS') {
-							alert("활성화.");
-							location.reload();
-						}
-					}
-				});
-			} else { //취소
-				return;
-			}
-		}
-		$("#manager").on("click", function() {
-			var str = "<input type='hidden' name='r_id' value='0'>";
-			 str += "<input type='hidden' name='ep_id' value='${manage.ep_id}'>"; 
-			$("form").append(str);
-			$("form").attr("action", "screen/manager");
-			$("form").attr("method", "get");
-			$("form").submit();
-		});
-		$("#ePageModify").on("click", function() {
-			$("form").attr("action", "screen/ePageModify");
-			$("form").attr("method", "get");
-			$("form").submit();
-		});
-		$("#evalPage").on("click", function() {
-			$("form").attr("action", "screen/evalPage");
-			$("form").attr("method", "get");
-			$("form").submit();
-		});
 $("#claimant").on("click",function(){
 
 		 var t_id = $(".t_id").val();
-			window.open("claimant?t_id="+t_id,"가입신청자","width=630,height=630 scrollbars=yes,")
+			window.open("claimant?t_id="+t_id,"가입신청자","width=600,height=600 scrollbars=yes,")
 	});
 	
 
+function dropout(){
+	event.preventDefault()
+	var t_id = $(".t_id").val();
+	alert(t_id);
+	if (confirm("정말 탈퇴하시겠습니까??") == true){    //확인
+		 $.ajax({
+				type:'post',
+				url:'dropoutTeam',
+				data: {t_id:t_id},
+				success : function(result){
+					console.log("result: "+result);
+					if(result == 'SUCCESS'){
+						alert("탈퇴완료.");
+						
+						window.location.href="myTeams";
+					}
+				}
+			});
+	}else{   //취소
+	    return;
+	}
+}
 
 
 //가입신청취소
@@ -446,7 +345,7 @@ $(".app").on("click", function(){
    //신청서가 들어가는 팀
  
    var t_id = $(".t_id").val();
-   if (confirm("정말 취소하시겠습니까??") == true){  
+   if (confirm("정말 가입하시겠습니까??") == true){  
 	    $.ajax({
 	      type:'post',
 	      url:'joinTeam',
@@ -466,6 +365,106 @@ $(".app").on("click", function(){
 	}
 });
 </script>
-	
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> 617d1c0f420c1cb12792eb4b157057a9b00a6b91
+	<script>
+		var formid = $("#formid");
+		
+		function dropout() {
+			event.preventDefault()
+			var t_id = $(".t_id").val();
+			alert(t_id);
+			if (confirm("정말 탈퇴하시겠습니까??") == true) { //확인
+				$.ajax({
+					type : 'post',
+					url : 'dropoutTeam',
+					data : {
+						t_id : t_id
+					},
+					success : function(result) {
+						console.log("result: " + result);
+						if (result == 'SUCCESS') {
+							alert("탈퇴완료.");
+
+							window.location.href = "myTeams";
+						}
+					}
+				});
+			} else { //취소
+				return;
+			}
+		}
+
+		function inactive() {
+			event.preventDefault()
+			var t_id = $(".t_id").val();
+			var recruit = 0;
+			if (confirm("팀을 비활성하시겠습니까??") == true) { //확인
+				$.ajax({
+					type : 'post',
+					url : 'Recruitcont',
+					data : {
+						t_id : t_id,
+						permit : recruit
+					},
+					success : function(result) {
+						console.log("result: " + result);
+						if (result == 'SUCCESS') {
+							alert("비활성화.");
+							window.location.href = "myTeams";
+						}
+					}
+				});
+			} else { //취소
+				return;
+			}
+		}
+
+		function activation() {
+			event.preventDefault()
+			var t_id = $(".t_id").val();
+			var recruit = 1;
+			if (confirm("팀을 활성화합니다.") == true) { //확인
+				$.ajax({
+					type : 'post',
+					url : 'Recruitcont',
+					data : {
+						t_id : t_id,
+						permit : recruit
+					},
+					success : function(result) {
+						console.log("result: " + result);
+						if (result == 'SUCCESS') {
+							alert("활성화.");
+							window.location.href = "myTeams";
+						}
+					}
+				});
+			} else { //취소
+				return;
+			}
+		}
+		$("#manager").on("click", function() {
+			var str = "<input type='hidden' name='r_id' value='0'>";
+			 str += "<input type='hidden' name='ep_id' value='${manage.ep_id}'>"; 
+			$("form").append(str);
+			$("form").attr("action", "screen/manager");
+			$("form").attr("method", "get");
+			$("form").submit();
+		});
+		$("#ePageModify").on("click", function() {
+			$("form").attr("action", "screen/ePageModify");
+			$("form").attr("method", "get");
+			$("form").submit();
+		});
+		$("#evalPage").on("click", function() {
+			$("form").attr("action", "screen/evalPage");
+			$("form").attr("method", "get");
+			$("form").submit();
+		});
+	</script>
 </body>
 </html>

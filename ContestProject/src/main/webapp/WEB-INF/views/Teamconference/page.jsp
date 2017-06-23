@@ -8,10 +8,41 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
     <script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <link rel="stylesheet" href="http://getbootstrap.com/dist/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="resources/css/Modal.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" type="text/javascript"></script>
 
+<style>
+.selected { background-color:red }
+.unselected { background-color:white }
+.dEnd{width:30px;
+	height:10px;
+	}
+.defaultDiv{
+border:1px solid red;
+float:left;
+width:230px;
+height:170px;
+margin-left:20px;
+border-radius: 5px;
+}
+.defaultDiv1{
+margin-left:10%; margin-right:10%; width:185px; height:110px;border-radius: 5px;
+}
+.defaultDiv2{
+display:none;
+}
+.bwdiv{
+border:1px solid red; float:left; width:220px; height:180px; margin-left:20px; border-radius: 5px;
+}
+.textarea{
+margin-left:10%; margin-right:10%; width:175px; height:90px; resize: none; border-radius: 5px;
+}
+.submit{
+margin-top:15px; margin-right:20px; float:right; border-radius: 5px; background-color:red; color:white;
+}
+</style>
 
 
     <!-- jQuery -->
@@ -54,13 +85,13 @@
 
         <!-- panel with buttons -->
             <div class="panel">
-                <a href="#category_form" id="category_pop" style="margin-top:120px;font-size:20px; font-family:'Comic Sans MS'; color:white;background-color:#e31937;">카테고리 등록</a>
+                <a href="#category_form" id="category_pop" style="margin-top:120px;font-size:20px; font-family:'Comic Sans MS'; color:white;background-color:#e31937;">카테고리 분류</a>
             </div>
 
         <!-- popup form #1 -->
         <a href="#x" class="overlay" id="category_form"></a>
         <div class="popup" style="margin-bottom:-15px;">
-            <h2>카테고리 등록 폼</h2>
+            <h2>카테고리 분류명</h2>
             <p>아이디어를 나눌 카테고리를 등록하세요</p>
             <div>
                 <label for="category_name">카테고리 명</label>
@@ -70,20 +101,20 @@
 
             <a class="close" href="#close"></a>
         </div>
-
-<table class="table" id="category_list" style="float:right; width:200px; height:30px; margin-top:40px;margin-right:100px;padding-right:100px; font-size:17px; font-family:'Comic Sans MS';">
+ <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<table class="table" id="category_list" style="float:left; width:200px; height:30px; margin-right:100px; font-size:17px; font-family:'Comic Sans MS';">
 <tr>
 	<th>카테고리명</th>
 </tr>
 
 </table>     
-
 </head>
 
 <body>
 
 
  <script>
+	
  var istrueBtn = false;
 var times = ${times};
  //var staticpage = ${pageread};
@@ -106,7 +137,7 @@ var times = ${times};
 	   function countDown(hrs,min,sec,gid) {
 		   sec--;
 		   if (sec == -01) {
-		     sec = 59;
+		     sec = 59;   
 		     min = min - 1;
 		   }
 		  else {   min = min;  }
@@ -153,9 +184,49 @@ var times = ${times};
 				        	 }
 				        	 $('.textarea').prop('disabled', true);
 				        	 $('.submit').prop('disabled', true);
-							 if(count != countCk){
+							 if(count != countCk){ ///////////////////////////////////시간 및 페이시 다시 생성
+								 
+								 $(".form-group div").attr('class','defaultDiv');
+								 $(".form-group textarea").attr('class','defaultDiv1');
+								 $(".form-group button").attr('class','defaultDiv2');
 								 countDown(0,0,times,'theTime');
 					        	 startpage();
+							 }else{
+								 var bt
+									$(".form-group*").on("mouseover","div",function(){
+									 	 bt = $(this);
+									 	 bt.draggable();
+									 	 bt.css( 'cursor', 'move' )
+									    bt.mousedown(function(){ // mousedown 이벤트 생성
+									        	$(this).css('z-index', -1); // 클릭한 이미지만 z-index 증가시킴D
+									 	});   
+									   		bt.mouseup(function(){ // mousedown 이벤트 생성
+									 	        	$(this).css('z-index', 0); // 클릭한 이미지만 z-index 증가시킴D
+											});   
+									});
+	
+							 		$('.table*').on("mouseup", "td", function(){
+							 			var btt = $(this).text();
+							 			var tttt = bt.children('textarea').val()
+							  			//alert(tttt);
+							 			$.ajax({
+							 				url : "categoryupdate",
+							 				data : {
+							 						bwc_content : btt,
+							 						bwi_content : tttt
+							 						},
+							 				type : "post",
+							 				dataType : "text",
+							 				success : function(data){
+							 					alert("카테고리 설정이 완료되었습니다.");
+							 			
+							 				},
+							 				error: function(){
+							 					alert("error");
+							 				}
+							 			});
+							 			 bt.remove('div');
+							 		}); 
 							 }
 				        	 
 				        	
@@ -166,7 +237,11 @@ var times = ${times};
 				         }
 					});
 					
-				}
+				} /* else{
+					/* $(".form-group.children().children().first().next().next().next().next()").hide();
+					$(".form-group.children()").addClass("dEnd"); */
+					
+				
 				
 		 }
 
@@ -195,43 +270,50 @@ var times = ${times};
 				 istrueBtn = true;	 
 			
 			}
-			
 			 var formnum=0;
 	function startpage(){
 		 stage++;
 		 formnum++;
-	      str = "<div name='dv1' class='good' style='border:1px solid red; float:left; width:220px; height:180px; margin-left:20px; border-radius: 5px;'>"+
+	      str = "<div name='dv1' class='bwdiv'>"+
 	           "<label>"+stage+"번 Idea</label>"+"<br>"+
-	           "<textarea class = 'textarea' id='textarea"+stage+"' style='margin-left:10%; margin-right:10%; width:175px; height:90px; resize: none; border-radius: 5px;'></textarea>"+"<br>"+
-	           "<button class ='submit' style='margin-top:15px; margin-right:20px; float:right; border-radius: 5px; background-color:red; color:white;'>Submit</button></div>";
+	           "<textarea class = 'textarea' id='textarea"+stage+"'></textarea>"+"<br>"+
+	           "<button class ='submit'>Submit</button></div>";
 	           stage++;
 	          
 	      str = str + 
-	      "<div name='dv1' class='good' id='ideadiv'"+stage+"' style='border:1px solid red; float:left; width:220px; height:180px; margin-left:20px; border-radius: 5px;'>"+
+	      "<div name='dv1' class='bwdiv' id='ideadiv'"+stage+"'>"+
 	           "<label>"+stage+"번 Idea</label>"+"<br>"+
-	           "<textarea class = 'textarea' id='textarea"+stage+"' style='margin-left:10%; margin-right:10%; width:175px; height:90px; resize: none; border-radius: 5px;'></textarea>"+"<br>"+
-	           "<button class ='submit' style='margin-top:15px; margin-right:20px; float:right; border-radius: 5px; background-color:red; color:white;'>Submit</button></div>";
+	           "<textarea class = 'textarea' id='textarea"+stage+"'></textarea>"+"<br>"+
+	           "<button class ='submit'>Submit</button></div>";
 	           stage++;
 	          
 	      str = str + 
-	      "<div name='dv1' class='good' id='ideadiv'"+stage+"' style='border:1px solid red; float:left; width:220px; height:180px; margin-left:20px; border-radius: 5px;'>"+
+	      "<div name='dv1' class='bwdiv' id='ideadiv'"+stage+"'>"+
 	           "<label>"+stage+"번 Idea</label>"+"<br>"+
-	           "<textarea class = 'textarea' id='textarea"+stage+"' style='margin-left:10%; margin-right:10%; width:175px; height:90px; resize: none; border-radius: 5px;'></textarea>"+"<br>"+
-	           "<button class ='submit' style='margin-top:15px; margin-right:20px; float:right; border-radius: 5px; background-color:red; color:white;'>Submit</button></div><br><br><br><br><br><br><br><br><br><br><br><br></div>";
+	           "<textarea class = 'textarea' id='textarea"+stage+"'></textarea>"+"<br>"+
+	           "<button class ='submit'>Submit</button></div><br><br><br><br><br><br><br><br><br><br><br><br></div>";
 
 	              $(".form-group").append(str);
 	            //  countDown(0,0,30,'theTime');
 	}
-	var ttt = "";
+
+/* 	var ttt = "";
 	$('.form-group*').on("click","div",function(){
 		if(count == countCk){
 		var bt = $(this);
 		var i = bt.children().first().next().next().val();
 		ttt = ttt + i +"/@";
+		
+		 if(bt.hasClass() == "selected"){
+		bt.addClass("unselected");
+		}else{
+		bt.addClass("selected");
+		
+		} 
 		}
-	});
+	}); */ 
 	
-	$('.table*').on("click","td",function(){
+/* 	$('.table*').on("click","td",function(){
 		if(count == countCk){
 		var bt = $(this).text();
 		var cate = ttt.split("/@");
@@ -253,7 +335,7 @@ var times = ${times};
 			
 		});
 	}
-	});
+	}); */
 	 
 	var idea_idid;
 	var idr = "";
@@ -377,6 +459,11 @@ var times = ${times};
 		  }
 	  });
   });
+  
+
+
+	
+ 	
   </script>
 </body>
 </html>
