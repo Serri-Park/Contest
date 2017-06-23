@@ -17,13 +17,14 @@
 .selected { background-color:red }
 .unselected { background-color:white }
 .dEnd{width:30px;
-	height:10px;}
+	height:10px;
+	}
 .defaultDiv{
 background-color:red;
 border:1px solid red;
 float:left;
 width:100px;
-height:50px;
+height:100px;
 margin-left:20px;
 border-radius: 5px;
 }
@@ -38,6 +39,9 @@ border:1px solid red; float:left; width:220px; height:180px; margin-left:20px; b
 }
 .textarea{
 margin-left:10%; margin-right:10%; width:175px; height:90px; resize: none; border-radius: 5px;
+}
+.submit{
+margin-top:15px; margin-right:20px; float:right; border-radius: 5px; background-color:red; color:white;
 }
 </style>
 
@@ -182,9 +186,9 @@ var times = ${times};
 				        	 $('.textarea').prop('disabled', true);
 				        	 $('.submit').prop('disabled', true);
 							 if(count != countCk){ ///////////////////////////////////시간 및 페이시 다시 생성
-								 $(".form-group textarea").addClass("defaultDiv1");
 								 $(".form-group div").addClass("defaultDiv");
-								 $(".form-group button").addClass("defaultDiv2");
+								 $(".form-group div textarea").addClass("defaultDiv1");
+								 $(".form-group div button").addClass("defaultDiv2");
 								 countDown(0,0,times,'theTime');
 					        	 startpage();
 							 }else{
@@ -273,21 +277,21 @@ var times = ${times};
 	      str = "<div name='dv1' class='bwdiv'>"+
 	           "<label>"+stage+"번 Idea</label>"+"<br>"+
 	           "<textarea class = 'textarea' id='textarea"+stage+"'></textarea>"+"<br>"+
-	           "<button class ='submit' style='margin-top:15px; margin-right:20px; float:right; border-radius: 5px; background-color:red; color:white;'>Submit</button></div>";
+	           "<button class ='submit'>Submit</button></div>";
 	           stage++;
 	          
 	      str = str + 
 	      "<div name='dv1' class='bwdiv' id='ideadiv'"+stage+"'>"+
 	           "<label>"+stage+"번 Idea</label>"+"<br>"+
 	           "<textarea class = 'textarea' id='textarea"+stage+"'></textarea>"+"<br>"+
-	           "<button class ='submit' style='margin-top:15px; margin-right:20px; float:right; border-radius: 5px; background-color:red; color:white;'>Submit</button></div>";
+	           "<button class ='submit'>Submit</button></div>";
 	           stage++;
 	          
 	      str = str + 
 	      "<div name='dv1' class='bwdiv' id='ideadiv'"+stage+"'>"+
 	           "<label>"+stage+"번 Idea</label>"+"<br>"+
 	           "<textarea class = 'textarea' id='textarea"+stage+"'></textarea>"+"<br>"+
-	           "<button class ='submit' style='margin-top:15px; margin-right:20px; float:right; border-radius: 5px; background-color:red; color:white;'>Submit</button></div><br><br><br><br><br><br><br><br><br><br><br><br></div>";
+	           "<button class ='submit'>Submit</button></div><br><br><br><br><br><br><br><br><br><br><br><br></div>";
 
 	              $(".form-group").append(str);
 	            //  countDown(0,0,30,'theTime');
