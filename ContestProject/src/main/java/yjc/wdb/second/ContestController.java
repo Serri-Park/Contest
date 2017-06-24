@@ -55,7 +55,7 @@ public class ContestController {
 		System.out.println(t_id);
 		service.create(contest);
 		model.addAttribute("criteria", criteria);
-		return "redirect:contestList";
+		return "redirect:screen/evalPage?t_id="+t_id;
 	}
 	
 	@RequestMapping(value="contestList",method=RequestMethod.GET)

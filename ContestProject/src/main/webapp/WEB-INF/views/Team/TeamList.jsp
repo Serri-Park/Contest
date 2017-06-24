@@ -13,7 +13,6 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <style>
 #allbody{
 	width: 90%;
@@ -25,20 +24,16 @@
 }
 
 #ControllBtn{
-	width: 500px;
 	height: 37px;
-   	margin-left: 30%;
+   	margin-left: 27%;
 }
 
-#atigs{
-	width: 300px;
-	height: 350px;
-    margin-top: 55px;
-    position: fixed;
-    font-size:30pt;
-    
-}
 
+
+.form-control{
+	width: 150px;
+	display: inline-block;
+}
 
 </style>
 </head>
@@ -52,37 +47,66 @@
 		
 		
 		<div id="ControllBtn">
-			<c:if test="${Conlist == 1}">
-				<button class="createTeam" class="btn btn-default">팀 생성</button>
-			</c:if>
-			<c:if test="${Conlist == 3}">
-				<button class="createTeam" class="btn btn-default">팀 생성</button>
-			</c:if>
-			 <select name="searchType" class="changeType">		
-				<option value="논문/리포트">논문/리포트</option>
-				<option value="기획/아이디어">기획/아이디어</option>
-				<option value="네이밍/슬로건">네이밍/슬로건</option>
-				<option value="디자인/캐릭터/만화">디자인/캐릭터/만화</option>
-				<option value="광고/마케팅">광고/마케팅</option>
-				<option value="영상/사진">영상/사진</option>
-				<option value="UCC/SOUND">UCC/SOUND</option>
-				<option value="예체능">예체능</option>
-				<option value="문학/수기">문학/수기</option>
-				<option value="과학/공학">과학/공학</option>
-				<option value="게임/소프트웨어">게임/소프트웨어</option>
-				<option value="건축/건설">건축/건설</option>
-				<option value="체험/참여">체험/참여</option>
-				<option value="취업/창업">취업/창업</option>
-				<option value="경품/이벤트">경품/이벤트</option>
-				<option value="전시/페스티벌">전시/페스티벌</option>
-				<option value="장학(금)재단">장학(금)재단</option>
-				<option value="봉사활동">봉사활동</option>
-				<option value="해외">해외</option>
-				<option value="기타">기타</option>
+			
+
+			<div class="form-group">
+				<select name="searchTypeFile" id="changeType" class="form-control">
+					<option value="All" <c:out value="${search.searchTypeFile eq 'All'?'selected':'' }"/>>All</option>	
+					<option value="논문/리포트" <c:out value="${search.searchTypeFile eq '논문/리포트'?'selected':'' }"/>>논문/리포트</option>
+					<option value="기획/아이디어" <c:out value="${search.searchTypeFile eq '기획/아이디어'?'selected':'' }"/>>기획/아이디어</option>
+					<option value="네이밍/슬로건" <c:out value="${search.searchTypeFile eq '네이밍/슬로건'?'selected':'' }"/>>네이밍/슬로건</option>
+					<option value="디자인/캐릭터/만화" <c:out value="${search.searchTypeFile eq '디자인/캐릭터/만화'?'selected':'' }"/>>디자인/캐릭터/만화</option>
+					<option value="광고/마케팅" <c:out value="${search.searchTypeFile eq '광고/마케팅'?'selected':'' }"/>>광고/마케팅</option>
+					<option value="영상/사진" <c:out value="${search.searchTypeFile eq '영상/사진'?'selected':'' }"/>>영상/사진</option>
+					<option value="UCC/SOUND" <c:out value="${search.searchTypeFile eq 'UCC/SOUND'?'selected':'' }"/>>UCC/SOUND</option>
+					<option value="예체능" <c:out value="${search.searchTypeFile eq '예체능'?'selected':'' }"/>>예체능</option>
+					<option value="문학/수기" <c:out value="${search.searchTypeFile eq '문학/수기'?'selected':'' }"/>>문학/수기</option>
+					<option value="과학/공학" <c:out value="${search.searchTypeFile eq '과학/공학'?'selected':'' }"/>>과학/공학</option>
+					<option value="게임/소프트웨어" <c:out value="${search.searchTypeFile eq '게임/소프트웨어'?'selected':'' }"/>>게임/소프트웨어</option>
+					<option value="건축/건설" <c:out value="${search.searchTypeFile eq '건축/건설'?'selected':'' }"/>>건축/건설</option>
+					<option value="체험/참여" <c:out value="${search.searchTypeFile eq '체험/참여'?'selected':'' }"/>>체험/참여</option>
+					<option value="취업/창업" <c:out value="${search.searchTypeFile eq '취업/창업'?'selected':'' }"/>>취업/창업</option>
+					<option value="경품/이벤트" <c:out value="${search.searchTypeFile eq '경품/이벤트'?'selected':'' }"/>>경품/이벤트</option>
+					<option value="전시/페스티벌" <c:out value="${search.searchTypeFile eq '전시/페스티벌'?'selected':'' }"/>>전시/페스티벌</option>
+					<option value="장학(금)재단" <c:out value="${search.searchTypeFile eq '장학(금)재단'?'selected':'' }"/>>장학(금)재단</option>
+					<option value="봉사활동" <c:out value="${search.searchTypeFile eq '봉사활동'?'selected':'' }"/>>봉사활동</option>
+					<option value="해외 " <c:out value="${search.searchTypeFile eq '해외'?'selected':'' }"/>>해외</option>
+					<option value="기타" <c:out value="${search.searchTypeFile eq '기타'?'selected':'' }"/>>기타</option>
+				</select>
+			<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+			<select name="searchAreas" id="searchAreas" class="form-control">		
+					<option value="All" <c:out value="${search.searchAreas eq 'All'?'selected':'' }"/>>All</option>
+					<option value="서울" <c:out value="${search.searchAreas eq '서울'?'selected':'' }"/>>서울</option>
+					<option value="부산" <c:out value="${search.searchAreas eq '부산'?'selected':'' }"/>>부산</option>
+					<option value="대구" <c:out value="${search.searchAreas eq '대구'?'selected':'' }"/>>대구</option>
+					<option value="울산" <c:out value="${search.searchAreas eq '울산'?'selected':'' }"/>>울산</option>
+					<option value="대전" <c:out value="${search.searchAreas eq '대전' ?'selected':'' }"/>>대전</option>
+					<option value="광주" <c:out value="${search.searchAreas eq '광주'?'selected':'' }"/>>광주</option>
+					<option value="제주" <c:out value="${search.searchAreas eq '제주' ?'selected':'' }"/>>제주</option>
 			</select>
+			<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+			<c:if test="${Conlist == 0 && permit == 1 || permit == 2}">
+				<select name="searchRights" id="SearchRights" class="form-control">		
+					<option value=0 <c:out value="${search.searchRights == 0 ?'selected':'' }"/>>모든팀</option>
+					<option value=1 <c:out value="${search.searchRights == 1 ?'selected':'' }"/>>참여자</option>
+					<option value=3 <c:out value="${search.searchRights == 3 ?'selected':'' }"/>>개최자</option>
+				</select>
+			</c:if>
+			<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+				<label>Keyword:</label> 
+				<input type="text" name="keyword" id="keyword" placeholder="${search.keyword}" value="" class="form-control">
+				<button id="searchBtn" class="btn btn-default">Search</button>
+				
+				<span>
+					<c:if test="${Conlist == 1 || Conlist == 0}">
+						<button class="createTeam" class="btn btn-default">참여팀 생성</button>
+					</c:if>
+					<c:if test="${Conlist == 3}">
+						<button class="createTeam" class="btn btn-default">개최팀 생성</button>
+					</c:if>
+				</span>
+			</div>
 		</div>
-		<br>
-		
 		
 		<div class="table-users">
 			<div class="a">Team List</div>
@@ -96,15 +120,18 @@
 						
 						<th>logo</th>
 						<th>팀명</th>
+						
 						<c:if test="${Conlist == 3}">
-							<th>주최사</th>
+							<th>주최자</th>
 						</c:if>
 						<c:if test="${Conlist == 1}">
 							<th>팀장</th>
 						</c:if>
 						<c:if test="${Conlist == 0}">
+							<th>구분</th>
 							<th>개설자</th>
 						</c:if>
+						
 						<th>지역</th>
 						<th>분야</th>
 						<th>개설일</th>
@@ -117,12 +144,24 @@
 								<td class="t_id" style="display: none"><input type="hidden" class="teamId" name="teamId" value="${TeamVo.t_id}"></td>
 								<td><a href="teamRoom?t_id=${TeamVo.t_id}"><img src = "displayTeamFile?fileName=${TeamVo.t_logo}"/></a></td>
 								<td><a href="teamRoom?t_id=${TeamVo.t_id}">${TeamVo.t_name}</a></td>
-								<td>${TeamVo.u_id}</td>
+								
+								<c:if test="${Conlist == 0}">
+									<c:if test="${TeamVo.m_rights == 1}">
+										<td>참가팀</td>
+									</c:if>
+									
+									<c:if test="${TeamVo.m_rights == 3}">
+										<td>개최팀</td> 
+									</c:if>
+								</c:if>
+								
+								<td>${TeamVo.u_name}</td>
 								<td>${TeamVo.t_areas}</td>
-								<td class="filedFilter">${TeamVo.t_filed}</td>
+								<td>${TeamVo.t_filed}</td>
 								<td><fmt:formatDate pattern="yyyy-MM-dd" value="${TeamVo.t_regdate}"/></td>
 								
 									<c:if test="${Conlist == 0}">
+										
 										<c:if test="${TeamVo.m_rights == 10}">
 											<td><button class="cancell btn btn-default">지원취소</button></td>
 										</c:if>
@@ -130,6 +169,7 @@
 										<c:if test="${TeamVo.m_rights == 2 || TeamVo.m_rights == 4}">
 											<td><button class="out btn btn-default">탈퇴</button></td>
 										</c:if>
+										
 										<c:if test="${TeamVo.m_rights == 1 || TeamVo.m_rights == 3}">
 											<td>
 												<c:if test="${TeamVo.t_permit == 2}">
@@ -139,6 +179,7 @@
 													<button class="completion btn btn-default">모집완료</button>
 												</c:if>
 											</td>
+										
 										</c:if>
 									</c:if>
 							</tr>
@@ -151,7 +192,6 @@
 	</c:if>
 </section>
 <script>
-
 //가입신청취소
 $(".cancell").on("click", function(){
 	event.preventDefault();
@@ -272,8 +312,10 @@ $(".start").on("click", function(){
 
 var Conlist = "";
 Conlist = ${Conlist};
+var permit ="";
+permit = ${permit};
 $(".createTeam").on("click", function(){
-	if(Conlist ==1){
+	if(Conlist ==1 || Conlist ==0){
 	window.location.href="registTeam?Conlist=1";
 	}else if(Conlist == 3){
 		window.location.href="registTeam?Conlist=3";	
@@ -281,22 +323,79 @@ $(".createTeam").on("click", function(){
 });
 
 
-/* 
-나중에 분야로 검색할때 이용
-//분야
-var search = "";
 
-$(".changeType").change(function(){
+//나중에 분야로 검색할때 이용
+//분야
+var searchFile = "";
+var searchRights = 0;
+var keyword="";
+var searchAreas="";
+$("#changeType").change(function(){
 	
-    $( ".changeType option:selected" ).each(function() {
-    	search += $( this ).text() + " ";
+    $( "#changeType option:selected" ).each(function() {
+    	searchFile = $( this ).text() + "";
+    	
     });
    
 });
 
 
 
- */
+//개최자 & 참가자 구분
+$("#SearchRights").change(function(){
+	
+    $( "#SearchRights option:selected" ).each(function() {
+    	searchRights = $(this).val();
+    	
+    });
+   
+});
+
+
+//지역 구분
+$("#searchAreas").change(function(){
+	
+    $( "#searchAreas option:selected" ).each(function() {
+    	searchAreas = $(this).text() + "";
+    	
+    });
+   
+});
+
+
+$("#searchBtn").on("click",function(){
+	keyword = $("#keyword").val();
+	window.location.href="AllTeamList?Conlist="+Conlist+"&permit="+permit+"&searchFile="+searchFile+"&searchRights="+searchRights+"&keyword="+keyword+"&searchAreas="+searchAreas;
+});
+
+
+//가입
+//가입
+$(".app").on("click", function(){
+   //신청서가 들어가는 팀
+ 
+   var t_id = $(this).parent().prevAll(".t_id").children().eq(0).val();
+   if (confirm("정말 가입하시겠습니까??") == true){  
+	    $.ajax({
+	      type:'post',
+	      url:'joinTeam',
+	      data: {t_id:t_id},
+	      success : function(result){
+	         console.log("result: "+result);
+	         if(result == 'SUCCESS'){
+	            alert("신청되었습니다.");
+	            
+	            location.reload();
+	
+	         }
+	      }
+	   });
+   }else{   //취소
+	    return;
+	}
+});
+
+
 
 </script>
 </body>

@@ -3,7 +3,9 @@ package yjc.wdb.second;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -32,9 +34,11 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+
 import yjc.wdb.second.bean.ClaimantVo;
 import yjc.wdb.second.bean.Manager;
 import yjc.wdb.second.bean.Member;
+import yjc.wdb.second.bean.MessageVo;
 import yjc.wdb.second.bean.TeamVo;
 import yjc.wdb.second.bean.Userbean;
 import yjc.wdb.second.service.EvaluationService;
@@ -138,7 +142,7 @@ public class teamController {
 	}
 
 	
-	//�뜝�룞�삕 �뛾�룊�삕
+	//占쎈쐻占쎈짗占쎌굲 占쎈쎗占쎈즸占쎌굲
 	@RequestMapping(value = "teamRoom", method = RequestMethod.GET)
 	public String 	list(@RequestParam(value="t_id")int t_id,TeamVo vo,Model model, HttpSession session) throws Exception{
 		//TeamVo vo2 = new TeamVo();
@@ -160,16 +164,12 @@ public class teamController {
 		model.addAttribute("Rights",vo2);
 		int leader = tservice.leaderRights(t_id);
 		model.addAttribute("leader",leader);
-		List<ClaimantVo> Colist = tservice.TeamRoomContest(t_id, leader);
-		int ConlCount = Colist.size();
 		
 		Manager manage = eservice.config(t_id);
-	      if(manage!=null){
-	      System.out.println("�򰡹��:"+manage.getEp_how());
-	      model.addAttribute("manage",manage);
-	      }
-		model.addAttribute("ConlCount",ConlCount);
-		model.addAttribute("Colist",Colist);
+		if(manage!=null){
+		System.out.println("평가방법:"+manage.getEp_how());
+		model.addAttribute("manage",manage);
+		}
 		
 		ClaimantVo vos = new ClaimantVo();
 		vos.setT_id(t_id);
@@ -178,24 +178,30 @@ public class teamController {
 		 return"Team/teamRoom";
 	}
 	
-	//嶺뚮?���?��?��?���?? �뜝�룞�삕 �솻洹ｋ?���굢�귦?��?�뜝�룞�삕�뜝?���??
+	//癲ル슢?占쏙옙占�?占쏙옙?占쏙옙?占쏙옙占�?? 占쎈쐻占쎈짗占쎌굲 占쎌녃域뱄퐢?占쏙옙占쎄덩占쎄랩?占쏙옙?占쎈쐻占쎈짗占쎌굲占쎈쐻?占쏙옙占�??
 	@RequestMapping(value = "AllTeamList", method = {RequestMethod.GET, RequestMethod.POST})
 	public String Teamlist(@RequestParam(value="Conlist",defaultValue="1")int Conlist,
+			@RequestParam(value="searchRights",defaultValue="0")int searchRights,
+			@RequestParam(value="keyword",defaultValue="All")String keyword,
 			@RequestParam(value="permit",defaultValue="1")int permit,
-			@RequestParam(value="search",defaultValue="All")String search,
+			@RequestParam(value="searchFile",defaultValue="All")String searchFile,
+			@RequestParam(value="searchAreas",defaultValue="All")String searchAreas,
 			TeamVo vo, Model model, HttpSession session) throws Exception{
-
+		
+		System.out.println("keyword"+keyword);
 		String u_id = (String)session.getAttribute("u_id");
 		List<TeamVo> tlist = tservice.teamchek(u_id);
 		int number = tlist.size();
-		System.out.println(u_id);
 		
 		model.addAttribute("num",number);
-		model.addAttribute("tlist",tlist);
+	//	model.addAttribute("tlist",tlist);
 		
-		vo.setSearchType(search);
+		vo.setSearchAreas(searchAreas);
+		vo.setSearchTypeFile(searchFile);
 		vo.setConlist(Conlist);
 		vo.setU_id(u_id);
+		vo.setSearchRights(searchRights);
+		vo.setKeyword(keyword);
 		model.addAttribute("search",vo);
 		List<TeamVo> list = tservice.AllTeamList(vo);
 		int listnum = list.size();
@@ -234,7 +240,7 @@ public class teamController {
 		
 	}
 	
-	//�뜝�럥?��뽩뜝�럥?��?�뜝�럥彛� �뜝�룞�삕 �솻洹ｋ?���굢�귦?��?�뜝�룞�삕�뜝?���??
+	//占쎈쐻占쎈윥?占쏙옙戮⑸쐻占쎈윥?占쏙옙?占쎈쐻占쎈윥壤쏉옙 占쎈쐻占쎈짗占쎌굲 占쎌녃域뱄퐢?占쏙옙占쎄덩占쎄랩?占쏙옙?占쎈쐻占쎈짗占쎌굲占쎈쐻?占쏙옙占�??
 		@RequestMapping(value = "myTeams", method = RequestMethod.GET)
 		public String MyTeamlist(TeamVo vo,Model model, HttpSession session) throws Exception{
 			String u_id = (String)session.getAttribute("u_id");
@@ -258,7 +264,7 @@ public class teamController {
 		return str;
 	}
 	
-	//�뤆�룊�삕�뜝�럩?����?���럥六욜�?�?륁삕
+	//占쎈쨬占쎈즸占쎌굲占쎈쐻占쎈윪?占쏙옙占쏙옙?占쏙옙占쎈윥筌묒슌占�?占�?瑜곸굲
 	@RequestMapping(value="joinTeam", method = RequestMethod.POST)
 	@ResponseBody
 	public String joinTeam(TeamVo vo, HttpServletRequest req ,HttpSession session){
@@ -280,11 +286,18 @@ public class teamController {
 		return entity;
 	}
 	
-	//�뜝�럥六욜�?�?륁삕�뜝�럩�겱 claimant
+	//占쎈쐻占쎈윥筌묒슌占�?占�?瑜곸굲占쎈쐻占쎈윪占쎄껑 claimant
 	@RequestMapping(value = "claimant", method = RequestMethod.GET)
-	public String claimants(@RequestParam(value="t_id",defaultValue="-1")int t_id,ClaimantVo vo,Model model, HttpSession session) throws Exception{
+	public String claimants(@RequestParam(value="t_id")int t_id,@RequestParam(value="m_rights",defaultValue="3")int m_rights,
+			@RequestParam(value="t_filed",defaultValue="All")String t_filed,
+			 TeamVo teamDate,ClaimantVo vo,Model model, HttpSession session) throws Exception{
 		
-		model.addAttribute("t_id",t_id);	
+		teamDate.setT_id(t_id);
+		teamDate.setM_rights(m_rights);
+		teamDate.setT_filed(t_filed);
+		model.addAttribute("teamDate",teamDate);	
+		
+		
 		TeamVo teamvo = new TeamVo();
 		
 		teamvo =  tservice.permitlook(t_id);
@@ -296,7 +309,7 @@ public class teamController {
 	return"Team/claimant";
 	}
 	
-	//�뤆�룊�삕�뜝�럩?����?���럥�빢�뜝�럩?��
+	//占쎈쨬占쎈즸占쎌굲占쎈쐻占쎈윪?占쏙옙占쏙옙?占쏙옙占쎈윥占쎈묄占쎈쐻占쎈윪?占쏙옙
 	@RequestMapping(value="userOk", method = RequestMethod.POST)
 	@ResponseBody
 	public String userOk(ClaimantVo vo, HttpServletRequest req ,HttpSession session) throws Exception{
@@ -323,7 +336,7 @@ public class teamController {
 	}
 	
 	
-	//�뤆�룊�삕�뜝�럩?���濾곌쑨��?�뜝�룞�삕
+	//占쎈쨬占쎈즸占쎌굲占쎈쐻占쎈윪?占쏙옙占쏙쫫怨뚯뫅占쏙옙?占쎈쐻占쎈짗占쎌굲
 		@RequestMapping(value="userNo", method = RequestMethod.POST)
 		@ResponseBody
 		public String userNo(ClaimantVo vo, HttpServletRequest req ,HttpSession session){
@@ -346,7 +359,7 @@ public class teamController {
 
 			return entity;
 		}
-		//�뜝�럡�돮�뜝�럥�떄
+		//占쎈쐻占쎈윞占쎈룼占쎈쐻占쎈윥占쎈뻹
 		@RequestMapping(value="dropoutTeam", method = RequestMethod.POST)
 		@ResponseBody
 		public String dropoutTeam(TeamVo vo, HttpServletRequest req ,HttpSession session)throws Exception{
@@ -360,7 +373,7 @@ public class teamController {
 
 			return entity;
 		}
-		//�뜝�룞�삕�뜝�럡留�?�뜝�럡?���?
+		//占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈윞筌랃옙?占쎈쐻占쎈윞?占쏙옙占�?
 				@RequestMapping(value="Recruitcont", method = RequestMethod.POST)
 				@ResponseBody
 				public String Recruitcont(TeamVo vo, HttpServletRequest req ,HttpSession session){
@@ -383,5 +396,35 @@ public class teamController {
 					return entity;
 				}
 		
+		
+		//추천인받기
+		@RequestMapping(value="recommend", method = RequestMethod.GET)
+		public ResponseEntity<Map<String,Object>> MassageMakeForm(MessageVo vo, HttpSession session, Model model,HttpServletRequest req) throws Exception{
+			ResponseEntity<Map<String,Object>> entity = null;
+			
+			String t_filed = req.getParameter("t_filed");
+			System.out.println(t_filed);
+			int t_id = Integer.parseInt(req.getParameter("t_id"));
+			
+			vo.setT_id(t_id);
+			vo.setT_filed(t_filed);
+				
+				List<MessageVo> list = tservice.RecommendUsetList(vo);
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("list", list);
+				int count = list.size();
+				if(count == 0){
+					entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+				}else{
+					
+					entity = new ResponseEntity<>(map,HttpStatus.OK);
+				}	
+				
+					
+			return entity;
+			
+						
+		}			
+	
 		
 }

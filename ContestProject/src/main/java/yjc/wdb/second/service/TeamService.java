@@ -5,6 +5,7 @@ package yjc.wdb.second.service;
 import java.util.List;
 
 import yjc.wdb.second.bean.ClaimantVo;
+import yjc.wdb.second.bean.MessageVo;
 import yjc.wdb.second.bean.TeamVo;
 
 
@@ -46,4 +47,7 @@ public interface TeamService {
 	
 	//Myschedule
 		public List<ClaimantVo> Myschedule(ClaimantVo vo) throws Exception;
+		
+	//RecommendUsetList
+	public List<MessageVo> RecommendUsetList(MessageVo vo) throws Exception;
 }

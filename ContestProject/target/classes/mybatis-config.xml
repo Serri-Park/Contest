@@ -31,9 +31,12 @@
 		<typeAlias type="yjc.wdb.second.bean.BW" alias="bw" />
 		<typeAlias type="yjc.wdb.second.bean.IDEA" alias="idea" />
 		<typeAlias type="yjc.wdb.second.bean.Page" alias="page" />
-
+		
 		<typeAlias type="yjc.wdb.second.bean.Criteria" alias="Criteria" />
 			<typeAlias type="yjc.wdb.second.bean.Evaluation" alias="Eval" />
 			<typeAlias type="yjc.wdb.second.bean.Manager" alias="manager" />
+		
+		<typeAlias alias="Message" type="yjc.wdb.second.bean.MessageVo"/>
+		
 	</typeAliases>
 </configuration>

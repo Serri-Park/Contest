@@ -5,22 +5,52 @@ import java.sql.Date;
 
 public class TeamVo {
 	
-	private String searchType;
-	public String getSearchType() {
-		return searchType;
-	}
-	public void setSearchType(String searchType) {
-		this.searchType = searchType;
-	}
-	
+	private String searchTypeFile;
+	private String keyword;
+	private int searchRights;
 	private int Conlist;
+	private String searchAreas;
 	
+	
+	public String getSearchAreas() {
+		return searchAreas;
+	}
+	public void setSearchAreas(String searchAreas) {
+		this.searchAreas = searchAreas;
+	}
+	public String getSearchTypeFile() {
+		return searchTypeFile;
+	}
+	public String getKeyword() {
+		return keyword;
+	}
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+	
+	public void setSearchTypeFile(String searchTypeFile) {
+		this.searchTypeFile = searchTypeFile;
+	}	
+	
+	public int getSearchRights() {
+		return searchRights;
+	}
+	public void setSearchRights(int searchRights) {
+		this.searchRights = searchRights;
+	}
 	public int getConlist() {
 		return Conlist;
 	}
 	public void setConlist(int conlist) {
 		Conlist = conlist;
 	}
+	
+	
+
+	
+
+
+
 
 	//team
 	private int t_id;
@@ -119,6 +149,16 @@ public class TeamVo {
 	
 
 	
+	private String u_name;
 	
+	
+	
+	public String getU_name() {
+		return u_name;
+	}
+	public void setU_name(String u_name) {
+		this.u_name = u_name;
+	}
+
 
 }

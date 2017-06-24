@@ -4,6 +4,7 @@ package yjc.wdb.second.dao;
 import java.util.List;
 
 import yjc.wdb.second.bean.ClaimantVo;
+import yjc.wdb.second.bean.MessageVo;
 import yjc.wdb.second.bean.TeamVo;
 
 
@@ -68,6 +69,8 @@ public interface TeamDao {
 	
 	//Myschedule
 	public List<ClaimantVo> Myschedule(ClaimantVo vo) throws Exception;
-
+	
+	//RecommendUsetList
+	public List<MessageVo> RecommendUsetList(MessageVo vo) throws Exception;
 		
 }

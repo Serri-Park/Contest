@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import yjc.wdb.second.bean.ClaimantVo;
+import yjc.wdb.second.bean.MessageVo;
 import yjc.wdb.second.bean.TeamVo;
 import yjc.wdb.second.dao.TeamDao;
 
@@ -161,6 +162,14 @@ public class TeamServiceImpl implements TeamService {
 	public List<TeamVo> JoinTotal(TeamVo vo) throws Exception {
 		// TODO Auto-generated method stub
 		return dao.JoinTotal(vo);
+	}
+	
+	
+	//RecommendUsetList
+	@Override
+	public List<MessageVo> RecommendUsetList(MessageVo vo) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.RecommendUsetList(vo);
 	}
 
 

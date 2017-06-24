@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import yjc.wdb.second.bean.ClaimantVo;
+import yjc.wdb.second.bean.MessageVo;
 import yjc.wdb.second.bean.TeamVo;
 
 
@@ -19,6 +20,7 @@ public class TeamImpl implements TeamDao {
 	private SqlSession sql;
 	private static String namespace ="yjc.wdb.team.teamMapper";
 	private static String namespace2 = "yjc.wdb.team.claimantMapper";
+	private static String namespace3 = "yjc.wdb.second.MessageMapper";
 	
 	//team 占쎈쑓占쎌뵠占쎄숲
 	@Override
@@ -184,16 +186,14 @@ public class TeamImpl implements TeamDao {
 		return sql.selectList(namespace+".JoinCount",vo);
 	}
 
-//	
-//	//<!--  가입된 모든 팀의 정보를 띄워준다 띄워준다 -->
-//		//<!-- TeamJoinTotall에서 이용한다 -->
-//	@Override
-//	public List<TeamVo> TeamJoinTotall(TeamVo vo) throws Exception {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-
 	
+	//RecommendUsetList
+	@Override
+	public List<MessageVo> RecommendUsetList(MessageVo vo) throws Exception {
+		// TODO Auto-generated method stub
+		return sql.selectList(namespace3+".RecommendUsetList",vo);
+	}
+
 
 
 }

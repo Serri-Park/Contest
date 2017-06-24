@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="yjc.wdb.second.MessageMapper">
+ 
+
+ 
+ <select id="allMessage" resultType="Message">
+ 	select c.u_name "u_name",a.send_id "send_id", 
+		       a.ms_id "ms_id" , a.ms_name "ms_name",
+ 		a.ms_date "ms_date", b.rc_date "rc_date"
+	from message a join receiver b join user c
+	on a.ms_id = b.ms_id
+	AND a.send_id = c.u_id  where b.rc_id = #{rc_id}
+ </select>
+
+<select id="transMessage" resultType="Message">
+select a.ms_id "ms_id",
+		 a.ms_date "ms_date", a.ms_name "ms_name",
+		b.rc_date "rc_date", b.rc_id "rc_id", c.u_name "u_name"
+from message a join receiver b join user c
+on a.ms_id = b.ms_id 
+AND b.rc_id = c.u_id
+where a.send_id = #{send_id} 
+</select>
+
+
+ <update id="messageRead_Date">
+ update receiver set rc_date = now() where rc_id = #{rc_id} and ms_id = #{ms_id}
+ </update>
+
+<select id="content" resultType="Message">
+		select a.ms_id "ms_id",a.ms_name "ms_name", a.ms_content "ms_content",
+		 a.ms_date "ms_date", a.send_id "send_id" , b.u_name "u_name" , c.rc_id "rc_id"
+		 from message a join user b join receiver c
+			on a.send_id = b.u_id and a.ms_id = c.ms_id
+		 where a.ms_id = #{ms_id}
+</select>
+ 
+<insert id="messageMake">
+  insert into message(ms_name,ms_content,send_id)
+    values(#{ms_name},#{ms_content},#{send_id})
+</insert>
+ 
+ <select id="receiverMake">
+ 	insert into receiver(rc_id,ms_id)
+ 	values(#{rc_id}, last_insert_id())
+ </select>
+
+ <select id="idSearch" resultType="Message">
+ select u_id, u_name from user where u_id LIKE CONCAT(#{rc_id}, '%')
+ </select>
+ 
+<delete id="messageDelet">
+delete from message
+		where ms_id= #{ms_id} 
+</delete>
+
+<delete id="receiverDelet">
+delete from receiver
+		where rc_id = #{rc_id} and ms_id=#{ms_id} 
+</delete> 
+
+<select id="CountMessage" resultType="Integer">
+select count(a.ms_id) from message a join receiver b on (a.ms_id = b.ms_id) where b.rc_id = #{rc_id} and b.rc_date is null
+</select>
+
+
+<select id="RecommendUsetList" resultType="Message">
+select u.u_id,u.u_name, u.u_major, u.u_email, u.u_address 
+from user u join team t
+where u_major like CONCAT('%',#{u_major},'%') and t.t_id != #{t_id}
+</select>
+
+ 
+ </mapper>

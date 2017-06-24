@@ -263,7 +263,7 @@
 		});
 		$("#btn_pass").on("click",function(){
 			var button = $("#btn_pass").attr("data-btn");
-			var data = {"w_id":${work.w_id},"grande":button,"u_id":${sessionScope.u_id},"t_id":${t_id}};
+			var data = {"w_id":${work.w_id},"grande":button,"u_id":"${sessionScope.u_id}","t_id":${t_id}};
 			 
 			$.ajax({
 			url: 'grande',
@@ -288,7 +288,7 @@
 		});
 		$("#btn_fail").on("click",function(){
 			var button = $("#btn_fail").attr("data-btn");
-			var data = {"w_id":${work.w_id},"grande":button,"u_id":${sessionScope.u_id},"t_id":${t_id}};
+			var data = {"w_id":${work.w_id},"grande":button,"u_id":"${sessionScope.u_id}","t_id":${t_id}};
 			 
 			$.ajax({
 			url: 'grande',
