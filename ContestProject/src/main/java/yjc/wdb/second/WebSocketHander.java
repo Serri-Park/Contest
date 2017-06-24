@@ -45,15 +45,14 @@ public class WebSocketHander implements WebSocketHandler {
     		msg = msgs[2];
     		sendMessageToUsers(new TextMessage("!!#time"+msg));
     	}
-    	else{
+    	/*else{
     	    		sendMessageToUser(t_id, new TextMessage(clientName + " : " + msg));
-    	}//charter ë°›ëŠ”?‚¬?Œ  //clientName ë³´ë‚´?Š”?‚¬?Œ
-    	/*else {
+    	}*/
+    	else {
     		sendMessageToUsers(new TextMessage(clientName + " :" + msg));
     		
 
-    	}*/
-        
+    	}       
     }
 
     @Override

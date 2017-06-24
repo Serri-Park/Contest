@@ -224,10 +224,9 @@ img{
 					<c:if test="${manage.ep_how!=null}">
 						<button class="btn btn-default" id="ePageModify">평가단계수정</button>
 					</c:if>
-					
-					<c:if test="${Rights.m_rights == 3 || Rights.m_rights == 4}">
+				</c:if>
+				<c:if test="${Rights.m_rights == 3 || Rights.m_rights == 4}">
 						<button class="btn btn-default" id="manager">평가매니저</button>
-					</c:if>
 				</c:if>
 				
 			</c:if>
