@@ -182,7 +182,7 @@ public class EvaluationController {
 		 work = service.read_work(manage);
 		 work.setU_id(id);
 		 work.setT_id(t_id);
-		 
+		 work.setEl_id(m1.get(0).getEl_id());
 			model.addAttribute("work", work);
 			Manager get_id = service.get_work_id(work);
 			if(get_id != null)
@@ -215,7 +215,7 @@ public class EvaluationController {
 		manage.setEp_stage(m1.get(0).getEp_stage());
 		 work = service.read_work(manage);
 		 work.setU_id(id);
-		
+		 work.setEl_id(m1.get(0).getEl_id());
 			Manager get_id = service.get_work_id(work);
 			if(get_id != null)
 			model.addAttribute("get_id", get_id.getW_id());
@@ -247,6 +247,7 @@ public class EvaluationController {
 		manage.setEp_stage(m1.get(0).getEp_stage());
 		work = service.read_work(manage);
 		work.setU_id(id);
+		work.setEl_id(m1.get(0).getEl_id());
 		Manager get_id = service.get_work_id(work);
 		model.addAttribute("b",b);
 		if (get_id != null)

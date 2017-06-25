@@ -115,7 +115,7 @@
 		from work
 		where w_id in (select w_id
 					from evaluation
-					where w_id = #{w_id} and u_id = #{u_id})
+					where w_id = #{w_id} and u_id = #{u_id} and el_id = #{el_id})
 	</select>
 	<!-- 채점 취소 -->
 	<delete id="del_grande">
