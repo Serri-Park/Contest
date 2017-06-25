@@ -22,6 +22,7 @@
 <title>Insert title here</title>
 <jsp:include page="../screen/top.jsp" flush="false" />
 <jsp:include page="../screen/mAside.jsp" flush="false" />
+<jsp:include page="../Teamconference/chat.jsp" flush="false" />
 <style>
 * {
 	padding: 0;

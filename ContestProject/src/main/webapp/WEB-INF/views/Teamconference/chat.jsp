@@ -7,7 +7,7 @@
 <title>Insert title here</title>
     <script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script> 
 
-	<link rel="stylesheet" href="resources/css/pagecss.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/pagecss.css">
 
     <title>webSocket</title>
     <!-- <div class="col-lg" style="height:40px; width:100px;">
@@ -64,7 +64,7 @@
         $(function(){
             	var clientName =  "박세환";  // $("#client_name").val();
 				if ("WebSocket" in window) {
-					websocket = new WebSocket("ws://172.19.2.235:8080/second/echo?name=${sessionScope.u_id}&t_id= ${sessionScope.t_id}");
+					websocket = new WebSocket("ws://172.20.10.145:8080/second/echo?name=${sessionScope.u_id}&t_id= ${sessionScope.t_id}");
 					
 				}
             
