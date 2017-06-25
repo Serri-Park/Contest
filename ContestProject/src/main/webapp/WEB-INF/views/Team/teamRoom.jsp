@@ -188,12 +188,11 @@ img{
 							
 						<c:if test="${Rights.m_rights == 3}">
 							<button id="claimant" class="btn btn-warning">심사위원지원자보기</button>
+							<a href="ScheMain?t_id=${t_id }">
+						<button id="conference" class="btn btn-danger">캘린더</button></a>
 							<a href="contestForm?t_id=${t_id }" ><button class="btn btn-default">공모전 개최</button></a>
 						</c:if>
-						
-						
-						<a href="ScheMain?t_id=${t_id }">
-						<button id="conference" class="btn btn-danger">캘린더</button></a>
+					
 				</c:if>	
 				
 			</c:if>
@@ -209,8 +208,8 @@ img{
 			
 				<c:if test="${Rights.m_rights == 1 || Rights.m_rights == 2}">
 					
-					<a href="ScheMain?t_id=${sessionScope.t_id}">
-						<button id="conference" class="btn btn-danger">유저캘린더</button></a>
+					<a href="ScheMain?t_id=${t_id }">
+						<button id="conference" class="btn btn-danger">캘린더</button></a>
 					
 					<!-- 참가자팀 팀장만 보기 -->
 					<c:if test="${Rights.m_rights == 1}">
@@ -222,7 +221,15 @@ img{
 	
 				</c:if>
 				
+				
+				<c:if test="${Rights.m_rights == 4}">
+						<a href="ScheMain?t_id=${t_id }">
+						<button id="conference" class="btn btn-danger">캘린더</button></a>
+						<button class="btn btn-default" id="manager">평가매니저</button>
+						
+				</c:if>
 				<c:if test="${Rights.m_rights == 3}">
+					
 					<c:if test="${manage.ep_how==null}">
 						<button class="btn btn-default" id="evalPage">평가단계설정</button>
 					</c:if>
@@ -230,10 +237,11 @@ img{
 					<c:if test="${manage.ep_how!=null}">
 						<button class="btn btn-default" id="ePageModify">평가단계수정</button>
 					</c:if>
+					<button class="btn btn-default" id="manager">평가매니저</button>
+
 				</c:if>
-				<c:if test="${Rights.m_rights == 3 || Rights.m_rights == 4}">
-						<button class="btn btn-default" id="manager">평가매니저</button>
-				</c:if>
+				
+				
 				
 			</c:if>
 		</div>

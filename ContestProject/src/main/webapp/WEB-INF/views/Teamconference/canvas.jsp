@@ -25,7 +25,7 @@
        <button id="btnDel" style="display:inline-block; width:100px;">지우기</button>
    <button type="button" style="display:inline-block; width:100px;" class="controls" onclick="saveCanvas()">저장 </button>
      <button type="button" style="display:inline-block; width:100px;" class="controls" onclick="loadCanvasClicked(event)">불러오기</button>
-    <!--  <input type="file" id="canvas_file" value="캔버스" style="display:inline-block; width:100px;" onchange="loadCanvas(this)"/> -->
+    <input type="file" id="canvas_file" value="캔버스" style="display:none; width:100px;" onchange="loadCanvas(this)"/> 
   </div>
   <br>
    <canvas id="canvas" width="1000px" height="500px" style="float:left;box-shadow:0 0 10px #e31937;border-radius:10px; margin-left:25%;border:2px solid #e31937; background-color:rgb(245,245,245); display:inline;">
