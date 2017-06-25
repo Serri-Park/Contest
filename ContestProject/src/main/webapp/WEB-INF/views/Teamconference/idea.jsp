@@ -10,13 +10,24 @@
 <style>
     .ideamenu a{cursor:pointer;}
     .ideamenu .idealistt{display:none;}
-    .ideamenu{
-    margin-bottom:15px; font-size:20px;color:white;font-family:'Comic Sans MS';background-color: #e31937;box-shadow:0 0 15px rgb(33, 30, 30);text-align:center;border: 1px solid #e31937; border-radius:5px;margin-left:25px; float: left; width: 15%;
+    .ideamenu{    
+    padding-bottom:-20px;margin-bottom:30px; font-size:20px;color:white;font-family:'Comic Sans MS';background-color: #e31937;box-shadow:0 0 10px rgb(33, 30, 30);text-align:center;border: 1px solid #e31937; border-radius:5px;margin-left:10%; float: left; width: 20%;
+    }           
+    .idealistt{
+    margin-top:10px;
+    border:1px solid #cccccc;
+    color:black;
+    margin-bottom:-11px;      
+    margin-left:-1px;
+    margin-right:-1px;
+    border-bottom-right-radius:5px;
+    border-bottom-left-radius:5px;
+    background-color:rgba(255, 255, 255, 1);
     }
 </style>
 
 <!-- Bootstrap styles -->
-    <link rel="stylesheet" href="http://getbootstrap.com/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="http://getbootstrap.com/dist/css/bootstrap.min.css" />  
     <link rel="stylesheet" href="http://weloveiconfonts.com/api/?family=fontawesome">
        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
        
@@ -26,7 +37,7 @@
 <body>
 
 <h3 style="font-family:'Comic Sans MS'; padding-left:25%">IdeaList</h3>
-<div class="Allmenus">
+<div class="Allmenus" style="margin-top:5%;">
    
 </div>
 
@@ -37,27 +48,21 @@ var k3 ="${a.bwc_content}";
 if(k1 == 0){
 	var z = "";
 	z = z + "<div class='ideamenu'>"+
-    "<a href='#' style='text-decoration:none;color:white;'>카테고리  : ${a.bwc_content}</a>"+
-    "<div class='idealistt'>"+
-     "<hr>"+
-      "<p>${a.bwi_content}</p>"+
-    "</div>"+
+    "<a href='#' style='text-decoration:none;color:white;border-bottom:2px;'>카테고리  : ${a.bwc_content}</a>"+
+    "<p class='idealistt'>${a.bwi_content}</p>"+
   "</div>";
   $(".Allmenus").append(z);
 }else{
 	var k2 = "${list[loop.index-1].bwc_content}";
 	if(k2 == k3){
 		var g = "";
-		g = g + "<p>${a.bwi_content}</p>";
-		$(".Allmenus div div:last").append(g);
+		g = g + "<p class='idealistt'>${a.bwi_content}</p>";
+		$(".Allmenus div:last").append(g);        
 	}else{
 		var z = "";
 		z = z + "<div class='ideamenu'>"
-	    +"<a href='#' style='text-decoration:none;color:white;'>카테고리  : ${a.bwc_content}</a>"
-	    +"<div class='idealistt'>"
-	     +"<hr>"
-	      +"<p>${a.bwi_content}</p>"
-	    +"</div>"
+	    +"<a href='#' style='text-decoration:none;color:white;border-bottom:2px;'>카테고리  : ${a.bwc_content}</a>"
+	      +"<p class='idealistt'>${a.bwi_content}</p>"
 	  +"</div>";
 	  $(".Allmenus").append(z);
 	}
@@ -68,7 +73,7 @@ if(k1 == 0){
 <script>
       $(document).ready(function(){
           $(".ideamenu>a").click(function(){
-              var submenu = $(this).next("div");
+              var submenu = $(this).nextAll();
 
               // submenu 가 화면상에 보일때는 위로 보드랍게 접고 아니면 아래로 보드랍게 펼치기
               if( submenu.is(":visible") ){
@@ -77,7 +82,7 @@ if(k1 == 0){
                   submenu.slideDown();
               }
           }).mouseover(function(){
-              $(this).next("div").slideDown();
+              $(this).nextAll().slideDown();
           });
       });
 </script>

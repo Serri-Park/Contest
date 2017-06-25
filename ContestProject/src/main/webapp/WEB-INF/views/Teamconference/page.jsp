@@ -106,7 +106,7 @@ width:200px;font-size:20px;  text-align:center; font-family:'Comic Sans MS'; col
             <a class="close" href="#close"></a>
         </div>
  <br><br><br><br><br><br><br>
-<div class="table" id="category_list" style="display:none; float:left; width:800px; height:800px; margin-right:100px; font-size:17px; font-family:'Comic Sans MS';">
+<div class="table" id="category_list" style="display:none; float:left; border:1px solid red;width:800px; height:800px; margin-right:100px; font-size:17px; font-family:'Comic Sans MS';">
 
 
 </div>     
@@ -194,42 +194,7 @@ var times = ${times};
 								 countDown(0,0,times,'theTime');
 					        	 startpage();
 							 }else{
-							 	$("#category_list").show();
-								 var bt
-									$(".form-group*").on("mouseover","div",function(){
-									 	 bt = $(this);
-									 	 bt.draggable();
-									 	 bt.css( 'cursor', 'move' )
-									    bt.mousedown(function(){ // mousedown 이벤트 생성
-									        	$(this).css('z-index', -1); // 클릭한 이미지만 z-index 증가시킴D
-									 	});   
-									   		bt.mouseup(function(){ // mousedown 이벤트 생성
-									 	        	$(this).css('z-index', 0); // 클릭한 이미지만 z-index 증가시킴D
-											});   
-									});
-	
-							 		$('.table*').on("mouseup", "p", function(){
-							 			var btt = $(this).text();
-							 			var tttt = bt.children('textarea').val()
-							  			//alert(tttt);
-							 			$.ajax({
-							 				url : "categoryupdate",
-							 				data : {
-							 						bwc_content : btt,
-							 						bwi_content : tttt
-							 						},
-							 				type : "post",
-							 				dataType : "text",
-							 				success : function(data){
-							 					alert("카테고리 설정이 완료되었습니다.");
-							 			
-							 				},
-							 				error: function(){
-							 					alert("error");
-							 				}
-							 			});
-							 			 bt.remove('div');
-							 		}); 
+								 $("#category_list").show();
 							 }
 				        	 
 				        	
@@ -249,6 +214,48 @@ var times = ${times};
 		 }
 
 		 }
+		 
+			 	
+				 var bt
+					$(".form-group*").on("mouseover","div",function(){
+						if(countCk == count){
+					 	 bt = $(this);
+					 	 bt.draggable();
+					 	 bt.css( 'cursor', 'move' )
+					     bt.mousedown(function(){ // mousedown 이벤트 생성
+					        	$(this).css('z-index', -1); // 클릭한 이미지만 z-index 증가시킴D
+					 	 });      
+					   		bt.mouseup(function(){ // mousedown 이벤트 생성
+					 	        	$(this).css('z-index', 1); // 클릭한 이미지만 z-index 증가시킴D
+							}); 
+						}
+					});
+
+			 		$('.table*').on("mouseup", "p", function(){
+			 			if(countCk == count){
+				 			var btt = $(this).text();
+				 			var tttt = bt.children('textarea').val();
+
+					 			$.ajax({
+					 				url : "categoryupdate",
+					 				data : {
+					 						bwc_content : btt,
+					 						bwi_content : tttt
+					 						},
+					 				type : "post",
+					 				dataType : "text",
+					 				success : function(data){
+					 					alert("카테고리 설정이 완료되었습니다.");
+					 			
+					 				},
+					 				error: function(){
+					 					alert("error");
+					 				}
+					 			});
+				 			 bt.remove('div');
+			 			}
+			 		}); 
+			 
 
 		 function addLoadEvent(func) {
 		   var oldonload = window.onload;
@@ -453,15 +460,15 @@ var times = ${times};
 		  data : {bwc_content : $("#category_name").val()},
 		  dataType : "text",
 		  success : function(data){
-			  category = "<p class='category_align'>"+data+"</p>";			 
+			  category = "<p class='category_align' style='margin-top:20px; margin-left:20px;display:inline-block; width:25%; height:15%;'>"+data+"</p>";			 
 			  $("#category_list").append(category);
 			  location.href="#close";
-		  },
+		  },    
 		  error : function(data){
 			  alert("등록이 되지않았습니다.");
 		  }
 	  });
-  });
+  });  
   
 
 
