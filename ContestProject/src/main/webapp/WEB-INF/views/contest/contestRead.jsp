@@ -152,6 +152,7 @@
 	</style>
 	
 	<script>
+	
 	   $(document).ready(function(){
 	      var formObj = $("#readForm");
 	      
@@ -343,7 +344,7 @@
 							    </c:when>
 									<c:when test="${startdate <= nowdate && enddate >= nowdate}">
 									
-				       				<a href="submit?c_id=${contest.c_id }&t_id=${t_id}"><button  class="submit">접수</button></a>
+				       				<a href="submit?c_id=${contest.c_id }&t_id=${contest.t_id}"><button  class="submit">접수</button></a>
 				    			</c:when>
 									<c:when test="${startdate > nowdate}">
 									

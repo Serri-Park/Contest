@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
      <%@ taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-	<%@ taglib uri ="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+   <%@ taglib uri ="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -62,9 +62,9 @@
                         <li><a href="#">Gallery</a></li>
                         <li><a href="../listPage">Community</a></li>
                         <li><a href="../PlaceList">장소대여</a></li>
-	 <c:if test="${empty sessionScope.u_id}">
-<!-- 	        <li><a href="join"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li> -->
-	        <li><a href="#" data-toggle="modal" data-target="#login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+    <c:if test="${empty sessionScope.u_id}">
+<!--            <li><a href="join"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li> -->
+           <li><a href="#" data-toggle="modal" data-target="#login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
        
 </c:if> 
 <c:if test="${not empty sessionScope.u_id}"> <!-- sessionScopre.id가 있으면 -->
@@ -111,7 +111,7 @@
             </div>
           
         
-     <span class='text-center' ><a href="../missingPassword" class="text-sm">비밀번호 찾기</a></span>&nbsp;&nbsp;&nbsp;	
+     <span class='text-center' ><a href="../missingPassword" class="text-sm">비밀번호 찾기</a></span>&nbsp;&nbsp;&nbsp;   
             <span class='text-center'>
             <a href="../MIssingID" class="text-sm">아이디  찾기</a></span>
            

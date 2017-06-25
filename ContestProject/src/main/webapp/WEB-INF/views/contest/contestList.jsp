@@ -126,7 +126,7 @@
 					<tr>
 						<td>
 							<a href="${contest.c_id}" class="title">${contest.c_name }</a>
-						</td>				
+						</td>					
 						<td>${contest.c_host }</td>
 						<td>
 							<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${contest.c_startdate}" var="startdate"/>
@@ -236,7 +236,7 @@
 			
 			if(dateCompare==null) {dateCompare="all";}
 			if(categoryCompare==null) {categoryCompare="allCategory";}
-			
+			$("<input type='hidden' name ='t_id' value='"+'${contest.t_id}'+"'>").appendTo(pageForm);
 			$("<input type='hidden' name ='c_id' value='"+c_id+"'>").appendTo(pageForm);
 			$("<input type='hidden' name ='dateState' value='"+dateCompare+"'>").appendTo(pageForm)
 			$("<input type='hidden' name ='category' value='"+categoryCompare+"'>").appendTo(pageForm);

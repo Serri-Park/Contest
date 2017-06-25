@@ -86,8 +86,9 @@ public class ContestController {
 	}
 
 	@RequestMapping(value="contestRead", method=RequestMethod.GET)
-	public String contestRead(@RequestParam(value="c_id") int c_id, @ModelAttribute Criteria criteria, Model model) throws Exception{
+	public String contestRead(@RequestParam(value="c_id") int c_id, int t_id, @ModelAttribute Criteria criteria, Model model) throws Exception{
 		Contest contest = service.read(c_id);
+		contest.setT_id(t_id);
 		model.addAttribute("contest", contest);
 		return "contest/contestRead";
 	}
@@ -123,9 +124,10 @@ public class ContestController {
 		return "redirect:contestRead";
 	}
 	@RequestMapping(value="submit", method=RequestMethod.GET)
-	public String submit(Model model,int c_id) throws Exception {
+	public String submit(Model model,int c_id, int t_id) throws Exception {
 	      Contest contest=new Contest();
 	         contest.setC_id(c_id);
+	         contest.setT_id(t_id);
               
 	         System.out.println(contest.getC_id());
 		 contest = service.read(c_id);
@@ -158,7 +160,7 @@ public class ContestController {
 		       
               		service.insertwork(work);
               	  System.out.println(work.getW_id());
-		return "redirect:success";
+		return "redirect:contestList";
 	}
 	
 	
