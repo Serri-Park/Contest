@@ -211,8 +211,13 @@ img{
 					
 					<a href="ScheMain?t_id=${sessionScope.t_id}">
 						<button id="conference" class="btn btn-danger">유저캘린더</button></a>
-					<a href="contestList?t_id=${t_id}">
-						<button id="conference" class="btn btn-danger">접수</button></a>
+					
+					<!-- 참가자팀 팀장만 보기 -->
+					<c:if test="${Rights.m_rights == 1}">
+						<a href="contestList?t_id=${t_id}">
+							<button id="conference" class="btn btn-danger">접수</button></a>
+					</c:if>
+					<!--  -->
 					<a href="bwlist?t_id=${t_id}&u_id=${sessionScope.u_id }" class="btn btn-default" id="navproject" style="text-decoration:none;">My Project</a>
 	
 				</c:if>

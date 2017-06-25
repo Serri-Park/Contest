@@ -10,26 +10,28 @@
 </head>
 <body>
 <%@include file="./bwnav.jsp"%>
-<%@include file="./chat.jsp"%>
-   
-   <canvas id="canvas" width="1000px" height="500px" style="float:left;box-shadow:0 0 10px #e31937;border-radius:10px; margin-left:18%; margin-top:3%; border:2px solid #e31937; background-color:rgb(245,245,245); display:inline;">
-   </canvas>
+<%@include file="./chat.jsp"%>  
 
-   <div id="toolbars" style="float:left; width:200px; height:200px; margin-top:50px; margin-left:10px;display:inline;">
+   <div id="toolbars" style="float:left; width:800px; margin-left:25%; margin-top:50px;display:inline;">
        <!-- 도트크기 -->
-      <select id="dot">
+      <select id="dot" style="display:inline-block; width:100px;">
            <option value="1">1px</option>
-           <option value="2">2px</option>
+           <option value="2">2px</option>  
            <option value="5">5px</option>
            <option value="10">10px</option>
        </select>
        <!-- 색깔 -->
-       <input type="color" id="color" value="#000000" />
-       <button id="btnDel">지우기</button>
-   <button type="button" style="width:100px; margin-left:270px;" class="controls" onclick="saveCanvas()">저장 </button>
-     <button type="button" style="margin-left:10px" class="controls" onclick="loadCanvasClicked(event)">불러오기</button>
-     <input type="file" id="canvas_file" value="캔버스" style="display:none;" onchange="loadCanvas(this)"/>
+       <input type="color" id="color" value="#000000" style="display:inline-block; width:100px;"/>
+       <button id="btnDel" style="display:inline-block; width:100px;">지우기</button>
+   <button type="button" style="display:inline-block; width:100px;" class="controls" onclick="saveCanvas()">저장 </button>
+     <button type="button" style="display:inline-block; width:100px;" class="controls" onclick="loadCanvasClicked(event)">불러오기</button>
+    <!--  <input type="file" id="canvas_file" value="캔버스" style="display:inline-block; width:100px;" onchange="loadCanvas(this)"/> -->
   </div>
+  <br>
+   <canvas id="canvas" width="1000px" height="500px" style="float:left;box-shadow:0 0 10px #e31937;border-radius:10px; margin-left:25%;border:2px solid #e31937; background-color:rgb(245,245,245); display:inline;">
+   </canvas>
+
+   
    <script type="text/javascript">
    var posX = 0;
    var posY = 0;

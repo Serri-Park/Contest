@@ -416,7 +416,7 @@ $(document).ready(function() {
 						</div>	
 						
 						<input type="submit" value="작성" class="form-control">
-<input type="hidden" class="t_id" name="t_id" value="${tid}">
+<input type="hidden" class="t_id" name="t_id" value="${t_id}">
 					</form>
 				</div>
 

@@ -18,9 +18,9 @@
 				<button class="btn btn-default" type="button" id="conncet_server" style="height:40px; color:red;">서버연결</button>
 			</span>
 		</div>
-	</div> -->
-
-<div class="note blue" style="width:300px; height:80px; right:20px; top:700px; margin-bottom:-50px; background-color:#e2e2e2; z-index:1;">
+	</div> -->  
+    
+<div class="note blue" style="width:300px; height:80px; right:20px; top:70%; margin-bottom:-50px; background-color:#e2e2e2; z-index:1;">
 <p style="color:#e31937; font-size :20px; font-family:'Comic Sans MS';">Chat</p>
 	<div class="well" id="msg" style="overflow-x:hidden; overflow-y:scroll; width:300px; height:80px; padding:1px;"></div>
 	
@@ -64,7 +64,7 @@
         $(function(){
             	var clientName =  "박세환";  // $("#client_name").val();
 				if ("WebSocket" in window) {
-					websocket = new WebSocket("ws://172.20.10.145:8080/second/echo?name=${sessionScope.u_id}&t_id= ${sessionScope.t_id}");
+					websocket = new WebSocket("ws://172.19.2.235:8080/second/echo?name=${sessionScope.u_id}&t_id= ${sessionScope.t_id}");
 					
 				}
             
@@ -98,7 +98,7 @@
                 	
                 	times = evnt.data.substr(7,1);
                 	console.log("소켓 실행됬습니다.");
-                	countDown(0,0,times,'theTime');
+                	countDown(0,times,0,'theTime');
                 	
                 	}else{
                     $("#msg").html($("#msg").html() + "<br/>" + evnt.data);
