@@ -307,7 +307,7 @@ public class EvaluationController {
       
       List<Manager> m = service.result_get(ep);
 
-<<<<<<< HEAD
+
 		for(int i = 0; i<m.size();i++){
 			m.get(i).setStage(ep.getEp_stage()-1);
 			System.out.println("�떒怨�:" + m.get(i).getStage());
@@ -565,5 +565,5 @@ public class EvaluationController {
       entity=new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
       return entity;
    }
->>>>>>> 288dec7e7d609758af15da116323fc46a096b1bf
+
 } 

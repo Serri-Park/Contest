@@ -48,7 +48,7 @@
       where a.w_result =#{ep_stage}-1
       limit #{startNum},#{endNum}
 
-<<<<<<< HEAD
+
 	</select>
 	<!-- 작품 갯수 -->
 	<select id="cnt_work" resultType="int">
@@ -248,8 +248,8 @@
 						order by c_id desc
 						limit 0,1)
 	</select>
-=======
-   </select>
+
+
    <!-- 작품 갯수 -->
    <select id="cnt_work" resultType="int">
    select count(r.c_id)
