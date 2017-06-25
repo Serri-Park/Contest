@@ -178,9 +178,10 @@
 					<td>${el.el_name }(배점 : ${el.el_score})</td>
 					<td class="form-inline cover">
 						<input type="number" class="form-control score" max="${el.el_score}" maxlength="3" oninput="maxLengthCheck(this)"
-						style="width:60%;" value=""/>
+						style="width:50%;" value=""/>
 						<button class="ten btn btn-default" data-btn="10" style="position: reative;">10</button>
 						<button class="one btn btn-default" data-btn="1" style="position: reative;">1</button>
+						<button class="one btn btn-default" data-btn="0" style="position: reative;">0</button>
 					</td>
 				</tr>
 			</c:forEach>
@@ -323,7 +324,7 @@
 				s = Number(result.val()) + Number(s);
 				result.val(s);   
 			} else if(0 == s){
-				var result = $(this).prev().prev();
+				var result = $(this).prev().prev().prev();
 				s =Number(s);
 				result.val(s);   
 				
