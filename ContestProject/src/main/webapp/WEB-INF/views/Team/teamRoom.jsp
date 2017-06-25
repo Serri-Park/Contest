@@ -230,11 +230,11 @@ img{
 				</c:if>
 				<c:if test="${Rights.m_rights == 3}">
 					
-					<c:if test="${manage.ep_how==null}">
+					<c:if test="${manage.ep_state==1}">
 						<button class="btn btn-default" id="evalPage">평가단계설정</button>
 					</c:if>
-					
-					<c:if test="${manage.ep_how!=null}">
+				
+					<c:if test="${manage.ep_state==0}">
 						<button class="btn btn-default" id="ePageModify">평가단계수정</button>
 					</c:if>
 					<button class="btn btn-default" id="manager">평가매니저</button>

@@ -18,73 +18,59 @@
 	margin: 0;
 	padding: 0;
 }
-
+@media only screen and (max-width: 1000px) {
+    #media {
+        display:none;
+    }
+}
 #form {
 	margin: 5% 10% 10% 20%;
 	min-height: 300px;
 }
 </style>
    <script type="text/javascript">
-   	$(document).ready(function(){
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawVisualization);
-   
-    var data = {"t_id":${t_id}};
-				function drawVisualization() {
-					$.ajax({
-						url : "totalPro",
-						dataType:"json",
-						data:JSON.stringify(data),  
-						type: "POST",  
-						 headers:{
-					            "Content-Type":"application/json",
-					            "X-HTTP-Method-Override":"POST"
-					         },
-						success:function(data) {
-							var data1;
-							console.log(data);
-							 data1 = new google.visualization.DataTable();
-				               data1.addColumn('string', '진행상황');
-				               data1.addColumn('number', '진행개수');
-				               data1.addRows(data.length);
-				               for(var i=0;i<data.length;i++){
-				            	  data1.setCell(i, 0, data[i].u_id);  
-				            	  data1.setCell(i, 1, data[i].allCnt); 
-				               }
-							var options = {
-								title : '전체 평가 진행 상황',
-								vAxis : {title : '',  
-									viewWindowMode:'explicit',
-			                          viewWindow: {
-			                            max:${cnt_work},
-			                            min:0     }  
-			                            },
-								
-								hAxis : {title : '총 작품개수 : '+data.length},
-								seriesType : 'bars',
-								series : {1 : {type : 'line'}}
-							};  
-							console.log(data1);
-							var chart = new google.visualization.ComboChart(
-									document.getElementById('chart_div'));
-							chart.draw(data1, options);
-						},
-						erorr:function(data){
-							alert("실패:"+data);
-						}
-					});
-				}
-   	});
-			</script>    
+  	   google.charts.load('current', {
+	      'packages' : [ 'corechart' ]
+	   });
+	   google.charts.setOnLoadCallback(drawChart);
+	   function drawChart() {
+	       var data = google.visualization.arrayToDataTable([
+        	['평가진행수', '현재 단계 평가 진행 개수'],
+         	['작품 미평가 개수',   ${cha_cnt}],
+        	['평가 진행한 개수',   ${cnt_eval}],
+       	]);
+	        var options = {
+	               title: '현재 단계 평가 진행 개수'
+	              };
+	                   
+	                     var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+	                     chart.draw(data, options);
+	          } 
+   </script>    
 </head>
 <body>
 	  
-	<div id="form">
-	전체 평가 진행 상황 ( ${total_cnt} / ${cnt_eval} )
-	 <div id="chart_div" style="width:900px; height: 500px; border:1px solid black;border-radius:4px;"></div>
+	<div id="form"> 
+	 <div id="piechart" style="width:600px;position: reative;float: left; height: 350px; border:1px solid black;border-radius:4px;"></div>
+	<div id ="media" style="padding:8% 3%;width:250px; height: 350px;position: reative;float: left;border:1px solid black;border-radius:4px;">
+	전체 평가 진행 상황 ( ${cnt_eval} / ${total_cnt} )<br><br>
+	심사위원 별 진행상황<br>
+		<div style="margin-left:20px;height: 350px; font-size:20px;position: reative;float: left; ">
+		<c:forEach items="${member}" var="m">
+				${m.u_id}<br>
+		</c:forEach>
+		</div>
+		<div style="height: 350px; font-size:20px;position: reative;float: left; ">	
+			<c:forEach items="${allCnt}" var="allCnt">
+					 : ( ${allCnt.allCnt} / ${cnt_work} )<br>
+				</c:forEach>
+		</div>
+	</div>
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 	
-	나의 평가 진행 상황 ( ${cnt_work} / ${cnt_u_work} )
-		<table class="table table-hover" style="width:900px;"> 
+		<table class="table table-hover" style="width:80%;"> 
+		나의 평가 진행 상황 ( ${cnt_u_work} / ${cnt_work} )
 			<tr>
 				<th>팀 이름</th>
 				<th>작품명</th>
@@ -111,7 +97,7 @@
 								<td>미채점</td>
 								</c:if>
 								<c:if test="${pro.e_score != 0}">
-							<td>${pro.te_score}</td>
+							<td>총점 : ${pro.te_score}</td>
 							</c:if>
 						</c:if>
 				</tr>

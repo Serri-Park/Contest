@@ -195,5 +195,15 @@ public class EvaluationServiceImpl implements EvaluationService{
 		// TODO Auto-generated method stub
 		return dao.getu_id(t_id);
 	}
+	@Override
+	public List<Manager> details(Manager m) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.details(m);
+	}
+	@Override
+	public List<Manager> pfgraph(int t_id) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.pfgraph(t_id);
+	}
 
 }
