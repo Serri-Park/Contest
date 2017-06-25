@@ -156,15 +156,10 @@
 				</div>
 			</div>
 		</c:if>
-		<c:if test="${get_id!=null}">
-			<div id="grandeBox">
-				<div id="modify">
-					<button class="btn btn-default" id="btn_Modify">Modify</button>
-				</div>
-			</div>
-		</c:if>
+		
 	</c:if>
 	<c:if test="${m.ep_how == '상세채점 방법' }">
+	<c:if test="${get_id==null}">
 	<div id="grandeBox1">
 	<table class="table table-hover" style="width:70%;"> 
 			<tr>
@@ -192,6 +187,14 @@
 				</div>
 			</div>
 	</c:if>
+	</c:if>
+	<c:if test="${get_id!=null}">
+			<div id="grandeBox">
+				<div id="modify">
+					<button class="btn btn-default" id="btn_Modify">Modify</button>
+				</div>
+			</div>
+		</c:if>
 	</div>
 	<div id="modal01" class="w3-modal" onclick="this.style.display='none'">
 		<span class="w3-button w3-hover-red w3-xlarge w3-display-topright">&times;</span>
@@ -256,7 +259,7 @@
 				  			str += "\"w_id\":";
 				  			str += "\""+setting[count][2]+"\",";
 				  			str += "\"u_id\":";
-				  			str += setting[count][3]+"},";
+				  			str += "\""+setting[count][3]+"\"},";
 				  		}
 				  		else{
 				  			str += "{\"el_id\":"
@@ -266,13 +269,31 @@
 					  			str += "\"w_id\":";
 					  			str += "\""+setting[count][2]+"\",";
 					  			str += "\"u_id\":";
-					  			str += setting[count][3]+"}]";
+					  			str += "\""+setting[count][3]+"\"}]"; 
 				  		}
 				  	}
-				  //	str += "}";
-				  	
-				  	
 				  	alert(str);
+				  	$.ajax({
+						url: "sgrande", 
+						type: "POST",  
+					    data :str,
+					    headers:{
+				            "Content-Type":"application/json",
+				            "X-HTTP-Method-Override":"POST"
+				         },
+					    dataType: "text", 
+					    
+					     success: function(data){
+					    	 console.log(data)
+					    	 alert("평가입력되었습니다");
+						        $("form").attr("action", "next");
+								$("form").attr("method", "get");
+								$("form").submit();
+					 	},
+					 	 error:function(data){
+					          alert("error:"+data);
+					        }
+					  });
 				}else{
 					alert("점수를 다시 설정해주세요");
 					location.reload();

@@ -286,7 +286,17 @@ public class EvaluationController {
 			m.setE_score(score);	
 		}
 		service.grande(m);
-		return new ResponseEntity<>("�셿猷�.", HttpStatus.OK);
+		return new ResponseEntity<>("성공", HttpStatus.OK);
+	
+	}
+	@RequestMapping(value = "screen/sgrande", method = RequestMethod.POST)
+	public ResponseEntity<String> sgrande(@RequestBody Manager[] list,Model model) throws Exception {
+		System.out.println("before");
+		for(int i=0;i<list.length;i++){
+			service.grande(list[i]);
+		}
+		System.out.println("after");
+		return new ResponseEntity<>("성공", HttpStatus.OK);
 	
 	}
 	

@@ -113,7 +113,7 @@
 	<select id="get_work_id" resultType="manager">
 		select *
 		from work
-		where w_id = (select w_id
+		where w_id in (select w_id
 					from evaluation
 					where w_id = #{w_id} and u_id = #{u_id})
 	</select>
