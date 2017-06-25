@@ -35,4 +35,5 @@ public interface EvaluationDAO {
 	public List<Manager> epEl(int t_id) throws Exception;
 	public int ep_id(int c_id) throws Exception;
 	public void elistCreate(Manager m) throws Exception;
+	public List<Manager> getu_id(int t_id) throws Exception;
 }

@@ -164,13 +164,11 @@
 	<div id="grandeBox1">
 	<table class="table table-hover" style="width:70%;"> 
 			<tr>
-				<th>번호</th>
 				<th>평가항목</th>
 				<th>채점</th>
 			</tr>
 		<c:forEach items="${list}" var="el">
 				<tr>
-					<td class="cnt"></td>
 					<td>${el.el_name }(배점 : ${el.el_score})</td>
 					<td class="form-inline cover">
 						<input type="number" class="form-control score" max="${el.el_score}" maxlength="3" oninput="maxLengthCheck(this)"
@@ -273,7 +271,7 @@
 					  			str += "\""+setting[count][3]+"\"}]"; 
 				  		}
 				  	}
-				  	alert(str);
+				//  	alert(str);
 				  	$.ajax({
 						url: "sgrande", 
 						type: "POST",  

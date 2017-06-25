@@ -36,7 +36,7 @@
 					<td>${m.t_name }</td>
 					<td>${m.w_name }</td>
 					<c:if test="${m.w_result == 0}">
-					<td>불통과</td>
+					<td>-</td>
 					</c:if>
 					<c:if test="${m.w_result != 0}">
 					<td>${m.w_result}차 통과</td>

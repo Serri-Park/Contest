@@ -383,12 +383,16 @@ public class EvaluationController {
 		c.setU_id(id);
 		c.setT_id(t_id);
 		c.setEl_id(m1.get(0).getEl_id());
+		c.setEp_id(m1.get(0).getEp_id());
+		c.setEp_stage(m1.get(0).getEp_stage());
 		int cnt_u_work = service.cnt_u_work(c);
 		List<Manager> list = service.progress(c);
+		System.out.println(list.get(0));
 		model.addAttribute("cnt_u_work",cnt_u_work);
 		model.addAttribute("cnt_work",cnt_work);
 		model.addAttribute("total_cnt",total_cnt);
 		model.addAttribute("cnt_eval",cnt_eval);
+		model.addAttribute("ep_how",m1.get(0).getEp_how());
 		model.addAttribute("t_id",t_id);
 		model.addAttribute("list",list);
 	}
@@ -422,6 +426,7 @@ public class EvaluationController {
 		m1.get(i).setT_id(t_id);
 		m1.get(0).setT_id(m.getT_id());
 		List<Manager> list = service.cnt_alleval(m1.get(0));
+		
 		//System.out.println(list.get(1).getAllCnt());
 		return list;
 	}

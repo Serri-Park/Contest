@@ -68,7 +68,7 @@
 							var chart = new google.visualization.ComboChart(
 									document.getElementById('chart_div'));
 							chart.draw(data1, options);
-						},  
+						},
 						erorr:function(data){
 							alert("실패:"+data);
 						}
@@ -95,15 +95,25 @@
 				<tr>
 					<td>${pro.t_name }</td>
 					<td>${pro.w_name }</td>
-					<c:if test="${pro.e_score == 0}">
-					<td>미채점</td>
-					</c:if>
-					<c:if test="${pro.e_score == 1}">
-					<td>Fail</td>
-					</c:if>
-					<c:if test="${pro.e_score == 100}">
-					<td>Pass</td>
-					</c:if>
+						<c:if test="${ep_how == 'Pass or Fail 방법' }">
+							<c:if test="${pro.e_score == 0}">
+								<td>미채점</td>
+								</c:if>
+								<c:if test="${pro.e_score == 1}">
+								<td>Fail</td>
+								</c:if>
+								<c:if test="${pro.e_score == 100}">
+								<td>Pass</td>
+							</c:if>
+						</c:if>
+						<c:if test="${ep_how == '상세채점 방법' }">
+								<c:if test="${pro.e_score == 0}">
+								<td>미채점</td>
+								</c:if>
+								<c:if test="${pro.e_score != 0}">
+							<td>${pro.te_score}</td>
+							</c:if>
+						</c:if>
 				</tr>
 
 

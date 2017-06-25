@@ -190,5 +190,10 @@ public class EvaluationServiceImpl implements EvaluationService{
 		// TODO Auto-generated method stub
 		dao.elistCreate(m);
 	}
+	@Override
+	public List<Manager> getu_id(int t_id) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.getu_id(t_id);
+	}
 
 }
