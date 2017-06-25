@@ -20,7 +20,7 @@
 		</div>
 	</div> -->
 
-<div class="note blue" style="width:300px; height:80px; right:20px; top:500px; margin-bottom:-50px; background-color:#e2e2e2; z-index:1;">
+<div class="note blue" style="width:300px; height:80px; right:20px; top:700px; margin-bottom:-50px; background-color:#e2e2e2; z-index:1;">
 <p style="color:#e31937; font-size :20px; font-family:'Comic Sans MS';">Chat</p>
 	<div class="well" id="msg" style="overflow-x:hidden; overflow-y:scroll; width:300px; height:80px; padding:1px;"></div>
 	

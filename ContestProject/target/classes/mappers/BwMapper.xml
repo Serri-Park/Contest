@@ -50,9 +50,10 @@
 	</select>
 	
 	<select id="idealist" resultType="IDEA">
-select a.bwi_content,b.bwc_content,a.u_id
+select b.bwc_content,a.bwi_content,a.u_id
 from (select bwi_content,bwc_id,u_id from bwidea natural join bwpage where bw_id = #{bw_id}) a, bwcategory b
 where a.bwc_id = b.bwc_id
+order by b.bwc_content
 	</select>
 	
 	<select id="count" resultType="Integer">
