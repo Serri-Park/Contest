@@ -107,7 +107,7 @@ public class ContestDAOImpl implements ContestDAO {
 		// TODO Auto-generated method stub
 		sql.insert(namespace+".submitInsert",receipt);
 	}
-
+	
 	@Override
 	public void insertwork(Work work) {
 		// TODO Auto-generated method stub
