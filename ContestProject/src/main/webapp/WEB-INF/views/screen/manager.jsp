@@ -143,12 +143,12 @@
 	<c:if test="${m.ep_how == 'Pass or Fail 방법' }">
 		<c:if test="${get_id==null}">
 			<div id="grandeBox">
-				<a class="btn icon-btn btn-primary"  href="#">
-				<span class="btn-glyphicon img-circle" id="btn_pass" data-btn="pass"><img alt="Pass" src="${pageContext.request.contextPath }/resources/upload/black-letter-p-20.png"></span>
+				<a class="btn icon-btn btn-primary" id="btn_pass" data-btn="pass" href="#">
+				<span class="btn-glyphicon img-circle" ><img alt="Pass" src="${pageContext.request.contextPath }/resources/upload/black-letter-p-20.png"></span>
 				Pass
 				</a>
-				<a class="btn icon-btn btn-warning"  href="#">
-				<span class="btn-glyphicon img-circle" id="btn_fail" data-btn="fail"><img alt="Fail" src="${pageContext.request.contextPath }/resources/upload/black-letter-f-20.png"></span>
+				<a class="btn icon-btn btn-warning" id="btn_fail" data-btn="fail" href="#">
+				<span class="btn-glyphicon img-circle" ><img alt="Fail" src="${pageContext.request.contextPath }/resources/upload/black-letter-f-20.png"></span>
 				Fail
 				</a>
 				<div id="modify" style="display: none">
@@ -174,7 +174,7 @@
 			</tr>
 		<c:forEach items="${list}" var="el">
 				<tr>
-					<td>1</td>
+					<td class="cnt"></td>
 					<td>${el.el_name }(배점 : ${el.el_score})</td>
 					<td class="form-inline cover">
 						<input type="number" class="form-control score" max="${el.el_score}" maxlength="3" oninput="maxLengthCheck(this)"
@@ -209,9 +209,84 @@
 		    object.value = object.value.slice(0, object.maxLength);
 		   }    
 		  }
+	 
+	
+	 $("#commit").on("click",function(){
+		 $.ajax({
+			url: "getEp", 
+			type: "POST",  
+			data :JSON.stringify({
+			   "t_id":${t_id}
+			}),
+			headers:{
+		       "Content-Type":"application/json",
+		       "X-HTTP-Method-Override":"POST"
+		    },
+			dataType: "json",
+			success: function(data){
+				var check=true;
+				for(var i = 0; i<data.list.length;i++){
+					console.log(data.list[i].el_score);
+					var x = $(".score").eq(i).val();
+					if(data.list[i].el_score < x || x ==""){
+						
+						check=false;
+					}
+				}
+				if(check){
+					var str = "[";
+					var stageNum = $(".score").length;
+					var count =0;
+					var setting = new Array();
+				  	for(count;count<stageNum;count++){
+				  		setting[count] = new Array();
+				  		//alert($(".el_name").eq(count).val());
+				  	
+				  			setting[count][0] = data.list[count].el_id;
+				  			setting[count][1] = $(".score").eq(count).val();
+				  			setting[count][2] = "${work.w_id}";
+				  			setting[count][3] = "${sessionScope.u_id}";
+				  		
+				  		if(count+1!=stageNum){
+				  			str += "{\"el_id\":"
+				  			str += setting[count][0]+","
+				  			str += "\"e_score\":";
+				  			str += setting[count][1]+",";
+				  			str += "\"w_id\":";
+				  			str += "\""+setting[count][2]+"\",";
+				  			str += "\"u_id\":";
+				  			str += setting[count][3]+"},";
+				  		}
+				  		else{
+				  			str += "{\"el_id\":"
+					  			str += setting[count][0]+","
+					  			str += "\"e_score\":";
+					  			str += setting[count][1]+",";
+					  			str += "\"w_id\":";
+					  			str += "\""+setting[count][2]+"\",";
+					  			str += "\"u_id\":";
+					  			str += setting[count][3]+"}]";
+				  		}
+				  	}
+				  //	str += "}";
+				  	
+				  	
+				  	alert(str);
+				}else{
+					alert("점수를 다시 설정해주세요");
+					location.reload();
+				}
+			},
+			error:function(data){
+			   alert("error:"+data);
+			}
+			  });
+		});
 	var check = ${b};
 	if(check==true){  
 	$(document).ready(function(){ 
+		var dd = $(".cnt").indexOf;
+		console.log(dd)
 		$('#confirm_content').confirmModal({
 		topOffset : 0,
 		onOkBut : function() {
@@ -242,13 +317,16 @@
 				var result = $(this).prev();
 				s = Number(result.val()) + Number(s);
 				result.val(s);   
-				console.log(result.val());
 			}    
-			else{
+			else if(1 == s){
 				var result = $(this).prev().prev();
 				s = Number(result.val()) + Number(s);
 				result.val(s);   
-				console.log(result.val());
+			} else if(0 == s){
+				var result = $(this).prev().prev();
+				s =Number(s);
+				result.val(s);   
+				
 			}
 		});
 		$("#next").on("click", function() {

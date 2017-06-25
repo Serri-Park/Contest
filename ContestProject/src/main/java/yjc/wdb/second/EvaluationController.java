@@ -421,5 +421,19 @@ public class EvaluationController {
 		model.addAttribute("t_id",t_id);
 		model.addAttribute("m",m);
 	}
+	@RequestMapping(value = "screen/getEp", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<Map<String,Object>> getEp(@RequestBody Manager m,Model model) throws Exception {
+		ResponseEntity<Map<String,Object>> entity= null;
+		List<Manager> ep = service.epEl(m.getT_id());
+		//Map<String, Object> retVal = new HashMap<String, Object>();
+		Map<String, Object> map= new HashMap<>();
+		
+		map.put("list", ep);
+		model.addAttribute("list",ep);
+		
+		entity=new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+		return entity;
+	}
 } 
 

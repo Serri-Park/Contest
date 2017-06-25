@@ -65,7 +65,8 @@
 	<select id="cnt_m" resultType="int">
 		select count(m_id)
 		from member m
-		where t_id = #{t_id};
+		where t_id = #{t_id}
+			and m_rights=3 or m_rights= 4;
 	</select>
 	<!-- 심사 내역 갯수 -->
 	<select id="cnt_eval" resultType="int">
