@@ -361,9 +361,9 @@
 		      },
 		      error: function(data) {
 		        alert("error");
-		      }
+		      } 
 		      
-			});
+			});  
 		});
 		$("#btn_fail").on("click",function(){
 			var button = $("#btn_fail").attr("data-btn");
