@@ -190,7 +190,7 @@ img{
 							<button id="claimant" class="btn btn-warning">심사위원지원자보기</button>
 							<a href="ScheMain?t_id=${t_id }">
 						<button id="conference" class="btn btn-danger">캘린더</button></a>
-							<a href="contestForm?t_id=${t_id }" ><button class="btn btn-default">공모전 개최</button></a>
+							<a href="contestForm?t_id=${t_id }"><button class="btn btn-default">공모전 개최</button></a>
 						</c:if>
 					
 				</c:if>	
@@ -366,7 +366,6 @@ img{
 		function dropout() {
 			event.preventDefault()
 			var t_id = $(".t_id").val();
-			alert(t_id);
 			if (confirm("정말 탈퇴하시겠습니까??") == true) { //확인
 				$.ajax({
 					type : 'post',

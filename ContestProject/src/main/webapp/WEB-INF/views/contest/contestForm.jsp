@@ -172,7 +172,7 @@
 <br>
 <div style="margin: 0% 10%">
 	<div id="cnav">
-		<form id="../contestList" method="get">
+		<form id="contestList" method="get">
 			<div class="list-group">  
 				<ul class="nav nav-pills nav-stacked">
 					<li class="list-group-item list-group-item-success">분야별</li>
@@ -725,7 +725,7 @@
 			
 			$(".uploadList .delbtn").each(function(index){
 				//drag drop 한 만큼 이미지 갯수가 있을텐데 그것만큼 똑같은 함수를 실행!  자동으로 인데스를 준다.
-			    str+="<input type='hidden' name='f_name["+index+"]' value='"+$(this).attr("href")+"'> ";
+			    str+="<input type='hidden' name='f_name' value='"+$(this).attr("href")+"'> ";
 			});	
 			str+="<input type='hidden' name='c_poster' value='"+$(".posterList .delbtn").attr("href")+"'> ";
 			form.append(str);

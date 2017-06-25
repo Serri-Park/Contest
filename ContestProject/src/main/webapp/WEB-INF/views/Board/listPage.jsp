@@ -11,6 +11,38 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<title>Insert title here</title>
 </head>
+<style>
+	#newBtn {
+		margin: 10px;
+	}
+	.greenActive { 
+		color: #00B700;
+	}
+	.nav-stacked > li[role=presentation] {
+		height: 25px;
+		text-align: left;
+	}
+	#cnav {
+		text-align: center;
+		float: left;
+		width: 20%;
+		height: 100%;
+		overflow: hidden;
+		
+	}
+	#pageForm {
+		margin-bottom:30px;
+		float: right;
+		text-align: center;
+	}
+	section {
+		padding-left: 5px;
+		float: right;
+		width: 80%;
+		height: 100%; 
+		overflow: hidden;
+	}
+</style>
 <body>
 <jsp:include page="../Member/top.jsp"></jsp:include>
 	
@@ -21,27 +53,20 @@
 		</script>
 	</c:if>
 
-<div style="margin:5% 15%">
-	<div class="form-group" align="center">
-		<button id ="menuAll" class="menuAll btn-default">전체글보기</button>
-		<button id ="menu1" class="menu1 btn-default">공지사항</button>
-		<button id ="menu2" class="menu2 btn-default">자유게시판</button>
-		<button id ="menu3" class="menu3 btn-default">수기</button>
-		<button id ="menu4" class="menu4 btn-default">Q&A</button>
-	</div>
-	<form id="pageForm" align="right" class="form-inline" style="margin-bottom:20px">
+<div style="margin:5% 15%;">   
+	<form id="pageForm" class="form-inline">
 		<input type="hidden" id="page" name="page" value="${criteria.page }">
 		<input type="hidden" name="recordsPerPage" value="${criteria.recordsPerPage }">
 		<div class="form-group">
 			<label>Menu Type:</label>
 			<select id="menuType" name="menuType" class="form-control">
 				<option value="0"
-					<c:out value="${criteria.menuType==null?'selected':''}"/>>
-				전체글보기
+					<c:out value="${criteria.menuType eq '0'?'selected':''}"/>>
+				전체글보기   
 				</option>
 				<option value="10"
 					<c:out value="${criteria.menuType eq '10'?'selected':''}"/>>
-				공지사항
+				공모전뉴스
 				</option>
 				<option value="20"
 					<c:out value="${criteria.menuType eq '20'?'selected':''}"/>>
@@ -49,11 +74,19 @@
 				</option>
 				<option value="30"
 					<c:out value="${criteria.menuType eq '30'?'selected':''}"/>>
-				수기
+				공모전수상작
 				</option>
 				<option value="40"
 					<c:out value="${criteria.menuType eq '40'?'selected':''}"/>>
-				Q&A
+				공모전Q&A
+				</option>
+				<option value="50"
+					<c:out value="${criteria.menuType eq '50'?'selected':''}"/>>
+				수상자인터뷰
+				</option>
+				<option value="60"
+					<c:out value="${criteria.menuType eq '60'?'selected':''}"/>>
+				주최사인터뷰
 				</option>
 			</select>
 		</div>
@@ -93,30 +126,56 @@
 		</div>
 		<div class="form-group">
 			<button id ="searchBtn" class="btn btn-default">Search</button>
-		</div>
+		</div>    
 	</form>
-	<table class="table">
-		<tr>
-			<th width="50px">글번호</th>
-			<th width="300px">제목</th>
-			<th width="70px">작성자</th>
-			<th width="100px">작성일</th>
-			<th width="50px">조회수</th>
-		</tr>
-		<c:forEach items="${list}" var="board">
+<br><br><br>
+
+
+	<div id="cnav">
+		<div class="list-group">  
+			<ul class="nav nav-pills nav-stacked">
+				<li class="list-group-item list-group-item-success">분야별</li>
+				<li role="presentation"><a href="" class="b_menuType
+				<c:out value="${criteria.menuType eq '0'?' greenActive':'' }"/>">전체보기</a></li>
+				<li role="presentation"><a href="10" class="b_menuType
+				<c:out value="${criteria.menuType eq '10'?' greenActive':'' }"/>">공모전뉴스</a></li>
+				<li role="presentation"><a href="20" class="b_menuType
+				<c:out value="${criteria.menuType eq '20'?' greenActive':'' }"/>">자유게시판</a></li>
+				<li role="presentation"><a href="30" class="b_menuType
+				<c:out value="${criteria.menuType eq '30'?' greenActive':'' }"/>">공모전수상작</a></li>
+				<li role="presentation"><a href="40" class="b_menuType
+				<c:out value="${criteria.menuType eq '40'?' greenActive':'' }"/>">공모전Q&A</a></li>
+				<li role="presentation"><a href="50" class="b_menuType
+				<c:out value="${criteria.menuType eq '50'?' greenActive':'' }"/>">수상자인터뷰</a></li>
+				<li role="presentation"><a href="60" class="b_menuType
+				<c:out value="${criteria.menuType eq '60'?' greenActive':'' }"/>">주최사인터뷰</a></li>
+			</ul>
+		</div>zxcsd
+	</div>   
+	<section>
+		<table class="table">
 			<tr>
-				<td>${board.b_id }</td>
-				<td>
-					<a href="read?b_id=${board.b_id}" class="title">${board.b_title }</a>
-				</td>
-				<td>${board.u_id }</td>
-				<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${board.b_regdate}" /></td>
-				<td>${board.b_hits }</td>
+				<th width="50px">글번호</th>
+				<th width="300px">제목</th>
+				<th width="70px">작성자</th>
+				<th width="100px">작성일</th>
+				<th width="50px">조회수</th>
 			</tr>
-		</c:forEach>
-			
-	</table>
-	<div class="container" align="center">
+			<c:forEach items="${list}" var="board">
+				<tr>
+					<td>${board.b_id }</td>
+					<td>
+						<a href="${board.b_id}" class="title">${board.b_title }</a>
+					</td>
+					<td>${board.u_id }</td>
+					<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${board.b_regdate}" /></td>
+					<td>${board.b_hits }</td>
+				</tr>
+			</c:forEach>
+				
+		</table>
+		
+	<div class="container" style="text-align: center;">
 		<ul class="pagination">
 			<c:if test="${criteria.prev }">
 				<li>
@@ -138,31 +197,53 @@
 			</c:if>
 		</ul>
 	</div>
-	<div align="right"><button id ="newBtn" class="btn btn-default">글쓰기</button></div>
+	<div align="right"><button id ="newBtn" class="btn btn-default">글쓰기</button></div>   
+	</section>
 </div>
 	<script>
-	var pageForm = $("#pageForm");
-	$("#newBtn").on("click", function(){
-		var categoryCompare = "${criteria.category}";
-		var dateCompare = "${criteria.dateState}";
-		if(dateCompare==null) {dateCompare="all";}
-		if(categoryCompare==null) {categoryCompare="allCategory";}
-		$("<input type='hidden' name ='dateState' value='"+dateCompare+"'>").appendTo(pageForm)
-		$("<input type='hidden' name ='category' value='"+categoryCompare+"'>").appendTo(pageForm);
-		pageForm.attr("action", "create");
-		pageForm.attr("method", "get");
-		pageForm.submit();
-	});		
-		$(".pagination li a").on("click", function(){
+		var pageForm = $("#pageForm");
+			$(".pagination li a").on("click", function(){
+				event.preventDefault();
+				
+				var targetPage = $(this).attr("href");
+				pageForm.find("[name=page]").val(targetPage);
+				pageForm.attr("action", "listPage");
+				pageForm.attr("method", "get");
+				$("#menuType").empty();
+				$("<input type='hidden' name ='b_id' value='"+targetPage+"'>").appendTo(pageForm);
+				$("<input type='hidden' name ='menuType' value='${criteria.menuType}'>").appendTo(pageForm);
+				pageForm.submit();
+			})
+			
+			$(".title").on("click",function(){
+				event.preventDefault();
+				var b_id = $(this).attr("href");
+				pageForm.attr("action","read");
+				pageForm.attr("method","get");
+				$("<input type='text' name ='b_id' value='"+b_id+"'>").appendTo(pageForm);
+				pageForm.submit();
+			});
+			$("#searchBtn").on("click", function(){
+				pageForm.attr("action", "listPage");
+				pageForm.attr("method", "get");
+				$("#page").val(1);
+				pageForm.submit();
+			})
+			$("#newBtn").on("click", function(){
+				pageForm.attr("action", "create");
+				pageForm.attr("method", "get");
+				pageForm.submit();
+			})
+			
+		$(".b_menuType").on("click", function(event){
 			event.preventDefault();
-			
-			var targetPage = $(this).attr("href");
-			pageForm.find("[name=page]").val(targetPage);
-			pageForm.attr("action", "placeList");
+			var menuType = $(this).attr("href")
+			$("#keyword").val("");
+			$("#searchType").empty();
+			$("#menuType").val(menuType);
+			pageForm.attr("action", "listPage");
 			pageForm.attr("method", "get");
-		
-			$("<input type='hidden' name ='p_id' value='"+targetPage+"'>").appendTo(pageForm);
-			
+			$("#page").val(1);
 			pageForm.submit();
 		});
 	</script>

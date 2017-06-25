@@ -59,7 +59,7 @@ public class ContestController {
 	}
 	
 	@RequestMapping(value="contestList",method=RequestMethod.GET)
-	public String contestList(Criteria criteria, Model model,Contest contest) throws Exception{
+	public String contestList(Criteria criteria, Model model,Contest contest, TeamVo teamvo) throws Exception{
 		
 	  Receipt receipt=new Receipt();
 		if(criteria.getCategory() == null){
@@ -78,18 +78,17 @@ public class ContestController {
 		
 		int totalCount = service.getSearchTotalCount(criteria);
 		
-		
 		criteria.setTotalCount(totalCount);	
 		model.addAttribute("criteria", criteria);
-
+		model.addAttribute("TeamVo",teamvo);
 		return "contest/contestList";
 	}
 
 	@RequestMapping(value="contestRead", method=RequestMethod.GET)
 	public String contestRead(@RequestParam(value="c_id") int c_id, int t_id, @ModelAttribute Criteria criteria, Model model) throws Exception{
 		Contest contest = service.read(c_id);
-		contest.setT_id(t_id);
 		model.addAttribute("contest", contest);
+	//	contest.setT_id(t_id);
 		return "contest/contestRead";
 	}
 

@@ -68,10 +68,12 @@
 				<option value="0"<c:out value="${criteria.menuType==null?'selected':''}"/>>
 					--------------------------
 				</option>
-				<option value="10"<c:out value="${criteria.menuType eq '10'?'selected':''}"/>>공지사항</option>
+				<option value="10"<c:out value="${criteria.menuType eq '10'?'selected':''}"/>>공모전뉴스</option>
 				<option value="20"<c:out value="${criteria.menuType eq '20'?'selected':''}"/>>자유게시판</option>
-				<option value="30"<c:out value="${criteria.menuType eq '30'?'selected':''}"/>>수기</option>
-				<option value="40"<c:out value="${criteria.menuType eq '40'?'selected':''}"/>>Q&A</option>
+				<option value="30"<c:out value="${criteria.menuType eq '30'?'selected':''}"/>>공모전수상작</option>
+				<option value="40"<c:out value="${criteria.menuType eq '40'?'selected':''}"/>>공모전Q&A</option>
+				<option value="50"<c:out value="${criteria.menuType eq '50'?'selected':''}"/>>수상자인터뷰</option>
+				<option value="60"<c:out value="${criteria.menuType eq '60'?'selected':''}"/>>주최사인터뷰</option>
 			</select>	
 		</div>
 		<div class="form-group">
@@ -84,7 +86,7 @@
 		</div>
 		<div class="writer">
 			<label for="writer">작성자</label>
-			<input type="text" class="form-control" id="writer" name="u_id" value=${u_id }> 
+			<input type="text" class="form-control" id="writer" name="u_id" value=${u_id } disabled> 
 		</div>
 		 
 		<div class="form-group" id="fs">
@@ -258,7 +260,7 @@
 			
 			$(".uploadList .delbtn").each(function(index){
 				//drag drop 한 만큼 이미지 갯수가 있을텐데 그것만큼 똑같은 함수를 실행!  자동으로 인데스를 준다.
-			    str+="<input type='hidden' name='f_name["+index+"]' value='"+$(this).attr("href")+"'> ";
+			    str+="<input type='hidden' name='f_name' value='"+$(this).attr("href")+"'> ";
 			});	
 			form.append(str);
 			form.get(0).submit();

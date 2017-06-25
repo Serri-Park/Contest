@@ -102,7 +102,9 @@
 		<input type="hidden" id="page" name="page" value="${criteria.page }">
 		<input type="hidden" name="recordsPerPage" value="${criteria.recordsPerPage }">
 		<section>
+			<c:if test="${contest.t_id != 0}">
 			<div align="right"><button id ="newBtn" class="btn btn-default">글쓰기</button></div>
+			</c:if>
 			<ul class="nav nav-pills nav-justified">
 				<li role="presentation"><a href="all" class="dateSelect
 				<c:out value="${criteria.dateState eq 'all'?' greenActive':'' }"/>" >전체보기</a></li>
@@ -274,7 +276,8 @@
 			var dateCompare = "${criteria.dateState}";
 			if(dateCompare==null) {dateCompare="all";}
 			if(categoryCompare==null) {categoryCompare="allCategory";}
-			$("<input type='hidden' name ='dateState' value='"+dateCompare+"'>").appendTo(pageForm)
+			$("<input type='hidden' name ='dateState' value='"+'${t_id}'+"'>").appendTo(pageForm);
+			$("<input type='hidden' name ='dateState' value='"+dateCompare+"'>").appendTo(pageForm);
 			$("<input type='hidden' name ='category' value='"+categoryCompare+"'>").appendTo(pageForm);
 			pageForm.attr("action", "contestForm");
 			pageForm.attr("method", "get");

@@ -343,8 +343,9 @@
 									D-day
 							    </c:when>
 									<c:when test="${startdate <= nowdate && enddate >= nowdate}">
-									
+									<c:if test="${contest.t_id != 0}">
 				       				<a href="submit?c_id=${contest.c_id }&t_id=${contest.t_id}"><button  class="submit">접수</button></a>
+				       				</c:if>
 				    			</c:when>
 									<c:when test="${startdate > nowdate}">
 									
@@ -368,7 +369,6 @@
 			</div>
 		
 			<span style="float: right; margin: 45px -5">
-				<button class="newBtn">글쓰기</button>
 				<c:if test="${contest.t_id eq t_id }">
 				<button class="btn-warning">수정</button>
 				<button class="btn-danger">삭제</button>
@@ -380,6 +380,7 @@
 	</section>
 </div>
 	<script>
+	
 	var c_id = ${contest.c_id};
 	var notImg = $("#posterLink").children('img').attr("src");
 	var poster = '${contest.c_poster }'
