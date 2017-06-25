@@ -196,4 +196,10 @@ private static final String namespace="yjc.wdb.EvalMapper";
 		sql.insert(namespace+".elistCreate",m);
 	}
 
+	@Override
+	public List<Manager> getu_id(int t_id) throws Exception {
+		// TODO Auto-generated method stub
+		return sql.selectList(namespace+".getu_id", t_id);
+	}
+
 }

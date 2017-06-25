@@ -1,6 +1,7 @@
 package yjc.wdb.second.bean;
 
 public class Manager {
+	private int te_score;
 	private String u_id;
 	//receipt ���̺�
 	private int c_id;
@@ -34,6 +35,14 @@ public class Manager {
 	private int stage;
 	
 	
+	public int getTe_score() {
+		return te_score;
+	}
+
+	public void setTe_score(int te_score) {
+		this.te_score = te_score;
+	}
+
 	public String getEl_name() {
 		return el_name;
 	}
