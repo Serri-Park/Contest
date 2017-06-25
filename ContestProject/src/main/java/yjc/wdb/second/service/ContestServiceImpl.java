@@ -103,7 +103,7 @@ public class ContestServiceImpl implements ContestService {
 		dao.insertSubmit(receipt);
 	
 	}
-
+	
 	@Override
 	public void insertwork(Work work) throws Exception {
 		// TODO Auto-generated method stub
