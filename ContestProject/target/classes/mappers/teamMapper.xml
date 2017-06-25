@@ -37,6 +37,7 @@
   <include refid="searchTypeFile"></include>
   <include refid="searchAreas"></include>
   <include refid="searchRights"></include>
+   <include refid="keyword"></include>
   ORDER BY e.t_regdate DESC;
  </select>
  
@@ -49,6 +50,7 @@
  <!--d.u_id != #{u_id} and   -->
  <include refid="searchTypeFile"></include>
  <include refid="searchAreas"></include>   
+  <include refid="keyword"></include>
   ORDER BY e.t_regdate DESC;
  </select>
   <!-- 참가자팀만 찾음 -->
@@ -59,6 +61,7 @@
  on (e.t_id = d.t_id) where d.m_rights = 1 and u.u_id=d.u_id
  <include refid="searchTypeFile"></include>
  <include refid="searchAreas"></include>
+  <include refid="keyword"></include>
   ORDER BY e.t_regdate DESC;
  </select>
  

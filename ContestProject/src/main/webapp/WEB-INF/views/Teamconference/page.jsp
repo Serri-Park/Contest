@@ -106,7 +106,7 @@ width:200px;font-size:20px;  text-align:center; font-family:'Comic Sans MS'; col
             <a class="close" href="#close"></a>
         </div>
  <br><br><br><br><br><br><br>
-<div class="table" id="category_list" style="display:none; float:left; border:1px solid red;width:800px; height:800px; margin-right:100px; font-size:17px; font-family:'Comic Sans MS';">
+<div class="table" id="category_list" style="display:none; float:left; border:3px solid red; width:800px; margin-right:100px; font-size:17px; font-family:'Comic Sans MS'; border-radius:5px;">
 
 
 </div>     
@@ -460,7 +460,7 @@ var times = ${times};
 		  data : {bwc_content : $("#category_name").val()},
 		  dataType : "text",
 		  success : function(data){
-			  category = "<p class='category_align' style='margin-top:20px; margin-left:20px;display:inline-block; width:25%; height:15%;'>"+data+"</p>";			 
+			  category = "<p class='category_align' style='margin-top:20px; margin-left:30px;display:inline-block; width:25%; height:15%; color:white;background-color:#e31937;'>"+data+"</p>";			 
 			  $("#category_list").append(category);
 			  location.href="#close";
 		  },    
