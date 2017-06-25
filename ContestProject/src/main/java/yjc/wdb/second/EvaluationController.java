@@ -41,273 +41,276 @@ import yjc.wdb.second.util.MediaUtils;
 
 @Controller
 public class EvaluationController {
-   private static final Logger logger = LoggerFactory.getLogger(EvaluationController.class);
+	private static final Logger logger = LoggerFactory.getLogger(EvaluationController.class);
 
-   @Resource(name="uploadPath")
-   private String uploadPath;
-   
-   @Inject
-   private EvaluationService service;
-   @Inject
-   private TeamService tservice;
-   
-   @RequestMapping(value = "screen/evalPage", method = RequestMethod.GET)
-   public void evalPage(Model model,int t_id) throws Exception {
-      
-      Manager manage =service.manager(t_id);
-      if(manage!=null){
-      model.addAttribute("t_id",t_id);
-      model.addAttribute("manage",manage);
-      Evaluation eval = service.read(manage.getC_id());
-       model.addAttribute("eval",eval);
-      }else{
-         Evaluation eval = service.read(t_id);
-          model.addAttribute("eval",eval);
-      }
-   }
-   @RequestMapping(value = "screen/elist", method = RequestMethod.GET)
-   public void elist(Model model,int t_id,int ep_id) throws Exception {
-      model.addAttribute("t_id",t_id);
-      model.addAttribute("ep_id",ep_id);
-   }
-   
-   @RequestMapping(value = "screen/ePageModify", method = RequestMethod.GET)
-   public void ePageModify(Model model,int t_id) throws Exception {
-      Manager manage =service.manager(t_id);
-      model.addAttribute("add",t_id);
-      List<Manager> m = service.get_epage(manage.getC_id());
-      model.addAttribute("getList", m);
-   }
-   /*@RequestMapping(value = "evalPage2", method = RequestMethod.POST)
-   @ResponseBody
+	@Resource(name="uploadPath")
+	private String uploadPath;
+	
+	@Inject
+	private EvaluationService service;
+	@Inject
+	private TeamService tservice;
+	
+	@RequestMapping(value = "screen/evalPage", method = RequestMethod.GET)
+	public void evalPage(Model model,int t_id) throws Exception {
+		
+		Manager manage =service.manager(t_id);
+		if(manage!=null){
+		model.addAttribute("t_id",t_id);
+		model.addAttribute("manage",manage);
+		Evaluation eval = service.read(manage.getC_id());
+	    model.addAttribute("eval",eval);
+		}else{
+			Evaluation eval = service.read(t_id);
+		    model.addAttribute("eval",eval);
+		}
+	}
+	@RequestMapping(value = "screen/elist", method = RequestMethod.GET)
+	public void elist(Model model,int t_id,int ep_id) throws Exception {
+		model.addAttribute("t_id",t_id);
+		model.addAttribute("ep_id",ep_id);
+	}
+	
+	@RequestMapping(value = "screen/ePageModify", method = RequestMethod.GET)
+	public void ePageModify(Model model,int t_id) throws Exception {
+		Manager manage =service.manager(t_id);
+		model.addAttribute("add",t_id);
+		List<Manager> m = service.get_epage(manage.getC_id());
+		model.addAttribute("getList", m);
+	}
+	/*@RequestMapping(value = "evalPage2", method = RequestMethod.POST)
+	@ResponseBody
    //public String evalPage(@RequestParam Map<String, Object> test ) {
-   public String evalPage2( @RequestBody List<MyEP> list ) {
-   //public String evalPage( @RequestBody MyEP[] list ) {
-      Evaluation eval = null;
-      //System.out.println(test);
-      System.out.println("evalPage!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-      System.out.println(list.size());
-      //System.out.println(list.length);
-      /*
-      System.out.println("test:"+ test);
-      System.out.println(test.get("test"));
+	public String evalPage2( @RequestBody List<MyEP> list ) {
+	//public String evalPage( @RequestBody MyEP[] list ) {
+		Evaluation eval = null;
+		//System.out.println(test);
+		System.out.println("evalPage!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		System.out.println(list.size());
+		//System.out.println(list.length);
+		/*
+		System.out.println("test:"+ test);
+		System.out.println(test.get("test"));
          for(int i=0;i<test.size();i++){
-            System.out.println(test.get(i));
+        	 System.out.println(test.get(i));
          }
-      
+		
         return "evalPage";
     }
-   */
-   @RequestMapping(value = "screen/evalPage", method = RequestMethod.POST,
-            produces = "text/plain;charset=UTF-8")
-   @ResponseBody
-   public ResponseEntity<String> evalPage(@RequestBody Evaluation[] list ) throws Exception {
-      System.out.println("ep_how : "+list[0].getEp_how());
-      Map<String, Object> map= new HashMap<>();
-      
-      String how = "";
-      for(int i=0;i<list.length;i++){
-         if(i==0)
-            service.firstCreate(list[i]);
-         else
-            service.create(list[i]);
-         if(list[i].getEp_how().equals("상세채점 방법"))
-         how = list[i].getEp_how();
-         
-      }
-      int ep_id = service.ep_id(list[0].getC_id());
-   
-      map.put("ep_how", how);
-      map.put("ep_id", ep_id);
-       ObjectMapper mapper = new ObjectMapper();
-       String json = "";
-           try {
-               json = mapper.writeValueAsString(map);
-           } catch (JsonProcessingException e) {
-               // TODO Auto-generated catch block
-               e.printStackTrace();
-           }
-      
+	*/
+	@RequestMapping(value = "screen/evalPage", method = RequestMethod.POST,
+	         produces = "text/plain;charset=UTF-8")
+	@ResponseBody
+	public ResponseEntity<String> evalPage(@RequestBody Evaluation[] list ) throws Exception {
+		System.out.println("ep_how : "+list[0].getEp_how());
+		Map<String, Object> map= new HashMap<>();
+		
+		String how = "";
+		for(int i=0;i<list.length;i++){
+			if(i==0)
+				service.firstCreate(list[i]);
+			else
+				service.create(list[i]);
+			if(list[i].getEp_how().equals("상세채점 방법"))
+			how = list[i].getEp_how();
+			
+		}
+		int ep_id = service.ep_id(list[0].getC_id());
+	
+		map.put("ep_how", how);
+		map.put("ep_id", ep_id);
+		 ObjectMapper mapper = new ObjectMapper();
+		 String json = "";
+	        try {
+	            json = mapper.writeValueAsString(map);
+	        } catch (JsonProcessingException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	        }
+		
         return new ResponseEntity<>(json, HttpStatus.OK);
     }
-   @RequestMapping(value = "screen/elistCreate", method = RequestMethod.POST,
-            produces = "text/plain;charset=UTF-8")
-   @ResponseBody
-   public ResponseEntity<String> elistCreate(@RequestBody Manager[] list ) throws Exception {
-      
-      for(int i=0;i<list.length;i++){
-         service.elistCreate(list[i]);
-      }
-      
+	@RequestMapping(value = "screen/elistCreate", method = RequestMethod.POST,
+	         produces = "text/plain;charset=UTF-8")
+	@ResponseBody
+	public ResponseEntity<String> elistCreate(@RequestBody Manager[] list ) throws Exception {
+		
+		for(int i=0;i<list.length;i++){
+			service.elistCreate(list[i]);
+		}
+		
       return new ResponseEntity<>("�꽦怨�", HttpStatus.OK);
   }
-   
-   @RequestMapping(value = "screen/ePageModify", method = RequestMethod.POST,
-            produces = "text/plain;charset=UTF-8")
-   @ResponseBody
-   public ResponseEntity<String> ePageModify(@RequestBody Evaluation[] list ) throws Exception {
-      
-      for(int i=0;i<list.length;i++){
-         service.update(list[i]);
-      }
-      
+	
+	@RequestMapping(value = "screen/ePageModify", method = RequestMethod.POST,
+	         produces = "text/plain;charset=UTF-8")
+	@ResponseBody
+	public ResponseEntity<String> ePageModify(@RequestBody Evaluation[] list ) throws Exception {
+		
+		for(int i=0;i<list.length;i++){
+			service.update(list[i]);
+		}
+		
        return new ResponseEntity<>("", HttpStatus.OK);
    }
-   
-   @RequestMapping(value = "screen/manager", method = RequestMethod.GET)
-   public String manager(int t_id,Model model,@RequestParam int r_id, HttpSession session) throws Exception {
-      List<Manager> m1 = service.epEl(t_id);
-      for(int i = 0;i<m1.size();i++)
-      m1.get(i).setT_id(t_id);
-      model.addAttribute("list",m1);
-      //c_id 諛쏄린
-      Manager manage =service.manager(t_id);
-      model.addAttribute("manage",manage);
-      model.addAttribute("t_id",t_id);
-      String id=(String)session.getAttribute("u_id");
-      manage.setStartNum(r_id);
-      boolean b = false;
-      int cnt_m = service.cnt_m(t_id);
-      int cnt_work = service.cnt_work(m1.get(0));
-      int cnt_eval = service.cnt_eval(m1.get(0));
-      int total_cnt = cnt_m * cnt_work;
-      System.out.println(cnt_work + " " + cnt_eval + " " + total_cnt);
-      if(cnt_eval == total_cnt){
-         b =true;
-      }
-      
-      manage.setEp_stage(m1.get(0).getEp_stage());
-      //�옉�뭹遺덈윭�삤湲�
-      Manager work = null;
-       work = service.read_work(manage);
-       work.setU_id(id);
-       work.setT_id(t_id);
-       
-         model.addAttribute("work", work);
-         Manager get_id = service.get_work_id(work);
-         if(get_id != null)
-         model.addAttribute("get_id", get_id.getW_id());
-         model.addAttribute("b",b);
-         model.addAttribute("r_id",r_id);
-         Manager m = service.config(t_id);
-         model.addAttribute("m",m);
-         return "screen/manager";
-   }
-   
-   @RequestMapping(value = "screen/next", method = RequestMethod.GET)
-   public String next(int t_id,Model model,@RequestParam int r_id,HttpSession session) throws Exception {
-      //�뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�떛�벝�삕 李얍뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕
-      Manager manage =service.manager(t_id);
-      model.addAttribute("manage",manage);
-      model.addAttribute("t_id",t_id);
-      String id=(String)session.getAttribute("u_id");
-      Manager work = null;
-      ++r_id;
-      List<Manager> m1 = service.epEl(t_id);
-      for(int i = 0;i<m1.size();i++)
-      m1.get(i).setT_id(t_id);
-      model.addAttribute("list",m1);
-      int cnt = service.cnt_work(m1.get(0));
-      if(cnt == r_id)
-         --r_id;
-      boolean b = false;
-      manage.setStartNum(r_id);
-      manage.setEp_stage(m1.get(0).getEp_stage());
-       work = service.read_work(manage);
-       work.setU_id(id);
-      
-         Manager get_id = service.get_work_id(work);
-         if(get_id != null)
-         model.addAttribute("get_id", get_id.getW_id());
-         model.addAttribute("b",b);
-         model.addAttribute("work", work);
-         model.addAttribute("r_id",r_id);
-         Manager m = service.config(t_id);
-         model.addAttribute("m",m);
-   
-         return "screen/manager";
-   }
-   
-   @RequestMapping(value = "screen/pre", method = RequestMethod.GET)
-   public String pre(int t_id, Model model, @RequestParam int r_id, HttpSession session) throws Exception {
-      // �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�떛�벝�삕 李얍뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕
-      Manager manage = service.manager(t_id);
-      model.addAttribute("manage", manage);
-      model.addAttribute("t_id", t_id);
-      String id = (String) session.getAttribute("u_id");
-      boolean b = false;
-      Manager work = null;
-      if (r_id != 0)
-         --r_id;
-      List<Manager> m1 = service.epEl(t_id);
-      for(int i = 0;i<m1.size();i++)
-      m1.get(i).setT_id(t_id);
-      model.addAttribute("list",m1);
-      manage.setStartNum(r_id);
-      manage.setEp_stage(m1.get(0).getEp_stage());
-      work = service.read_work(manage);
-      work.setU_id(id);
-      Manager get_id = service.get_work_id(work);
-      model.addAttribute("b",b);
-      if (get_id != null)
-         model.addAttribute("get_id", get_id.getW_id());
-      model.addAttribute("work", work);
-      model.addAttribute("r_id", r_id);
-      Manager m = service.config(t_id);
-      model.addAttribute("m",m);
-      return "screen/manager";
-   }
+	
+	@RequestMapping(value = "screen/manager", method = RequestMethod.GET)
+	public String manager(int t_id,Model model,@RequestParam int r_id, HttpSession session) throws Exception {
+		List<Manager> m1 = service.epEl(t_id);
+		for(int i = 0;i<m1.size();i++)
+		m1.get(i).setT_id(t_id);
+		model.addAttribute("list",m1);
+		//c_id 諛쏄린
+		Manager manage =service.manager(t_id);
+		model.addAttribute("manage",manage);
+		model.addAttribute("t_id",t_id);
+		String id=(String)session.getAttribute("u_id");
+		manage.setStartNum(r_id);
+		boolean b = false;
+		int cnt_m = service.cnt_m(t_id);
+		int cnt_work = service.cnt_work(m1.get(0));
+		int cnt_eval = service.cnt_eval(m1.get(0));
+		int total_cnt = cnt_m * cnt_work;
+		System.out.println(cnt_work + " " + cnt_eval + " " + total_cnt);
+		if(cnt_eval == total_cnt){
+			b =true;
+		}
+		
+		manage.setEp_stage(m1.get(0).getEp_stage());
+		//�옉�뭹遺덈윭�삤湲�
+		Manager work = null;
+		 work = service.read_work(manage);
+		 work.setU_id(id);
+		 work.setT_id(t_id);
+		 
+			model.addAttribute("work", work);
+			Manager get_id = service.get_work_id(work);
+			if(get_id != null)
+			model.addAttribute("get_id", get_id.getW_id());
+			model.addAttribute("b",b);
+			model.addAttribute("r_id",r_id);
+			Manager m = service.config(t_id);
+			model.addAttribute("m",m);
+			return "screen/manager";
+	}
+	
+	@RequestMapping(value = "screen/next", method = RequestMethod.GET)
+	public String next(int t_id,Model model,@RequestParam int r_id,HttpSession session) throws Exception {
+		//�뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�떛�벝�삕 李얍뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕
+		Manager manage =service.manager(t_id);
+		model.addAttribute("manage",manage);
+		model.addAttribute("t_id",t_id);
+		String id=(String)session.getAttribute("u_id");
+		Manager work = null;
+		++r_id;
+		List<Manager> m1 = service.epEl(t_id);
+		for(int i = 0;i<m1.size();i++)
+		m1.get(i).setT_id(t_id);
+		model.addAttribute("list",m1);
+		int cnt = service.cnt_work(m1.get(0));
+		if(cnt == r_id)
+			--r_id;
+		boolean b = false;
+		manage.setStartNum(r_id);
+		manage.setEp_stage(m1.get(0).getEp_stage());
+		 work = service.read_work(manage);
+		 work.setU_id(id);
+		
+			Manager get_id = service.get_work_id(work);
+			if(get_id != null)
+			model.addAttribute("get_id", get_id.getW_id());
+			model.addAttribute("b",b);
+			model.addAttribute("work", work);
+			model.addAttribute("r_id",r_id);
+			Manager m = service.config(t_id);
+			model.addAttribute("m",m);
+	
+			return "screen/manager";
+	}
+	
+	@RequestMapping(value = "screen/pre", method = RequestMethod.GET)
+	public String pre(int t_id, Model model, @RequestParam int r_id, HttpSession session) throws Exception {
+		// �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�떛�벝�삕 李얍뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕
+		Manager manage = service.manager(t_id);
+		model.addAttribute("manage", manage);
+		model.addAttribute("t_id", t_id);
+		String id = (String) session.getAttribute("u_id");
+		boolean b = false;
+		Manager work = null;
+		if (r_id != 0)
+			--r_id;
+		List<Manager> m1 = service.epEl(t_id);
+		for(int i = 0;i<m1.size();i++)
+		m1.get(i).setT_id(t_id);
+		model.addAttribute("list",m1);
+		manage.setStartNum(r_id);
+		manage.setEp_stage(m1.get(0).getEp_stage());
+		work = service.read_work(manage);
+		work.setU_id(id);
+		Manager get_id = service.get_work_id(work);
+		model.addAttribute("b",b);
+		if (get_id != null)
+			model.addAttribute("get_id", get_id.getW_id());
+		model.addAttribute("work", work);
+		model.addAttribute("r_id", r_id);
+		Manager m = service.config(t_id);
+		model.addAttribute("m",m);
+		return "screen/manager";
+	}
 
-   @RequestMapping(value = "screen/team", method = RequestMethod.GET)
-   public String team(int t_id,Model model) throws Exception {
-      model.addAttribute("t_id",t_id);
-      
-      Manager manage = service.config(t_id);
-      if(manage!=null){
-      System.out.println("�뜝��琉꾩삕�뜝�듅�벝�삕�뜝�룞�삕�뜝�룞�삕:"+manage.getEp_how());
-      model.addAttribute("manage",manage);
-      }
-      return "screen/teamMain";
-   
-   }
-   
-   @RequestMapping(value = "screen/grande", method = RequestMethod.POST)
-   public ResponseEntity<String> grande(@RequestBody Manager m,Model model) throws Exception {
-      int score=1;
-      m.setE_score(score);
-      int t_id = m.getT_id();
-      List<Manager> m1 = service.epEl(t_id);
-      for(int i = 0;i<m1.size();i++)
-      m1.get(i).setT_id(t_id);
-      m.setEl_id(m1.get(0).getEl_id());
-      System.out.println(m.getGrande());
-      if(m.getGrande().equals("pass")){
-         score = 100;
-         m.setE_score(score);   
-      }
-      service.grande(m);
-      return new ResponseEntity<>("�셿猷�.", HttpStatus.OK);
-   
-   }
-   
-   @RequestMapping(value = "screen/del_grande", method = RequestMethod.POST)
-   public ResponseEntity<String> del_grande(@RequestBody Manager m,Model model,HttpSession session) throws Exception {
-      String id=(String)session.getAttribute("u_id");
-      m.setU_id(id);
-      service.del_grande(m);
-      return new ResponseEntity<>( HttpStatus.OK);
-   }
-   @RequestMapping(value = "screen/stageModify", method = RequestMethod.GET)
-   public ResponseEntity<String> stageModify(int t_id,Model model,HttpSession session) throws Exception {
-      String id=(String)session.getAttribute("u_id");
-      Manager ep = service.get_ep_id(t_id);
-      int m_count = service.cnt_m(t_id);
-      ep.setT_id(t_id);
-      ep.setM_count(m_count);
-      
-      List<Manager> m = service.result_get(ep);
+	@RequestMapping(value = "screen/team", method = RequestMethod.GET)
+	public String team(int t_id,Model model) throws Exception {
+		model.addAttribute("t_id",t_id);
+		
+		Manager manage = service.config(t_id);
+		if(manage!=null){
+		System.out.println("�뜝��琉꾩삕�뜝�듅�벝�삕�뜝�룞�삕�뜝�룞�삕:"+manage.getEp_how());
+		model.addAttribute("manage",manage);
+		}
+		return "screen/teamMain";
+	
+	}
+	
+	@RequestMapping(value = "screen/grande", method = RequestMethod.POST)
+	public ResponseEntity<String> grande(@RequestBody Manager m,Model model) throws Exception {
+		int score=1;
+		m.setE_score(score);
+		int t_id = m.getT_id();
+		List<Manager> m1 = service.epEl(t_id);
+		for(int i = 0;i<m1.size();i++)
+		m1.get(i).setT_id(t_id);
+		m.setEl_id(m1.get(0).getEl_id());
+		System.out.println(m.getGrande());
+		if(m.getGrande().equals("pass")){
+			score = 100;
+			m.setE_score(score);	
+		}
+		service.grande(m);
+		return new ResponseEntity<>("�셿猷�.", HttpStatus.OK);
+	
+	}
+	
+	@RequestMapping(value = "screen/del_grande", method = RequestMethod.POST)
+	public ResponseEntity<String> del_grande(@RequestBody Manager m,Model model,HttpSession session) throws Exception {
+		String id=(String)session.getAttribute("u_id");
+		m.setU_id(id);
+		service.del_grande(m);
+		return new ResponseEntity<>( HttpStatus.OK);
+	}
+	@RequestMapping(value = "screen/stageModify", method = RequestMethod.GET)
+	public ResponseEntity<String> stageModify(int t_id,Model model,HttpSession session) throws Exception {
+		String id=(String)session.getAttribute("u_id");
+		Manager ep = service.get_ep_id(t_id);
+		int m_count = service.cnt_m(t_id);
+		ep.setT_id(t_id);
+		ep.setM_count(m_count);
+		
+		List<Manager> m = service.result_get(ep);
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8ffd119ae861a7f3ccdba86c1c2a2313af561907
 		for(int i = 0; i<m.size();i++){
 			m.get(i).setStage(ep.getEp_stage()-1);
 			System.out.println("�떒怨�:" + m.get(i).getStage());
@@ -436,6 +439,7 @@ public class EvaluationController {
 		entity=new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
 		return entity;
 	}
+<<<<<<< HEAD
 =======
       for(int i = 0; i<m.size();i++){
          m.get(i).setStage(ep.getEp_stage()-1);
@@ -566,4 +570,7 @@ public class EvaluationController {
       return entity;
    }
 
+=======
+>>>>>>> 8ffd119ae861a7f3ccdba86c1c2a2313af561907
 } 
+
