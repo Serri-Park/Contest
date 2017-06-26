@@ -9,7 +9,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
     <meta name="verify-v1" content="UKWeA341x+qh1YxCFUrfTgQpQ4B/nSfe4Z3ofWT0SYA=">
         <meta http-equiv="imagetoolbar" content="no">
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -40,7 +40,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">공모전 <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="contestList">공모전 현황</a></li> 
-								<li><a href="AllTeamList?Conlist=1&permit=1">공모전 팀원모집</a></li>
+								<li><a href="AllTeamList?Conlist=1&permit=1">팀원 모집</a></li>
                                 <li><a href="AllTeamList?Conlist=3&permit=1">심사위원 모집</a></li>
   
                             </ul>
@@ -49,9 +49,9 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Team<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="AllTeamList?Conlist=0&permitt=1">Waiting TeamList</a></li>
-       							 <li><a href="AllTeamList?Conlist=0&permit=2">My TeamList</a></li>
-                                <li><a href="#">미확정</a></li>
+                                <li><a href="AllTeamList?Conlist=0&permit=1">모집중인 나의 팀리스트</a></li>
+       							 <li><a href="AllTeamList?Conlist=0&permit=2">모집완료된 나의 팀 리스트</a></li>
+                                 <li><a href="AllTeamList?Conlist=0&permit=0">활동이 종료된 나의 팀 리스트</a></li>
 
 
 
@@ -60,7 +60,7 @@
                             </ul>
                         </li>
                         
-                        <li><a href="#">Gallery</a></li>
+                        <!-- <li><a href="#">Gallery</a></li> -->
                         <li><a href="listPage">Community</a></li>
                         <li><a href="PlaceList">장소대여</a></li>
 	 <c:if test="${empty sessionScope.u_id}">
@@ -70,6 +70,7 @@
 </c:if> 
 <c:if test="${not empty sessionScope.u_id}"> <!-- sessionScopre.id가 있으면 -->
          <li><a href="logout"><span class="glyphicon glyphicon-log-in"></span> logout</a></li>
+ 		<li><span class="mess glyphicon glyphicon-envelope" style="margin-top: 20px;"><span class="badge"></span></span></li>
 
 
 </c:if>
@@ -130,7 +131,42 @@
     </div>
  
      </div>
+     
+<script>
+$(".mess").on("click",function(){
+	event.preventDefault();
+	var ppctor =0;
+	//var u_id = $("#u_id").text();
+	window.open("Team/post?ppctor="+ppctor,"메세지창","width=630,height=630 scrollbars=yes,")
+});
 
+var messageItem = "";
+ 
+/*사용자가 보유중인 메시지 개수 출력*/
+  $.ajax({
+	type:"get",
+	url: "Team/CountMessage",
+	headers : {
+		"Content-Type" : "application/json",
+		"X-HTTP-Method-Override" : "GET"
+	},
+	dataType:'json',
+	success:function(obj){
+		
+		if(obj != null) {
+			console.log("data"+obj);
+			
+			var MassCount = obj.MassCount;
+			
+			messageItem+= MassCount;
+			$(".badge").html(messageItem);
+		}
+	},
+	error: function(){
+		console.log("실패");
+      }
+}); 
+</script>
 
 </body>
 </html>

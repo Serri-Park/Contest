@@ -66,7 +66,7 @@ public class TeamImpl implements TeamDao {
 	public List<TeamVo> teamchek(String u_id) throws Exception {
 		// TODO Auto-generated method stub
 	
-		return sql.selectList(namespace+".teamlist",u_id);
+		return sql.selectList(namespace+".teamchek",u_id);
 	}
 	
 	
@@ -195,5 +195,70 @@ public class TeamImpl implements TeamDao {
 	}
 
 
+	//InvitationMake
+	@Override
+	public void InvitationMake(MessageVo vo) throws Exception {
+		// TODO Auto-generated method stub
+		sql.insert(namespace3+".messageMake",vo);
+	}
+	
+	@Override
+	public void receiverMake(MessageVo vo) throws Exception {
+		// TODO Auto-generated method stub
+		sql.insert(namespace3+".receiverMake",vo);
+	}
+	//
+
+
+	@Override
+	public void MemberInvitation(MessageVo vo) throws Exception {
+		// TODO Auto-generated method stub
+		sql.insert(namespace3+".MemberInvitation",vo);
+	}
+
+
+	@Override
+	public List<MessageVo> invitationMassge(String rc_id) throws Exception {
+		// TODO Auto-generated method stub
+		return sql.selectList(namespace3+".invitationMassge",rc_id);
+	}
+
+	
+	//transinvitationM
+	@Override
+	public List<MessageVo> transinvitationM(int t_id) throws Exception {
+		// TODO Auto-generated method stub
+		return sql.selectList(namespace3+".transinvitationM",t_id);
+	}
+
+	
+	//read
+	@Override
+	public MessageVo content(MessageVo vo) throws Exception {
+		// TODO Auto-generated method stub
+		return sql.selectOne(namespace3+".content",vo);
+	}
+
+	//messageRead Date update
+	@Override
+	public void messageRead_Date(MessageVo vo) throws Exception {
+		sql.update(namespace3+".messageRead_Date",vo);
+		
+	}
+	//
+
+
+	@Override
+	public List<TeamVo> MemberTeam(TeamVo vo) throws Exception {
+		// TODO Auto-generated method stub
+		return sql.selectList(namespace+".MemberTeam",vo);
+	}
+	
+	//CountMessage
+		@Override
+		public int CountMessage(String rc_id) throws Exception {
+			// TODO Auto-generated method stub
+			return sql.selectOne(namespace3+".CountMessage",rc_id);
+		}
 
 }

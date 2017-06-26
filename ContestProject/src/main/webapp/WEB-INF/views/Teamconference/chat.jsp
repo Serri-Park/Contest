@@ -98,7 +98,7 @@
                 	
                 	times = evnt.data.substr(7,1);
                 	console.log("소켓 실행됬습니다.");
-                	countDown(0,times,0,'theTime');
+                	countDown(0,0,times,'theTime');
                 	
                 	}else{
                     $("#msg").html($("#msg").html() + "<br/>" + evnt.data);

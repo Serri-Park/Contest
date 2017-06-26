@@ -59,7 +59,7 @@ public class ContestController {
 	}
 	
 	@RequestMapping(value="contestList",method=RequestMethod.GET)
-	public String contestList(Criteria criteria, Model model,Contest contest, TeamVo teamvo) throws Exception{
+	public String contestList(@RequestParam(value="t_id", defaultValue="0") int t_id, Criteria criteria, Model model,Contest contest, TeamVo teamvo) throws Exception{
 		
 	  Receipt receipt=new Receipt();
 		if(criteria.getCategory() == null){
@@ -81,14 +81,16 @@ public class ContestController {
 		criteria.setTotalCount(totalCount);	
 		model.addAttribute("criteria", criteria);
 		model.addAttribute("TeamVo",teamvo);
+		criteria.setSubt_id(t_id);
 		return "contest/contestList";
 	}
 
 	@RequestMapping(value="contestRead", method=RequestMethod.GET)
-	public String contestRead(@RequestParam(value="c_id") int c_id, int t_id, @ModelAttribute Criteria criteria, Model model) throws Exception{
+	public String contestRead(@RequestParam(value="c_id") int c_id, int t_id, @ModelAttribute Criteria criteria, Model model,HttpSession session) throws Exception{
 		Contest contest = service.read(c_id);
 		model.addAttribute("contest", contest);
-	//	contest.setT_id(t_id);
+		criteria.setSubt_id(t_id);
+		
 		return "contest/contestRead";
 	}
 
@@ -124,7 +126,8 @@ public class ContestController {
 	}
 	@RequestMapping(value="submit", method=RequestMethod.GET)
 	public String submit(Model model,int c_id, int t_id) throws Exception {
-	      Contest contest=new Contest();
+	      
+		Contest contest=new Contest();
 	         contest.setC_id(c_id);
 	         contest.setT_id(t_id);
               

@@ -52,6 +52,9 @@ display: none;
 .hidenId{
 	display: none;
 }
+.rc_id{
+display: none;
+}
 
 #retrunList{
 	display: none;
@@ -80,7 +83,6 @@ $(document).ready(function(){
 
 
 	<div>
-	
 		<div class="teamDates" id="m_rights">${teamDate.m_rights}</div>
 		<div class="teamDates" id="teamId">${teamDate.t_id}</div>
 		<div class="teamDates" id="t_filed">${teamDate.t_filed}</div>
@@ -101,7 +103,6 @@ $(document).ready(function(){
 							<th class="hidenId">ID</th>
 							<th>이름</th>
 							<th>분야</th>
-							<th>주소</th>
 							<th>e-mail</th>
 						</tr>
 					</table>
@@ -155,7 +156,8 @@ $(document).ready(function(){
 				<button id="ReturnRoom" class="btn btn-default">teamRoom</button>
 			
 				<c:if test="${teamDate.m_rights == 3}">
-					<button id="recommendBtn" class="btn btn-warning">심사위원 추천</button>
+					<button id="recommendBtn" class="btn btn-warning">심사위원 추천</button>			
+					<button id="invilist" class="btn btn-warning">보낸 초청창</button>				
 				</c:if>
 				
 				<button id="retrunList" class="btn btn-warning">돌아가기</button>
@@ -164,7 +166,8 @@ $(document).ready(function(){
 		
 	</div>
 <script>
-
+var t_id = $("#teamId").text();
+var m_rights = $("#m_rights").text();
 $(".ok").on("click", function(){
 	event.preventDefault();
 	//신청서가 들어가는 팀
@@ -206,8 +209,7 @@ $(".no").on("click", function(){
 });
 
 $("#recommendBtn").on("click",function(){
-	var t_id = $("#teamId").text();
-	var m_rights = $("#m_rights").text();
+	
 	var t_filed = $("#t_filed").text();
 	var src="";
 	var divsrc="";
@@ -220,24 +222,31 @@ $("#recommendBtn").on("click",function(){
 			"X-HTTP-Method-Override" : "GET"
 		},
 		dataType:"json",
-		data:{t_filed:t_filed,t_id:t_id},
-		success:function(data) {
-			if(data != null) {
+		data:{ 
+			t_filed:t_filed, 
+			t_id:t_id	
+		},success:function(data) {
+			console.log(data.list+"명")
+			if(data.list != 0) {
 				$(".header").remove();
 				$(".header").hide();
 				$(".recommendDIV").show();
 				
 				$(data.list).each(function(){
 					divsrc += "<h2>추천 심사위원 List</h2>"
-					src += "<tr class='reply'><td><a href='MassageMakeForm?rc_id="+this.u_id+"'>"+this.u_id+"</a></td><td>"+this.u_name+"</td><td>"+this.u_major+"</td><td>"+this.u_email+"</td><td>"+this.u_address+"</td></tr>";
+					src += "<tr><td class='rc_id'>"+this.u_id+"</td><td>"+this.u_name+"</td><td>"+this.u_major+"</td><td>"+this.u_email+"</td><td><button class='receiver btn btn-default'>초청</button></td></tr>";
 					
 				});
 				
 				$("#recommendTable").append(src);
 				$("#recommendBtn").hide();
 				$("#retrunList").show();
-			}else if(data == null){
-				src += "<tr><th>신청자가 없습니다.</th></tr>"
+			}else if(data.list == 0){
+				$(".header").remove();
+				$(".header").hide();
+				$(".recommendDIV").show();
+				
+				src += "<tr><th>추천인이 없습니다.</th></tr>"
 				$("#recommendTable").append(src);
 				$("#recommendBtn").hide();
 				$("#retrunList").show();
@@ -247,6 +256,15 @@ $("#recommendBtn").on("click",function(){
 		
 });
 
+$("#invilist").on("click",function(){
+	window.location.href="post?ppctor="+t_id+"&m_rights="+m_rights;
+});
+
+
+$("#recommendTable").on("click",".receiver",function(){
+	var rc_id = $(this).parent().prevAll(".rc_id").text();
+	window.location.href="InvitationMakeForm?rc_id="+rc_id+"&t_id="+t_id;
+});
 
 
 $("#retrunList").on("click",function(){

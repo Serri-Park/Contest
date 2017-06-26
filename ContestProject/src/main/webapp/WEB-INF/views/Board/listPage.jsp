@@ -150,7 +150,7 @@
 				<li role="presentation"><a href="60" class="b_menuType
 				<c:out value="${criteria.menuType eq '60'?' greenActive':'' }"/>">주최사인터뷰</a></li>
 			</ul>
-		</div>zxcsd
+		</div>
 	</div>   
 	<section>
 		<table class="table">

@@ -25,8 +25,9 @@
 	<select id="listPage" resultType="Contest">
 		select * 
 		from contest
+		where <![CDATA[c_startdate < now() and c_enddate > now()]]>
 		order by c_id desc
-		limit #{startRecord}, #{recordsPerPage}
+		limit 12
 	</select>
 	<select id="totalCount" resultType="Integer">
 		select count(*) 

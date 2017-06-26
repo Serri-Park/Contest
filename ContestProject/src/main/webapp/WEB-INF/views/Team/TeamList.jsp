@@ -138,7 +138,8 @@
 						<th>   </th>
 						<th>   </th>
 					</tr>
-					<c:forEach items="${list}" var="TeamVo">
+					<c:set var="number" value="0"/>	
+					<c:forEach items="${list}" var="TeamVo" >
 						<c:if test="${TeamVo.t_permit == permit}">
 							<tr>
 								<td class="t_id" style="display: none"><input type="hidden" class="teamId" name="teamId" value="${TeamVo.t_id}"></td>
@@ -164,24 +165,117 @@
 										
 										<c:if test="${TeamVo.m_rights == 10}">
 											<td><button class="cancell btn btn-default">지원취소</button></td>
+											<c:set var="number" value="${number+1}"/>
 										</c:if>
 										
 										<c:if test="${TeamVo.m_rights == 2 || TeamVo.m_rights == 4}">
 											<td><button class="out btn btn-default">탈퇴</button></td>
+											<c:set var="number" value="${number+1}"/>
 										</c:if>
+										<c:if test="${TeamVo.m_rights == 2 || TeamVo.m_rights == 4}">
+											<td>탈퇴헀음</td>
+											<c:set var="number" value="${number+1}"/>
+										</c:if>
+										
 										
 										<c:if test="${TeamVo.m_rights == 1 || TeamVo.m_rights == 3}">
 											<td>
-												<c:if test="${TeamVo.t_permit == 2}">
-													<button class="start btn btn-default">모집시작</button>
+												<c:if test="${TeamVo.t_permit != 0}">
+													<c:if test="${TeamVo.t_permit == 2}">
+														<button class="start btn btn-default">모집시작</button>
+														<c:set var="number" value="${number+1}"/>
+													</c:if>
+													
+													<c:if test="${TeamVo.t_permit == 1}">
+														<button class="completion btn btn-default">모집완료</button>
+														<c:set var="number" value="${number+1}"/>
+													</c:if>
+													
+													<button id="inactive" class="btn btn-warning" onclick="inactive()">활동중지</button>
+													<c:set var="number" value="${number+1}"/>
+												
 												</c:if>
-												<c:if test="${TeamVo.t_permit == 1}">
-													<button class="completion btn btn-default">모집완료</button>
+												
+												<c:if test="${TeamVo.t_permit == 0}">
+													<button class="start btn btn-default">활동시작</button>
+													<c:set var="number" value="${number+1}"/>
 												</c:if>
 											</td>
-										
 										</c:if>
 									</c:if>
+									<c:if test="${Conlist != 0}">
+											
+																	
+										<c:if test="${num > 0}">
+											<c:forEach items="${tlist}" var="MyTeamVo" varStatus="index">
+												<c:if test="${MyTeamVo.t_id == TeamVo.t_id }">
+													<c:if test="${MyTeamVo.m_rights == 10}">
+														<c:if test="${number == 0}">
+															<td><button class="cancell btn btn-default">지원취소</button></td>
+															<c:set var="number" value="${number+1}"/>
+														</c:if>
+													</c:if>
+													
+													<c:if test="${MyTeamVo.m_rights == 2 || MyTeamVo.m_rights == 4}">
+														<c:if test="${number == 0}">
+															<td><button class="out btn btn-default">탈퇴</button></td>
+															<c:set var="number" value="${number+1}"/>
+														</c:if>
+													</c:if>
+													
+													<c:if test="${MyTeamVo.m_rights == 0}">
+														<c:if test="${number == 0}">
+															<td>탈퇴헀음</td>
+															<c:set var="number" value="${number+1}"/>
+														</c:if>
+													</c:if>
+										
+													<c:if test="${MyTeamVo.m_rights == 11}">
+														<c:if test="${number == 0}">
+															<td><button class="cancell btn btn-default">거절</button></td>
+															<c:set var="number" value="${number+1}"/>
+														</c:if>
+													</c:if>
+													
+													
+													<c:if test="${MyTeamVo.m_rights == 1 || TeamVo.m_rights == 3}">
+														<td>
+
+															<c:if test="${TeamVo.t_permit == 0}">
+																<c:if test="${number == 0}">
+																	<button class="start btn btn-default">활동시작</button>
+																</c:if>
+															</c:if>
+															<c:if test="${TeamVo.t_permit > 0}">
+																<c:if test="${TeamVo.t_permit == 2}">
+																	<c:if test="${number == 0}">
+																		<button class="start btn btn-default">모집시작</button>
+																	</c:if>
+																</c:if>
+																<c:if test="${TeamVo.t_permit == 1}">
+																	<c:if test="${number == 0}">
+																		<button class="completion btn btn-default">모집완료</button>
+																	</c:if>
+																</c:if>
+																<c:if test="${number == 0}">
+																	<td><button class="inactive btn btn-warning">활동중지</button></td>
+																</c:if>
+															</c:if>
+														
+														</td>
+														<c:set var="number" value="${number+1}"/>
+													</c:if>
+												</c:if>
+												<c:if test="${index.last}">
+													<c:if test="${number == 0}">
+														<td><a href="teamRoom?t_id=${TeamVo.t_id}" class="btn btn-default">상세보기</a>
+														<td><button class="app btn btn-default">가입신청</button></td>
+													</c:if>
+												</c:if>
+											</c:forEach>
+										</c:if>
+								  </c:if>
+							
 							</tr>
 						</c:if>
 					</c:forEach>
@@ -189,6 +283,9 @@
 			</c:if>
 		
 		</div>
+	</c:if>
+	<c:if test="${sessionScope.u_id == null}">
+	<h1>로그인을 하세요!</h1>
 	</c:if>
 </section>
 <script>
@@ -241,28 +338,32 @@ $(".out").on("click", function(){
 
 
 //활동종료
-$(".end").on("click", function(){
+$(".inactive").on("click",function() {
+	event.preventDefault()
 	var t_id = $(this).parent().prevAll(".t_id").children().eq(0).val();
+	alert(t_id);
 	var recruit = 0;
-	if (confirm("팀을 비활성하시겠습니까??") == true){    //확인
-		 $.ajax({
-				type:'post',
-				url:'Recruitcont',
-				data: {t_id:t_id,permit:recruit},
-				success : function(result){
-					console.log("result: "+result);
-					if(result == 'SUCCESS'){
-						alert("비활성화.");
-						location.reload();
-					}
+	if (confirm("팀을 비활성하시겠습니까??") == true) { //확인
+		$.ajax({
+			type : 'post',
+			url : 'Recruitcont',
+			data : {
+				t_id : t_id,
+				permit : recruit
+			},
+			success : function(result) {
+				console.log("result: " + result);
+				if (result == 'SUCCESS') {
+					alert("비활성화.");
+					 location.reload();
 				}
-			});
-	}else{   //취소
-	    return;
+			}
+		});
+	} else { //취소
+		return;
 	}
 });
-
-
+	
 
 //모집완료
 $(".completion").on("click", function(){
@@ -291,6 +392,7 @@ $(".completion").on("click", function(){
 //모집시작
 $(".start").on("click", function(){
 	var t_id = $(this).parent().prevAll(".t_id").children().eq(0).val();
+	
 	var permit = 1;
 	if (confirm("팀원 모집을 시작하시겠습니까??") == true){    //확인
 		$.ajax({

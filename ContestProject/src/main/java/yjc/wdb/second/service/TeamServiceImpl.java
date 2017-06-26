@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import yjc.wdb.second.bean.ClaimantVo;
 import yjc.wdb.second.bean.MessageVo;
@@ -173,9 +174,57 @@ public class TeamServiceImpl implements TeamService {
 	}
 
 
+	//
+	//InvitationMake
+	@Transactional
+	@Override
+	public void InvitationMake(MessageVo vo) throws Exception {
+		// TODO Auto-generated method stub
+		dao.InvitationMake(vo);
+		dao.receiverMake(vo);
+		dao.MemberInvitation(vo);
+	}
 
+	@Override
+	public List<MessageVo> invitationMassge(String rc_id) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.invitationMassge(rc_id);
+	}
+
+	@Override
+	public List<MessageVo> transinvitationM(int t_id) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.transinvitationM(t_id);
+	}
+	
+	//read
+	@Override
+	public MessageVo content(MessageVo vo,int i) throws Exception {
+		// TODO Auto-generated method stub
+		//i = 0 == no read
+		//1 = 1 == yes read
+		if(i == 0){
+		dao.messageRead_Date(vo);
+		}
+		System.out.println(vo.getT_id()+"  1번째");
+		vo.setT_id(dao.leaderRights(vo.getT_id()));
+		System.out.println(vo.getT_id()+"  2번째");
+		return dao.content(vo);
+	}
+
+	@Override
+	public List<TeamVo> MemberTeam(TeamVo vo) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.MemberTeam(vo);
+	}
 	
 
-	
+	//CountMessage
+		@Override
+		public int CountMessage(String rc_id) throws Exception {
+			// TODO Auto-generated method stub
+			return dao.CountMessage(rc_id);
+		}
+
 
 }

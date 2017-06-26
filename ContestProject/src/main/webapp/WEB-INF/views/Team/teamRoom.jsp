@@ -157,7 +157,9 @@ img{
 				<c:if test="${Rights.m_rights == 10}">
 					<button class="cancell btn btn-default">지원취소</button>
 				</c:if>
-			
+				<c:if test="${Rights.m_rights == 11}">
+					<button class="cancell btn btn-default">거절</button>
+				</c:if>
 				<c:if test="${Rights.m_rights == null}">
 					<button class="app btn btn-default">가입신청</button>
 				</c:if>
@@ -213,7 +215,7 @@ img{
 					
 					<!-- 참가자팀 팀장만 보기 -->
 					<c:if test="${Rights.m_rights == 1}">
-						<a href="contestList?t_id=${t_id}">
+						<a href="contestList?t_id=${t_id}&dateState=ing&category=${teamDate.t_filed}">
 							<button id="conference" class="btn btn-danger">접수</button></a>
 					</c:if>
 					<!--  -->
@@ -457,15 +459,14 @@ img{
 		
 		
 		
-$("#claimant").on("click",function(){
-		
-		 var t_filed = $(".t_filed").val();
-		 var m_rights = $(".m_rights").val();
-		 var t_id = $(".t_id").val();
-		 //window.open("post?ppctor="+ppctor,"메세지창","width=500,height=600 scrollbars=yes,")
-			window.open("claimant?t_id="+t_id+"&m_rights="+m_rights+"&t_filed="+t_filed,"모집현황창","width=630,height=630 scrollbars=yes,")
-	});
-	
+		$("#claimant").on("click",function(){
+			
+			 var t_filed = $(".t_filed").val();
+			 var m_rights = $(".m_rights").val();
+			 var t_id = $(".t_id").val();
+			 //window.open("post?ppctor="+ppctor,"메세지창","width=500,height=600 scrollbars=yes,")
+				window.open("Team/claimant?t_id="+t_id+"&m_rights="+m_rights+"&t_filed="+t_filed,"모집현황창","width=630,height=630 scrollbars=yes,")
+		});
 
 
 
