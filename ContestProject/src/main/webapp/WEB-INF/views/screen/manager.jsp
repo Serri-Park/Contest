@@ -110,12 +110,16 @@
 </style>
 </head>
 <body>
-<form>
+
 		<div id="confirm_content" style="display: none">
 			<div class="confirmModal_content">
 				현재 단계의 평가가 완료 되었습니다.<br>
 				<c:if test="${m.ep_how == '상세채점 방법' }">
 				마지막단계입니다. 
+				<form>	
+		<input type='hidden' name='r_id' id='r_id' value='${r_id}'> 
+		<input type="hidden" name="t_id" id="t_id" value="${t_id}">
+		<input type="number" id="rank" name ="rank"></form>
 				</c:if>
 				<c:if test="${m.ep_how != '상세채점 방법' }">
 				다음 평가를 진행하시겠습니까?
@@ -130,10 +134,7 @@
 			</div>
 
 		</div>
-		
-		<input type='hidden' name='r_id' id='r_id' value='${r_id}'> 
-		<input type="hidden" name="t_id" id="t_id" value="${t_id}">
-	</form>
+	
 
 	<div id="form">
 		<h3>작품명 : ${work.w_name }</h3>
@@ -317,10 +318,13 @@
 	if(check==true){  
 	$(document).ready(function(){ 
 		$('#confirm_content').confirmModal({
+			//var rank = document.getElementById("rank");    
+			////console.log(rank);
 		topOffset : 0,
 		onOkBut : function() {
 			if("${m.ep_how}"==="상세채점 방법"){
-				$("form").attr("action", "./eval_result");
+				
+				$("form").attr("action", "details");
 				$("form").attr("method", "get");
 				$("form").submit();
 			}else{
@@ -329,7 +333,7 @@
 				type: 'GET',
 			    dataType: "text", 
 			    success: function(data) {
-
+					location.reload();
 			    },
 			    error: function(data) {
 			        alert("error");

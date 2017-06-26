@@ -321,7 +321,7 @@ public class EvaluationController {
 		if(sPage.get(0).getEp_how().equals("Pass or Fail 방법")){
 		List<Manager> m = service.result_get(ep);
 		for(int i = 0; i<m.size();i++){
-			m.get(i).setStage(ep.getEp_stage()-1);
+			m.get(i).setStage(ep.getEp_stage());
 			service.result_set(m.get(i));
 		}
 		service.stage_end(t_id);
@@ -334,9 +334,36 @@ public class EvaluationController {
 		return new ResponseEntity<>(q, HttpStatus.OK);
 	}
 	@RequestMapping(value = "screen/details", method = RequestMethod.GET)
-	public String details(int t_id,Model model,HttpSession session) throws Exception {
-		
-		return "redirect:screen/eval_result?t_id="+t_id;
+	public String details(int t_id,int rank,Model model,HttpSession session) throws Exception {
+			System.out.println("랭크 : "+rank);
+			Manager ep = service.get_ep_id(t_id);
+			if(ep == null){
+				List<Manager> sPage = service.epEl(t_id);
+				if(sPage.get(0).getEp_how().equals("상세채점 방법")){
+					sPage.get(0).setT_id(t_id);
+					sPage.get(0).setEndNum(rank);
+					
+					List<Manager> m1 = service.details(sPage.get(0));
+					for(int i = 0; i<m1.size();i++){
+						m1.get(i).setStage(sPage.get(0).getEp_stage());
+						service.result_set(m1.get(i));
+					}
+					service.stage_end(t_id);
+				}
+//			
+			}else if(ep.getEp_how().equals("상세채점 방법")){
+				ep.setT_id(t_id);
+				ep.setEndNum(rank);
+				
+				List<Manager> m1 = service.details(ep);
+				for(int i = 0; i<m1.size();i++){
+					m1.get(i).setStage(ep.getEp_stage());
+					service.result_set(m1.get(i));
+				}
+				service.stage_end(t_id);
+				service.stage_pro(ep.getEp_id());
+			}
+		return "redirect:eval_result?t_id="+t_id;
 	}
 	
 	@ResponseBody
@@ -362,7 +389,7 @@ public class EvaluationController {
 			}else{
 				fileName = fileName.substring(fileName.indexOf("_")+1);
 				headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-				//�뜝�룞�삕�뜝�떛�냲�삕 �뜝�룞�삕�듃�뜝�룞�삕�뜝�떛�벝�삕�뜝�룞�삕 �뜝�뙣�븘�씛�삕 �뜝�떦�뒗怨ㅼ삕
+
 				String fN = new String(fileName.getBytes("UTF-8"),"ISO-8859-1");
 				headers.add("Content-Dispostion", "attachment; filename=\""+ fN+"\"");	
 			}
@@ -418,8 +445,6 @@ public class EvaluationController {
 	@ResponseBody
 	public ResponseEntity<Map<String,Object>> get_stage(@RequestBody Manager m,Model model) throws Exception {
 		ResponseEntity<Map<String,Object>> entity= null;
-		//System.out.println("���븘�씠�뵒 : "+m.getT_id());
-		//System.out.println("���븘�씠�뵒 : "+t_id);
 		
 		Manager c = service.manager(m.getT_id());
 		List<Manager> ep = service.get_epage(c.getC_id());
@@ -462,19 +487,7 @@ public class EvaluationController {
 		List<Manager> m =service.get_work(t_id);
 		model.addAttribute("t_id",t_id);
 		model.addAttribute("m",m);
-		//개야매로 한거
-		Manager ep = service.get_ep_id(t_id);
-//		if(ep.getEp_how().equals("상세채점 방법")){
-//		ep.setT_id(t_id);
-//		ep.setEndNum(3);
-//		
-//		List<Manager> m1 = service.details(ep);
-//		for(int i = 0; i<m1.size();i++){
-//			m1.get(i).setStage(ep.getEp_stage());
-//			service.result_set(m1.get(i));
-//		}
-//		service.stage_end(t_id);
-//		}
+
 	}
 	@RequestMapping(value = "screen/getEp", method = RequestMethod.POST)
 	@ResponseBody

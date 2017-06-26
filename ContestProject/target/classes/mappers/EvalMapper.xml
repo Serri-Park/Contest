@@ -175,7 +175,7 @@
 		select *,sum(e.e_score) te_score
 		from receipt a join (select c_id
 							from contest
-							where t_id = 9
+							where t_id = #{t_id}
 							order by c_id desc
 							limit 0,1) b
 				join team c on (a.t_id = c.t_id)
