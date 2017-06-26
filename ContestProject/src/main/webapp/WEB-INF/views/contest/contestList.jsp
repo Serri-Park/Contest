@@ -292,6 +292,7 @@
 			if(categoryCompare==null) {categoryCompare="allCategory";}
 			$("<input type='hidden' name ='dateState' value='"+date+"'>").appendTo(pageForm);
 			$("<input type='hidden' name ='category' value='"+categoryCompare+"'>").appendTo(pageForm);
+			$("<input type='hidden' name ='t_id' value='${criteria.subt_id}'>").appendTo(pageForm);
 			pageForm.attr("action","contestList");
 			pageForm.attr("method","get");
 			$("#page").val(1);
@@ -306,6 +307,7 @@
 			if(dateCompare==null) {dateCompare="all";}
 			$("<input type='hidden' name ='dateState' value='"+dateCompare+"'>").appendTo(pageForm);
 			$("<input type='hidden' name ='category' value='"+category+"'>").appendTo(pageForm);
+			$("<input type='hidden' name ='t_id' value='${criteria.subt_id}'>").appendTo(pageForm);
 			pageForm.attr("action", "contestList");
 			pageForm.attr("method", "get");
 			$("#page").val(1);

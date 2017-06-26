@@ -9,7 +9,7 @@
  </select>
  
  <select id="Rights" resultType="teams">
- select m_rights from member where u_id = #{u_id} and t_id = #{t_id}
+ select DISTINCT t_id, m_rights from member where u_id = #{u_id} and t_id = #{t_id}
  </select>
  
  
@@ -30,8 +30,8 @@
 
 <!-- 모든 팀을 찾는다!!!!!! -->
  <select id="AllTeamList" resultType="teams">
-  select e.t_name"t_name", e.t_areas "t_areas", e.t_regdate
-"t_regdate",e.t_filed "t_filed", e.t_id "t_id",d.u_id "u_id", e.t_permit "t_permit",d.m_rights "m_rights", e.t_logo "t_logo",u.u_name
+  select DISTINCT e.t_id ,e.t_name, e.t_areas, e.t_regdate
+,e.t_filed , d.u_id , e.t_permit,d.m_rights, e.t_logo,u.u_name
  from team e JOIN member d join user u
  on (e.t_id = d.t_id) where d.u_id= #{u_id} and u.u_id=d.u_id
   <include refid="searchTypeFile"></include>
@@ -43,8 +43,8 @@
  
  <!-- 개최팀만 찾음 -->
   <select id="listhost" resultType="teams">
- select e.t_name"t_name", e.t_areas "t_areas", e.t_regdate
-"t_regdate",e.t_filed "t_filed", e.t_id "t_id",d.u_id "u_id",e.t_permit "t_permit",d.m_rights "m_rights", e.t_logo "t_logo",u.u_name
+ select DISTINCT e.t_id "t_id",e.t_name"t_name", e.t_areas "t_areas", e.t_regdate
+"t_regdate",e.t_filed "t_filed",d.u_id "u_id",e.t_permit "t_permit",d.m_rights "m_rights", e.t_logo "t_logo",u.u_name
  from team e JOIN member d join user u 
  on (e.t_id = d.t_id) where d.m_rights = 3  and u.u_id=d.u_id
  <!--d.u_id != #{u_id} and   -->
@@ -55,8 +55,8 @@
  </select>
   <!-- 참가자팀만 찾음 -->
   <select id="Listguest" resultType="teams">
- select e.t_name"t_name", e.t_areas "t_areas", e.t_regdate
-"t_regdate",e.t_filed "t_filed", e.t_id "t_id",d.u_id "u_id",e.t_permit "t_permit",d.m_rights "m_rights", e.t_logo "t_logo",u.u_name
+ select DISTINCT e.t_id "t_id",e.t_name"t_name", e.t_areas "t_areas", e.t_regdate
+"t_regdate",e.t_filed "t_filed",d.u_id "u_id",e.t_permit "t_permit",d.m_rights "m_rights", e.t_logo "t_logo",u.u_name
  from team e JOIN member d join user u
  on (e.t_id = d.t_id) where d.m_rights = 1 and u.u_id=d.u_id
  <include refid="searchTypeFile"></include>
@@ -135,9 +135,9 @@
  
  <!-- 가입된 팀을 찾는다. -->
  <!-- teamList에서 팀아이디 찾고 중복되면 제한주기위한 쿼리 -->
- <select id="teamlist" resultType="teams">
- 	select t_id, m_rights, u_id  from member where u_id = #{u_id}
- 	 ORDER BY m_regdate DESC;
+ <select id="teamchek" resultType="teams">
+ 	select t_id, m_rights, u_id, m_regdate  from member where u_id = #{u_id}
+ 	ORDER BY m_regdate DESC;
  </select>
 
 <!--가입된 모든 팀의 정보를 띄워준다 띄워준다
@@ -186,10 +186,15 @@ on(a.t_id = b.t_id) where u_id = #{u_id}
  </update>
 
  <select id="JoinCount" resultType="teams">
- 
  select e.t_name "t_name", e.t_areas "t_areas", e.t_filed "t_filed",
   e.t_regdate "t_regdate", d.t_id "t_id",e.t_permit "t_permit", d.m_rights "m_rights",e.t_logo "t_logo"
  from team e JOIN member d
  on (e.t_id = d.t_id) where 10>=d.m_rights>0 and u_id = #{u_id} or m_id is null
+ </select>
+ 
+ <select id="MemberTeam" resultType="teams">
+ select t_id,u_id,m_rights,m_regdate
+  from member
+  where t_id = #{t_id} and m_rights IN (2,4,11)
  </select>
  </mapper>

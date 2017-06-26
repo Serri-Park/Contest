@@ -4,9 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="yjc.wdb.second.MessageMapper">
  
-
- 
- <select id="allMessage" resultType="Message">
+<select id="allMessage" resultType="Message">
  	select c.u_name "u_name",a.send_id "send_id", 
 		       a.ms_id "ms_id" , a.ms_name "ms_name",
  		a.ms_date "ms_date", b.rc_date "rc_date"
@@ -67,11 +65,41 @@ select count(a.ms_id) from message a join receiver b on (a.ms_id = b.ms_id) wher
 </select>
 
 
+
+<!--  -->
+<!-- 심사위원 초청관련 sql문 -->
 <select id="RecommendUsetList" resultType="Message">
-select u.u_id,u.u_name, u.u_major, u.u_email, u.u_address 
-from user u join team t
-where u_major like CONCAT('%',#{u_major},'%') and t.t_id != #{t_id}
+select distinct u.u_id,u.u_name, u.u_major, u.u_email, u.u_address 
+from user u join (select u_id from member) m
+where u.u_id != m.u_id and u.u_major like CONCAT('%',#{t_filed},'%')
 </select>
+
+<!-- MemberInvitation -->
+<insert id="MemberInvitation">
+ insert into member(m_rights,u_id,t_id) values(11,#{rc_id},#{t_id})
+ </insert>
+ 
+ <select id="invitationMassge" resultType="Message">
+  select distinct a.ms_id,c.u_name,a.send_id, 
+		         a.ms_name,
+ 		a.ms_date, b.rc_date ,d.t_id
+from message a join receiver b join user c join (select t.t_id, t.t_name from team t join member m on(t.t_id = m.t_id) where m.m_rights = 11 ) d
+on a.ms_id = b.ms_id 
+AND a.send_id = c.u_id
+  where b.rc_id = #{rc_id}
+</select>
+ 
+ <select id="transinvitationM" resultType="Message">
+ select distinct a.ms_id ,
+		 a.ms_date , a.ms_name ,
+		b.rc_date, b.rc_id, c.u_name ,d.t_id
+from message a join receiver b join user c
+ join (select t.t_id, t.t_name from team t join member m on(t.t_id = m.t_id)
+  where m.m_rights = 11 ) d
+on a.ms_id = b.ms_id 
+AND b.rc_id = c.u_id
+where d.t_id = #{t_id}
+ </select>
 
  
  </mapper>

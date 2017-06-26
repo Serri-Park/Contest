@@ -115,5 +115,4 @@ public class Contest {
 	public String getEnd() {
 		return c_enddate.toString().replace(' ', 'T').substring(0, c_enddate.toString().lastIndexOf(":"));
 	}
-
 }

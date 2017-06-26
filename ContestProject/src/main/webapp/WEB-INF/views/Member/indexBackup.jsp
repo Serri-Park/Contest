@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -92,30 +90,92 @@
                     <!--                   -->
                 </div>
             </div>
-            <br><br>
+            <br><br><br><br>
+            <div class="row">
+                <div class="col-sm-6 col-md-3 margin30">
+                    <div class="service-box wow animated fadeIn" data-wow-delay="0.1s">
+                        <i class="glyphicon glyphicon-scale"></i>
+                        <h4>체계적인 팀프로젝트 </h4>
+                        <p>
+                            BrainWriting , Chat , Canvas , fileSharing
+                        </p>
+                    </div>
+                </div><!--service column-->
+                <div class="col-sm-6 col-md-3 margin30">
+                    <div class="service-box wow animated fadeIn" data-wow-delay="0.2s">
+                        <i class="glyphicon glyphicon-user"></i>
+                        <h4>온라인 팀원 모집</h4>
+                        <p>
+                            Team 단위 , 팀원 추천 및 등록 , 공모전별 팀원 모집
+                        </p>
+                    </div>
+                </div><!--service column-->
+                <div class="col-sm-6 col-md-3 margin30">
+                    <div class="service-box wow animated fadeIn" data-wow-delay="0.3s">
+                        <i class="glyphicon glyphicon-leaf"></i>
+                        <h4>간편한 공모전 개최</h4>
+                        <p>
+                            Contest , 간편한 개최 , 심사위원 추천 및 선정 , 실시간 작품접수
+                        </p>
+                    </div>
+                </div><!--service column-->
+                <div class="col-sm-6 col-md-3 margin30">
+                    <div class="service-box wow animated fadeIn" data-wow-delay="0.4s">
+                        <i class="glyphicon glyphicon-earphone"></i>
+                        <h4>다양하고 체계적인 평가시스템</h4>
+                        <p>
+                            Evaluate , 다양한 평가방법 , 자유로운 평가단계 , 손쉬운 평가
+                        </p>
+                    </div>
+                </div><!--service column-->
+            </div>
+            <div class="divide20"></div>
+            <div class="text-center">
+                <a href="#" class="btn btn-lg btn-theme-bg">More about our Services <i class="glyphicon glyphicon-circle-arrow-right"></i></a>
+            </div>
         </div>
         <div class="divide60"></div>
 
         <div class="team-section">
-            <div class="container">  
+            <div class="container">
                 <div class="row">
-       				<c:forEach items="${list}" var="contest">   
-	                   <div class="col-sm-6 col-sm-3 margin30">
-	                       <div class="team-col wow animated fadeInLeft" data-wow-delay="0.4s">
-								<a href="contestRead?c_id=${contest.c_id }&t_id=0">
-									<img src="displayFile?fileName=${contest.c_poster }" alt='공개된 포스터가 없습니다.' class="img-responsive"  style="height:270px; width:200px">
-	                       		</a>       
-	                           <p style="height:25px; margin-top:20px;">
-	                           		<strong><a href="contestRead?c_id=${contest.c_id }&t_id=0" class="title">${contest.c_name }</a></strong>
-	                           </p>
-	                           <p style="margin-bottom:50px;">
-									<fmt:formatDate pattern="yyyy-MM-dd" value="${contest.c_startdate}"/>
-									&nbsp;~&nbsp;
-									<fmt:formatDate pattern="yyyy-MM-dd" value="${contest.c_enddate}"/>
-								</p>
-	                       </div><!--team col-->   
-	                   </div><!--col-md-3 col-sm-6-->
-                    </c:forEach>
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <div class="center-title">
+                            
+                            <h2>New Contest <strong>Service</strong></h2>
+                           
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-sm-3 margin30">
+                        <div class="team-col wow animated fadeInLeft" data-wow-delay="0.1s">
+                            <a href="#"><img src="resources/img/medical/submit1.png" class="img-responsive" alt=""></a>
+							<h2><strong>온라인 접수</strong></h2>
+								<p>보다 빠르고 간편하게 이용하실 수 있습니다.</p>
+                        </div><!--team col-->
+                    </div><!--col-md-3 col-sm-6-->
+                    <div class="col-sm-6 col-sm-3 margin30">
+                        <div class="team-col wow animated fadeInLeft" data-wow-delay="0.2s">
+                            <a href="#"><img src="resources/img/medical/conference1.png" class="img-responsive" alt=""></a>
+                            <h2><strong>온라인 회의</strong></h2>
+                            <p>언제 어디서든 팀원들과 소통하실 수 있습니다..</p>
+                        </div><!--team col-->
+                    </div><!--col-md-3 col-sm-6-->
+                    <div class="col-sm-6 col-sm-3 margin30">
+                        <div class="team-col wow animated fadeInLeft" data-wow-delay="0.3s">
+                            <a href="#"><img src="resources/img/medical/slideview1.png" class="img-responsive" alt=""></a>
+                            <h2><strong>다양한 평가</strong></h2>
+                            <p>원하는 평가 방법으로 평가합니다.</p>
+                        </div><!--team col-->
+                    </div><!--col-md-3 col-sm-6-->
+                    <div class="col-sm-6 col-sm-3 margin30">
+                        <div class="team-col wow animated fadeInLeft" data-wow-delay="0.4s">
+                            <a href="#"><img src="resources/img/medical/evaluate1.png" class="img-responsive" alt=""></a>
+                            <h2><strong>신속한 평가</strong></h2>
+                            <p>많은 양의 작품을 빠르게 평가할 수 있습니다.</p>
+                        </div><!--team col-->
+                    </div><!--col-md-3 col-sm-6-->
                 </div>
             </div>
         </div><!--team section end-->

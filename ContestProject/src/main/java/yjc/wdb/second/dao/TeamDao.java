@@ -72,5 +72,23 @@ public interface TeamDao {
 	
 	//RecommendUsetList
 	public List<MessageVo> RecommendUsetList(MessageVo vo) throws Exception;
-		
+	
+	
+	//InvitationMake
+public void InvitationMake(MessageVo vo) throws Exception;
+public void receiverMake(MessageVo vo) throws Exception;
+public void MemberInvitation(MessageVo vo) throws Exception;
+
+//invitationMassge
+public List<MessageVo> invitationMassge(String rc_id) throws Exception;	
+//transinvitationM
+public List<MessageVo> transinvitationM(int t_id)throws Exception;
+
+//Read
+public MessageVo content(MessageVo vo) throws Exception;
+public void messageRead_Date(MessageVo vo) throws Exception;
+public List<TeamVo> MemberTeam(TeamVo vo)throws Exception;
+//CountMessage
+public int CountMessage(String rc_id) throws Exception;
+//
 }

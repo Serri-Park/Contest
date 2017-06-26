@@ -179,7 +179,7 @@ public class teamController {
 	}
 	
 	//癲ル슢?占쏙옙占�?占쏙옙?占쏙옙?占쏙옙占�?? 占쎈쐻占쎈짗占쎌굲 占쎌녃域뱄퐢?占쏙옙占쎄덩占쎄랩?占쏙옙?占쎈쐻占쎈짗占쎌굲占쎈쐻?占쏙옙占�??
-	@RequestMapping(value = "AllTeamList", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "AllTeamList", method = RequestMethod.GET)
 	public String Teamlist(@RequestParam(value="Conlist",defaultValue="1")int Conlist,
 			@RequestParam(value="searchRights",defaultValue="0")int searchRights,
 			@RequestParam(value="keyword",defaultValue="All")String keyword,
@@ -188,13 +188,13 @@ public class teamController {
 			@RequestParam(value="searchAreas",defaultValue="All")String searchAreas,
 			TeamVo vo, Model model, HttpSession session) throws Exception{
 		
-		System.out.println("keyword"+keyword);
+
 		String u_id = (String)session.getAttribute("u_id");
 		List<TeamVo> tlist = tservice.teamchek(u_id);
 		int number = tlist.size();
-		
+		System.out.println(number+"dasdad");
 		model.addAttribute("num",number);
-	//	model.addAttribute("tlist",tlist);
+		model.addAttribute("tlist",tlist);
 		
 		vo.setSearchAreas(searchAreas);
 		vo.setSearchTypeFile(searchFile);
@@ -209,6 +209,7 @@ public class teamController {
 		model.addAttribute("listnum",listnum);
 		model.addAttribute("list",list);
 		model.addAttribute("permit",permit);
+		System.out.println(permit+"ddd");
 		
 	return "Team/TeamList";
 		
@@ -287,7 +288,7 @@ public class teamController {
 	}
 	
 	//占쎈쐻占쎈윥筌묒슌占�?占�?瑜곸굲占쎈쐻占쎈윪占쎄껑 claimant
-	@RequestMapping(value = "claimant", method = RequestMethod.GET)
+	@RequestMapping(value = "Team/claimant", method = RequestMethod.GET)
 	public String claimants(@RequestParam(value="t_id")int t_id,@RequestParam(value="m_rights",defaultValue="3")int m_rights,
 			@RequestParam(value="t_filed",defaultValue="All")String t_filed,
 			 TeamVo teamDate,ClaimantVo vo,Model model, HttpSession session) throws Exception{
@@ -379,7 +380,6 @@ public class teamController {
 				public String Recruitcont(TeamVo vo, HttpServletRequest req ,HttpSession session){
 					
 					int t_id = Integer.parseInt(req.getParameter("t_id"));
-					
 					int permit =  Integer.parseInt(req.getParameter("permit"));
 					vo.setT_permit(permit);
 					vo.setT_id(t_id);
@@ -397,34 +397,170 @@ public class teamController {
 				}
 		
 		
-		//추천인받기
-		@RequestMapping(value="recommend", method = RequestMethod.GET)
-		public ResponseEntity<Map<String,Object>> MassageMakeForm(MessageVo vo, HttpSession session, Model model,HttpServletRequest req) throws Exception{
-			ResponseEntity<Map<String,Object>> entity = null;
-			
-			String t_filed = req.getParameter("t_filed");
-			System.out.println(t_filed);
-			int t_id = Integer.parseInt(req.getParameter("t_id"));
-			
-			vo.setT_id(t_id);
-			vo.setT_filed(t_filed);
-				
-				List<MessageVo> list = tservice.RecommendUsetList(vo);
-				Map<String, Object> map = new HashMap<String, Object>();
-				map.put("list", list);
-				int count = list.size();
-				if(count == 0){
-					entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-				}else{
-					
-					entity = new ResponseEntity<>(map,HttpStatus.OK);
-				}	
-				
-					
-			return entity;
-			
-						
-		}			
-	
 		
+		//추천인받기
+				@ResponseBody
+				@RequestMapping(value="Team/recommend", method = RequestMethod.GET)
+				public ResponseEntity<Map<String,Object>> MassageMakeForm(MessageVo vo, HttpSession session, Model model,HttpServletRequest req) throws Exception{
+					ResponseEntity<Map<String,Object>> entity = null;
+					
+					String t_filed = req.getParameter("t_filed");
+			
+					int t_id = Integer.parseInt(req.getParameter("t_id"));
+					
+					vo.setT_id(t_id);
+					vo.setT_filed(t_filed);
+						
+					List<MessageVo> list = tservice.RecommendUsetList(vo);			
+					int count = list.size();
+					System.out.println(count);
+					Map<String, Object> map = new HashMap<String, Object>();
+					map.put("list", list);
+					entity = new ResponseEntity<>(map,HttpStatus.OK);
+						
+						
+							
+					return entity;
+					
+								
+				}			
+			
+				@RequestMapping(value="Team/InvitationMakeForm", method = RequestMethod.GET)
+				public void InvitationMakeForm(
+						@RequestParam(value="rc_id")String rc_id,
+						@RequestParam(value="t_id")int t_id,
+						MessageVo vo, HttpSession session, Model model) throws Exception{
+						System.out.println("MfORM rc_id="+rc_id);
+						
+						vo.setRc_id(rc_id);
+						model.addAttribute("rc_id",rc_id);
+						
+						vo.setT_id(t_id);
+						int Rights = tservice.leaderRights(t_id);
+						TeamVo team = tservice.teamData(vo);
+						team.setM_rights(Rights);
+						model.addAttribute("MakeDate",team);
+						
+					
+					
+				}
+				
+				@RequestMapping(value="Team/InvitationMake", method = RequestMethod.POST)
+				public String MassageMake(MessageVo vo, HttpSession session, Model model) throws Exception{
+					int ppctor = vo.getT_id();
+					System.out.println(ppctor +"t_id");
+					
+					String send_id = (String) session.getAttribute("u_id");
+					
+					vo.setSend_id(send_id);
+					tservice.InvitationMake(vo);
+					return "redirect:post?ppctor="+ppctor;
+
+				}
+				
+				@RequestMapping(value = "Team/post", method = RequestMethod.GET)
+				public void post(@RequestParam(value="ppctor",defaultValue="0")int ppctor,
+						@RequestParam(value="m_rights",defaultValue="11")int m_rights,
+						MessageVo vo, HttpSession session, Model model,HttpServletRequest req) throws Exception{
+					//post page controll
+					// 0 = user, etc = teamleader
+					int MessageCount = ppctor;
+					System.out.println(MessageCount);
+					TeamVo TeamDate = new TeamVo();
+					
+
+					//table
+					int Count = 0;
+					List<MessageVo> list = null;
+					List<TeamVo> TeamList = null;
+					System.out.println("ppctor은 "+MessageCount);
+					//postPageContorll;
+					if(MessageCount == 0){
+					
+						//session
+						String rc_id = (String) session.getAttribute("u_id");
+						TeamList = tservice.teamchek(rc_id);
+						
+						list = tservice.invitationMassge(rc_id);
+						Count = list.size();
+						TeamDate.setT_id(MessageCount);
+						
+					}else if(MessageCount != 0){
+							
+							vo.setT_id(MessageCount);
+							TeamList = tservice.MemberTeam(vo);
+							TeamDate =  tservice.teamData(vo);
+							TeamDate.setM_rights(tservice.leaderRights(MessageCount));
+							//session id
+							list = tservice.transinvitationM(MessageCount);
+							Count = list.size();
+							
+							
+					}
+					int TeamSize = TeamList.size();
+					model.addAttribute("TeamSize", TeamSize);
+					model.addAttribute("TeamList", TeamList);
+					model.addAttribute("ppctor",MessageCount);
+					model.addAttribute("TeamDate",TeamDate);
+					System.out.println(Count);
+					System.out.println(list);
+					
+					model.addAttribute("count",Count);
+					model.addAttribute("list",list);
+					
+				}
+				
+			@RequestMapping(value = "Team/messageRead", method = RequestMethod.GET)
+			public void messageRead(@RequestParam(value="ms_id",defaultValue="-1")int ms_id,
+					@RequestParam(value="ppctor",defaultValue="0")int ppctor,
+					@RequestParam(value="i",defaultValue="0")int i,
+					@RequestParam(value="t_id",defaultValue="0")int t_id,
+				MessageVo vo, HttpSession session, Model model) throws Exception{
+				model.addAttribute("ppctor",ppctor);
+				if(ms_id == -1){
+					return;
+					}
+					else if(ms_id > -1){
+						
+						//Message read date update
+						String rc_id = (String) session.getAttribute("u_id");
+						vo.setRc_id(rc_id);
+						vo.setMs_id(ms_id);
+						vo.setT_id(t_id);	
+						int Rights = tservice.leaderRights(t_id);
+						vo.setM_rights(Rights);
+						System.out.println("rights : " + vo.getM_rights());
+						System.out.println("t_ID : " + vo.getT_id());
+						model.addAttribute("Inteam",vo);
+						vo =  tservice.content(vo,i);
+						
+						model.addAttribute("u_id",rc_id);
+						model.addAttribute("content",vo);
+					}
+				}
+			
+			
+			
+			@RequestMapping(value="Team/CountMessage", method = RequestMethod.GET)
+			public ResponseEntity<Map<String,Object>> CountMessage(HttpServletRequest req,MessageVo vo, HttpSession session, Model model){
+				ResponseEntity<Map<String,Object>> entity =null;
+				//session
+				String rc_id = (String) session.getAttribute("u_id");
+				//String rc_id = req.getParameter("rc_id");
+				
+				try {
+					int MassCount = tservice.CountMessage(rc_id);
+					Map<String, Object> map = new HashMap<String, Object>();
+					System.out.println("MassCount"+MassCount);
+					map.put("MassCount", MassCount);
+					//model.addAttribute("MassCount",MassCount);
+					entity = new ResponseEntity<>(map,HttpStatus.OK);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+				}
+				
+				return entity;
+			}
 }

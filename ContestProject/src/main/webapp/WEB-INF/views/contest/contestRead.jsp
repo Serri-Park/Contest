@@ -169,7 +169,7 @@
 			});
 			
 			      
-			$(".btn-danger").on("click",function(){
+			$(".rove").on("click",function(){
 				if(confirm("삭제하시겠습니까?")){
 					var arr = [];
 					var posterArr = [];
@@ -204,6 +204,7 @@
 				var category = $(this).attr("href")
 				$("#c_keyword").val("");
 				$("#category").val(category);
+				$("<input type='hidden' name ='t_id' value='${criteria.subt_id}'>").appendTo(formObj);
 				formObj.attr("action", "contestList");
 				formObj.attr("method", "get");
 				$("#page").val(1);
@@ -326,37 +327,37 @@
 						<span class="tit">홈페이지</span>${contest.c_homepage }
 						<c:if test="${contest.c_homepage == ''}"> ― </c:if>
 					</li>
+					<li>
+			
+					<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${contest.c_startdate}" var="startdate" /> 
+					<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${contest.c_enddate}" var="enddate" /> <jsp:useBean id="now" class="java.util.Date" />
+					<fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm:ss" var="nowdate" /> 
+					<fmt:formatDate pattern="yyyy-MM-dd" value="${contest.c_enddate}" var="endd" /> 
+					<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="nowd" /> 
+					<c:choose>
+						<c:when test="${endd == nowd && enddate > nowdate}">
+							<span class="tit">D-day</span>
+		       				<a href="AllTeamList?Conlist=1&permit=1&searchFile=${contest.c_category }"><button class="btn-primary">팀원모집</button></a>
+							<c:if test="${criteria.subt_id != 0}">
+		       				<a href="submit?c_id=${contest.c_id }&t_id=${criteria.subt_id}"><button class="btn-danger">접수</button></a>
+		       				</c:if>
+					    </c:when>
+						<c:when test="${startdate <= nowdate && enddate >= nowdate}">
+							<span class="tit"></span>
+		       				<a href="AllTeamList?Conlist=1&permit=1"><button class="btn-primary">팀원모집</button></a>
+							<c:if test="${criteria.subt_id != 0}">
+		       				<a href="submit?c_id=${contest.c_id }&t_id=${criteria.subt_id}"><button class="btn-danger">접수</button></a>
+		       				</c:if>
+			    		</c:when>
+						<c:otherwise>
+					    </c:otherwise>
+					</c:choose>
+					</li>
 				</ul>
 			</div>
 			<div class="article" style="padding-bottom: 50px;">
 				<div class="tit">공모전 공모요강</div>
 				<div class="content">${contest.c_content}</div>
-			<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss"
-									value="${contest.c_startdate}" var="startdate" /> <fmt:formatDate
-									pattern="yyyy-MM-dd HH:mm:ss" value="${contest.c_enddate}"
-									var="enddate" /> <jsp:useBean id="now" class="java.util.Date" />
-								<fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm:ss"
-									var="nowdate" /> <fmt:formatDate pattern="yyyy-MM-dd"
-									value="${contest.c_enddate}" var="endd" /> <fmt:formatDate
-									value="${now}" pattern="yyyy-MM-dd" var="nowd" /> <c:choose>
-									<c:when test="${endd == nowd && enddate > nowdate}">
-									D-day
-							    </c:when>
-									<c:when test="${startdate <= nowdate && enddate >= nowdate}">
-									<c:if test="${contest.t_id != 0}">
-				       				<a href="submit?c_id=${contest.c_id }&t_id=${contest.t_id}"><button  class="submit">접수</button></a>
-				       				</c:if>
-				    			</c:when>
-									<c:when test="${startdate > nowdate}">
-									
-							    </c:when>
-									<c:when test="${enddate<nowdate }">
-									
-							    </c:when>
-									<c:otherwise>
-									
-							    </c:otherwise>
-								</c:choose>
 			</div>
 		   
 		
@@ -371,7 +372,7 @@
 			<span style="float: right; margin: 45px -5">
 				<c:if test="${contest.t_id eq t_id }">
 				<button class="btn-warning">수정</button>
-				<button class="btn-danger">삭제</button>
+				<button class="btn-danger rove">삭제</button>
 				</c:if>
 				<button type="submit" class="list-btn-primary">목록</button>
 				

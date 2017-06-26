@@ -53,13 +53,13 @@
                              <li><a href="../AllTeamList?Conlist=1&permit=1">All Team</a></li>
                                 <li><a href="../AllTeamList?Conlist=0&permitt=1">Waiting TeamList</a></li>
                                 
-                                <li><a href="#">미확정</a></li>
+                               <!--  <li><a href="#">미확정</a></li> -->
 
 
                             </ul>
                         </li>
                         
-                        <li><a href="#">Gallery</a></li>
+                      <!--   <li><a href="#">Gallery</a></li> -->
                         <li><a href="../listPage">Community</a></li>
                         <li><a href="../PlaceList">장소대여</a></li>
     <c:if test="${empty sessionScope.u_id}">

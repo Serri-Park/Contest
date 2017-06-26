@@ -5,6 +5,7 @@
 	import java.util.List;
 	import java.util.Locale;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -28,7 +29,9 @@ import yjc.wdb.second.service.ContestService;
 	 */
 	@Controller
 	public class HomeController1 {
+		@Inject
 		private BoardService service;
+		@Inject
 		private ContestService Cservice;
 		private static final Logger logger = LoggerFactory.getLogger(HomeController1.class);
 		
@@ -53,10 +56,19 @@ import yjc.wdb.second.service.ContestService;
 		
 		
 		@RequestMapping(value="home",method=RequestMethod.GET)
-		public String list( Model model) throws Exception{
-		
-			
-			
+		public String list( Model model, Criteria criteria) throws Exception{
+			if(criteria.getCategory() == null){
+				criteria.setCategory("allCategory");
+			}
+			if(criteria.getDateState() == null){
+				criteria.setDateState("all");
+			}
+			if(criteria.getC_searchType() == null || criteria.getC_keyword() == ""){
+				criteria.setC_searchType("noSearch");
+			}
+			List<Contest> list = Cservice.listPage(criteria);
+			model.addAttribute("list",list);
+			System.out.print(list);
 			
 			return "Member/index";
 		}

@@ -8,6 +8,7 @@ public class Criteria {
    private String keyword;
    private int startPage;
    private int endPage;
+   private int subt_id;
    private boolean prev;
    private boolean next;
    private int totalCount;
@@ -140,5 +141,11 @@ public class Criteria {
    public String toString(){
       return "Criteria [page=" +page +"," +"recordsPerPage=" + recordsPerPage + "]";
    }
+public int getSubt_id() {
+	return subt_id;
+}
+public void setSubt_id(int subt_id) {
+	this.subt_id = subt_id;
+}
    
 }
