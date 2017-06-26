@@ -315,18 +315,28 @@ public class EvaluationController {
 		int m_count = service.cnt_m(t_id);
 		ep.setT_id(t_id);
 		ep.setM_count(m_count);
+		List<Manager> sPage = service.epEl(t_id);
+		String q = null;
 		
+		if(sPage.get(0).getEp_how().equals("Pass or Fail 방법")){
 		List<Manager> m = service.result_get(ep);
-
 		for(int i = 0; i<m.size();i++){
 			m.get(i).setStage(ep.getEp_stage()-1);
-			System.out.println("�떒怨�:" + m.get(i).getStage());
 			service.result_set(m.get(i));
 		}
 		service.stage_end(t_id);
 		service.stage_pro(ep.getEp_id());
+		}
 		
-		return new ResponseEntity<>("", HttpStatus.OK);
+		else if(sPage.get(0).getEp_how().equals("상세채점 방법")){
+			q = "상위 몇등까지 포함시키겠습니까?";
+		}
+		return new ResponseEntity<>(q, HttpStatus.OK);
+	}
+	@RequestMapping(value = "screen/details", method = RequestMethod.GET)
+	public String details(int t_id,Model model,HttpSession session) throws Exception {
+		
+		return "redirect:screen/eval_result?t_id="+t_id;
 	}
 	
 	@ResponseBody
@@ -378,20 +388,25 @@ public class EvaluationController {
 		int cnt_work = service.cnt_work(m1.get(0));
 		int cnt_eval = service.cnt_eval(m1.get(0));
 		int total_cnt = cnt_m * cnt_work;
-		
+		int cha_cnt = cnt_m * cnt_work-cnt_eval;
 		Manager c =service.manager(t_id);
 		c.setU_id(id);
 		c.setT_id(t_id);
 		c.setEl_id(m1.get(0).getEl_id());
 		c.setEp_id(m1.get(0).getEp_id());
 		c.setEp_stage(m1.get(0).getEp_stage());
+		List<Manager> allCnt = service.cnt_alleval(c);
 		int cnt_u_work = service.cnt_u_work(c);
 		List<Manager> list = service.progress(c);
-		System.out.println(list.get(0));
+		List<Manager> member = service.getu_id(t_id);
+		
+		model.addAttribute("allCnt",allCnt);
+		model.addAttribute("member",member);
 		model.addAttribute("cnt_u_work",cnt_u_work);
 		model.addAttribute("cnt_work",cnt_work);
 		model.addAttribute("total_cnt",total_cnt);
 		model.addAttribute("cnt_eval",cnt_eval);
+		model.addAttribute("cha_cnt",cha_cnt);
 		model.addAttribute("ep_how",m1.get(0).getEp_how());
 		model.addAttribute("t_id",t_id);
 		model.addAttribute("list",list);
@@ -419,23 +434,47 @@ public class EvaluationController {
 	}
 	@RequestMapping(value = "screen/totalPro", method = RequestMethod.POST)
 	@ResponseBody
-	public List<Manager> totalPro(@RequestBody Manager m,Model model) throws Exception {
-		int t_id = m.getT_id();
-		List<Manager> m1 = service.epEl(t_id);
+	public ResponseEntity<Map<String,Object>> totalPro(@RequestBody Manager m,Model model) throws Exception {
+		ResponseEntity<Map<String,Object>> entity= null;
+		List<Manager> ep = service.epEl(m.getT_id());
+		//Map<String, Object> retVal = new HashMap<String, Object>();
+		Map<String, Object> map= new HashMap<>();
+		List<Manager> m1 = service.epEl(m.getT_id());
 		for(int i = 0;i<m1.size();i++)
-		m1.get(i).setT_id(t_id);
-		m1.get(0).setT_id(m.getT_id());
-		List<Manager> list = service.cnt_alleval(m1.get(0));
-		
-		//System.out.println(list.get(1).getAllCnt());
-		return list;
+		m1.get(i).setT_id(m.getT_id());
+		int cnt_m = service.cnt_m(m.getT_id());
+		int cnt_work = service.cnt_work(m1.get(0));
+		int cnt_eval = service.cnt_eval(m1.get(0));
+		int total_cnt = cnt_m * cnt_work-cnt_eval;
+		map.put("cnt_work", cnt_work);
+		map.put("cnt_eval", cnt_eval);
+		map.put("total_cnt", total_cnt);
+		System.out.println(map);
+		entity=new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+		return entity;
 	}
 	@RequestMapping(value = "screen/eval_result", method = RequestMethod.GET)
 	public void eval_result(int t_id,Model model,HttpSession session) throws Exception {
+		int m_count = service.cnt_m(t_id);
+
+		model.addAttribute("m_count",m_count);
 		String id=(String)session.getAttribute("u_id");
 		List<Manager> m =service.get_work(t_id);
 		model.addAttribute("t_id",t_id);
 		model.addAttribute("m",m);
+		//개야매로 한거
+		Manager ep = service.get_ep_id(t_id);
+		if(ep.getEp_how().equals("상세채점 방법")){
+		ep.setT_id(t_id);
+		ep.setEndNum(3);
+		
+		List<Manager> m1 = service.details(ep);
+		for(int i = 0; i<m1.size();i++){
+			m1.get(i).setStage(ep.getEp_stage());
+			service.result_set(m1.get(i));
+		}
+		service.stage_end(t_id);
+		}
 	}
 	@RequestMapping(value = "screen/getEp", method = RequestMethod.POST)
 	@ResponseBody
@@ -451,5 +490,21 @@ public class EvaluationController {
 		entity=new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
 		return entity;
 	}
+	@RequestMapping(value = "screen/pfgraph", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<Map<String,Object>> pfgraph(@RequestBody Manager m,Model model) throws Exception {
+		int t_id = m.getT_id();
+		Manager ep = service.get_ep_id(t_id);
+
+		List<Manager> m1 = service.pfgraph(t_id);
+		ResponseEntity<Map<String,Object>> entity= null;
+		Map<String, Object> map= new HashMap<>();
+		
+		map.put("list", m1);
+		
+		entity=new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+		return entity;
+	}
+
 } 
 

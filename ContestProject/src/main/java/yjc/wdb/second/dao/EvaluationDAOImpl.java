@@ -202,4 +202,16 @@ private static final String namespace="yjc.wdb.EvalMapper";
 		return sql.selectList(namespace+".getu_id", t_id);
 	}
 
+	@Override
+	public List<Manager> details(Manager m) throws Exception {
+		// TODO Auto-generated method stub
+		return sql.selectList(namespace+".details",m);
+	}
+
+	@Override
+	public List<Manager> pfgraph(int t_id) throws Exception {
+		// TODO Auto-generated method stub
+		return sql.selectList(namespace+".pfgraph",t_id);
+	}
+
 }

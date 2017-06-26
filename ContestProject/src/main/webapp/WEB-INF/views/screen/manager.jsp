@@ -110,9 +110,17 @@
 </style>
 </head>
 <body>
+<form>
 		<div id="confirm_content" style="display: none">
 			<div class="confirmModal_content">
-				현재 단계의 평가가 완료 되었습니다.<br>다음 평가를 진행하시겠습니까?
+				현재 단계의 평가가 완료 되었습니다.<br>
+				<c:if test="${m.ep_how == '상세채점 방법' }">
+				마지막단계입니다. 
+				</c:if>
+				<c:if test="${m.ep_how != '상세채점 방법' }">
+				다음 평가를 진행하시겠습니까?
+				</c:if>
+				
 			</div>
 			<div class="confirmModal_footer">
 				<button type="button" class="btn btn-primary"
@@ -120,8 +128,9 @@
 				<button type="button" class="btn btn-default"
 					data-confirmmodal-but="cancel">Cancel</button>
 			</div>
+
 		</div>
-	<form>
+		
 		<input type='hidden' name='r_id' id='r_id' value='${r_id}'> 
 		<input type="hidden" name="t_id" id="t_id" value="${t_id}">
 	</form>
@@ -303,26 +312,31 @@
 			}
 			  });
 		});
+	 var getRank=0;
 	var check = ${b};
 	if(check==true){  
 	$(document).ready(function(){ 
-		var dd = $(".cnt").indexOf;
-		console.log(dd)
 		$('#confirm_content').confirmModal({
 		topOffset : 0,
 		onOkBut : function() {
+			if("${m.ep_how}"==="상세채점 방법"){
+				$("form").attr("action", "./eval_result");
+				$("form").attr("method", "get");
+				$("form").submit();
+			}else{
 			$.ajax({
 				url: 'stageModify?t_id='+${t_id},
 				type: 'GET',
 			    dataType: "text", 
 			    success: function(data) {
-			       location.reload();
+
 			    },
 			    error: function(data) {
 			        alert("error");
 			    }
 			      
 				});
+			}
 		},
 		onCancelBut : function() {},
 		onLoad : function() {},

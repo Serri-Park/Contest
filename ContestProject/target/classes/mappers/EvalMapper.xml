@@ -170,6 +170,25 @@
 		where a.c_id = b.c_id
 			group by c.t_name,e.u_id
 	</select>
+	<!-- 상세평가 -->
+	<select id ="details" resultType="manager">
+		select *,sum(e.e_score) te_score
+		from receipt a join (select c_id
+							from contest
+							where t_id = 9
+							order by c_id desc
+							limit 0,1) b
+				join team c on (a.t_id = c.t_id)
+				join work d on (d.r_id = a.r_id and d.w_result = (#{ep_stage}-1))
+				left outer join evaluation e 
+				on(e.w_id = d.w_id and  e.el_id in (select el_id
+														from elist
+														where ep_id =  #{ep_id}))
+		where a.c_id = b.c_id
+			group by c.t_name
+			order by te_score desc
+			limit 0,#{endNum}
+	</select>
 	<!-- 평가 유저의 평가진행상황 검색 -->
 	<select id="cnt_alleval" resultType="manager">
 		select a.u_id, count(a.u_id) allCnt
@@ -234,11 +253,22 @@
 		where ep_id = #{ep_id}	
 	</update>
 	<select id="result_get" resultType="manager">
-		select a.w_id,count(a.e_id)>(#{m_count}/2) w_result
+		select a.w_id,count(a.e_id)>ceil(#{m_count}/2) w_result
 		from evaluation a join work w on (a.w_id = w.w_id) 
 						join receipt r on (r.r_id = w.r_id and r.c_id = (select c_id 
 																		from contest
 																		where t_id = #{t_id}
+																		order by c_id desc
+																		limit 0,1)) 
+		where a.e_score = 100
+		group by a.w_id;
+	</select>
+	<select id="pfgraph" resultType="manager">
+		select w.w_name,count(a.e_id) w_result
+		from evaluation a join work w on (a.w_id = w.w_id) 
+						join receipt r on (r.r_id = w.r_id and r.c_id = (select c_id 
+																		from contest
+																		where t_id =#{t_id}
 																		order by c_id desc
 																		limit 0,1)) 
 		where a.e_score = 100

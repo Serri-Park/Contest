@@ -35,4 +35,6 @@ public interface EvaluationService {
 	public int ep_id(int c_id) throws Exception;
 	public void elistCreate(Manager m) throws Exception;
 	public List<Manager> getu_id(int t_id) throws Exception;
+	public List<Manager> details(Manager m) throws Exception;
+	public List<Manager> pfgraph(int t_id) throws Exception;
 }

@@ -13,7 +13,11 @@
 	top:15%;  
 	left:3%;
 }
-
+@media only screen and (max-width: 1000px) {
+    #menu {
+        display:none;
+    }  
+}
 #menu ul.vert-one{
 	margin:0;padding:0;list-style-type:none;display:block;
 	font:bold 12px tahoma, sans-serif;line-height:165%;
