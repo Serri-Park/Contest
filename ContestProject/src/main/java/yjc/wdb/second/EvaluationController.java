@@ -464,17 +464,17 @@ public class EvaluationController {
 		model.addAttribute("m",m);
 		//개야매로 한거
 		Manager ep = service.get_ep_id(t_id);
-		if(ep.getEp_how().equals("상세채점 방법")){
-		ep.setT_id(t_id);
-		ep.setEndNum(3);
-		
-		List<Manager> m1 = service.details(ep);
-		for(int i = 0; i<m1.size();i++){
-			m1.get(i).setStage(ep.getEp_stage());
-			service.result_set(m1.get(i));
-		}
-		service.stage_end(t_id);
-		}
+//		if(ep.getEp_how().equals("상세채점 방법")){
+//		ep.setT_id(t_id);
+//		ep.setEndNum(3);
+//		
+//		List<Manager> m1 = service.details(ep);
+//		for(int i = 0; i<m1.size();i++){
+//			m1.get(i).setStage(ep.getEp_stage());
+//			service.result_set(m1.get(i));
+//		}
+//		service.stage_end(t_id);
+//		}
 	}
 	@RequestMapping(value = "screen/getEp", method = RequestMethod.POST)
 	@ResponseBody
